@@ -16,6 +16,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
+@Order(0)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -29,9 +30,9 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 	@Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
         //auth.inMemoryAuthentication().withUser("user1").password("123").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("admin_Pa$$word").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("admin").password("111").roles("ADMIN");
         //auth.inMemoryAuthentication().withUser("dba").password("123").roles("ADMIN","DBA");//dba have two roles.
-        auth.inMemoryAuthentication().withUser("order").password("123").roles("ORDERS");//dba have two roles.
+        auth.inMemoryAuthentication().withUser("order").password("111").roles("ORDERS");//dba have two roles.
     }
      
     @Override
@@ -44,19 +45,19 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(filter,CsrfFilter.class);
 
       http.authorizeRequests()
-        .antMatchers("/", "/loginPage").permitAll() 
+        .antMatchers("/").permitAll() 
         .antMatchers("/admin/**").access("hasRole('ADMIN')")
         //.antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
         .antMatchers("/eshop/**").access("hasRole('ORDERS')")
         .and().formLogin()
         	.successHandler(customAuthenticationSuccessHandler)
-        	.loginPage("/login")
-			//.defaultSuccessUrl("/admin")
-			.failureUrl("/login?error")
+        	.loginPage("/")
+			//.failureUrl("/login?error")
 			.usernameParameter("username").passwordParameter("password")				
 			.and()
-			.logout().logoutSuccessUrl("/login?logout")
+			.logout().logoutSuccessUrl("/?logout")
         .and()
+        
         	.exceptionHandling().accessDeniedPage("/403");
   
     }

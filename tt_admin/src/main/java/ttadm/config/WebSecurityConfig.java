@@ -17,8 +17,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import ttadm.bean.SessionBean;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
+//@Order(1)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
@@ -62,12 +63,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         .antMatchers("/eshop/**").access("hasRole('ORDERS')")
         .and().formLogin()
         	.successHandler(customAuthenticationSuccessHandler)
-        	.loginPage("/login")
+        	.loginPage("/")
 			//.defaultSuccessUrl("/admin")
 			.failureUrl("/login?error")
 			.usernameParameter("username").passwordParameter("password")				
 			.and()
-			.logout().logoutSuccessUrl("/login?logout")
+			.logout().logoutSuccessUrl("/?logout")
         .and()
         	.exceptionHandling().accessDeniedPage("/403");
   

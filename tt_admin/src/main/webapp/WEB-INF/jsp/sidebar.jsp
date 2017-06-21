@@ -36,8 +36,7 @@
           	</ul>
           </li>
 
-          <!-- li><a href="">Settings</a></li>
-          <li class="last"><a href="#" class="link">ThemeForest</a></li -->
+		<li><a href="${pageContext.request.contextPath}/?logout" >Выход</a></li>
         </ul>
         <!-- /.mainmenu -->
 
