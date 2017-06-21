@@ -3,13 +3,16 @@ package ttadm.config;
 import java.io.IOException;
 import java.util.Collection;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,11 +26,16 @@ import org.springframework.stereotype.Service;
 import ttadm.bean.SessionBean;
 
 
+@PropertySource("classpath:app.properties")
 @Service
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+	@Resource
+    private Environment env;
 
+	private static final String SITE = "SITE";
 	private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse resp, Authentication auth)
@@ -88,7 +96,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         	return 	"/admin";
         	
         	case "ROLE_USER": 
-        	return 	"/";
+        	return 	env.getRequiredProperty(SITE);
         	
         	case "ROLE_ORDERS":
         	return "/eshop";

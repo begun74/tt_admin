@@ -1,3 +1,9 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,22 +12,22 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Login</title>
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resources/css/font-awesome.min.css" rel="stylesheet">
-    <link href="resources/css/prettyPhoto.css" rel="stylesheet">
-    <link href="resources/css/price-range.css" rel="stylesheet">
-    <link href="resources/css/animate.css" rel="stylesheet">
-	<link href="resources/css/main.css" rel="stylesheet">
-	<link href="resources/css/responsive.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/prettyPhoto.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/price-range.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/responsive.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->       
     <link rel="shortcut icon" href="resources/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="resources/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="resources/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="resources/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="resources/images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="${pageContext.request.contextPath}/resources/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="${pageContext.request.contextPath}/resources/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="${pageContext.request.contextPath}/resources/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/resources/images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 
 <body>
@@ -33,7 +39,7 @@
 				<div class="col-sm-4 col-sm-offset-4 text-center">
 					<div class="login-form"><!--login form-->
 						<h2><spring:message code="login.to.your.account"/></h2>
-						<form id="loginform" method="post"  class="">
+						<form id="loginform" method="post" class="">
 			   		            <!-- Error form message -->            
 			   		            <c:if test="${not empty error}">
 			   		            <div class="form-group alert">
@@ -50,10 +56,10 @@
 								<div class="form-group">
 										<input type="password" name="password" placeholder="password" />
 								</div>
-								<span>
+								<!-- span>
 									<input type="checkbox" class="checkbox"> 
 									<spring:message code="keep.me.signed.in"/>
-								</span>
+								</span -->
 
 								<button type="submit" class="btn btn-default">Login</button>
 								

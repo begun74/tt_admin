@@ -56,10 +56,10 @@
 								<div class="form-group">
 										<input type="password" name="password" placeholder="password" />
 								</div>
-								<span>
+								<!-- span>
 									<input type="checkbox" class="checkbox"> 
 									<spring:message code="keep.me.signed.in"/>
-								</span>
+								</span -->
 
 								<button type="submit" class="btn btn-default">Login</button>
 								

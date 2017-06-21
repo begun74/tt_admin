@@ -17,9 +17,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import ttadm.bean.SessionBean;
 
-//@Configuration
-//@EnableWebSecurity
-//@Order(1)
+@Configuration
+@EnableWebSecurity
+@Order(1)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
