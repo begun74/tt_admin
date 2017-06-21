@@ -62,7 +62,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public List<DirProvider> getProviderList() {
 		// TODO Auto-generated method stub
-		return null;
+		return getSession().createSQLQuery("select * from dir_provider order by name").addEntity(DirProvider.class).list();
 	}
 
 	@Override

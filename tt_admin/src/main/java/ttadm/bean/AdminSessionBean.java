@@ -8,7 +8,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import tt.modelattribute.MA_loadNomencl;
@@ -19,9 +21,15 @@ import tt.modelattribute.MA_loadTail;
 import ttadm.model.Tail;
 
 
+//@Component(value = "adminSessionBean")
 @Service
 @Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class AdminSessionBean  implements Serializable {
+
+	/**
+	 * 
+	 */
+	//private static final long serialVersionUID = 3935902451114251503L;
 
 	/**
 	 * 
@@ -33,6 +41,7 @@ public class AdminSessionBean  implements Serializable {
 	private AppBean appBean;
 	
 	@Autowired
+	//@Qualifier("mA_loadProvider")
 	private MA_loadProvider mA_loadProvider;
 	
 	@Autowired
@@ -152,7 +161,7 @@ public class AdminSessionBean  implements Serializable {
 
 	@PostConstruct
 	void init(){
-		//System.out.println("SessionBean @PostConstruct ");
+		System.out.println("AdminSessionBean @PostConstruct ");
 		
 		if(appBean.findBySerialVerUID(mA_loadNomencl.getSerialversionuid()) == null)
 			setmA_loadNomencl(new MA_loadNomencl());
@@ -178,7 +187,7 @@ public class AdminSessionBean  implements Serializable {
 	
 	@PreDestroy
 	void destr() {
-		//System.out.println("SessionBean @PreDestroy ");
+		System.out.println("AdminSessionBean @PreDestroy ");
 	}
 
 

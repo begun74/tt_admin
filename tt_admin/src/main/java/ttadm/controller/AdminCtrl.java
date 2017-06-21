@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,6 +38,7 @@ public class AdminCtrl {
 	private AppBean appBean;
 
 	@Autowired
+	@Qualifier("adminSessionBean")
 	private AdminSessionBean adminSessBean;
 	
 	@Autowired
@@ -90,7 +92,7 @@ public class AdminCtrl {
 
 			case "3":
 				model = new ModelAndView("addTails");
-				model.addObject("tempTails", adminSessBean.getTempListTails());
+				//model.addObject("tempTails", adminSessBean.getTempListTails());
 				model.addObject("tails", ttadmService.getTailsList());
 			break;
 

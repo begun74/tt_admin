@@ -52,7 +52,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<DirProvider> getProviderList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getProviderList();
 	}
 
 	@Override

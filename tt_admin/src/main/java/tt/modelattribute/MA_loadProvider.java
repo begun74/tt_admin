@@ -2,14 +2,19 @@ package tt.modelattribute;
 
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
-@Scope(value="session")
+@Component(value = "mA_loadProvider")
+@Scope(value="request")
 public class MA_loadProvider implements IMAmodel {
 	
 	
 	
+	/**
+	 * 
+	 */
+	//private static final long serialVersionUID = 2428882008313022746L;
 	/**
 	 * 
 	 */
