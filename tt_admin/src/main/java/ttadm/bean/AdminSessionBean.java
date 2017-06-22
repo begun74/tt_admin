@@ -21,8 +21,7 @@ import tt.modelattribute.MA_loadTail;
 import ttadm.model.Tail;
 
 
-//@Component(value = "adminSessionBean")
-@Service
+@Component
 @Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
 public class AdminSessionBean  implements Serializable {
 
@@ -41,7 +40,7 @@ public class AdminSessionBean  implements Serializable {
 	private AppBean appBean;
 	
 	@Autowired
-	//@Qualifier("mA_loadProvider")
+	@Qualifier("mA_loadProvider")
 	private MA_loadProvider mA_loadProvider;
 	
 	@Autowired
@@ -161,7 +160,7 @@ public class AdminSessionBean  implements Serializable {
 
 	@PostConstruct
 	void init(){
-		System.out.println("AdminSessionBean @PostConstruct ");
+		//System.out.println("AdminSessionBean @PostConstruct ");
 		
 		if(appBean.findBySerialVerUID(mA_loadNomencl.getSerialversionuid()) == null)
 			setmA_loadNomencl(new MA_loadNomencl());
@@ -187,18 +186,8 @@ public class AdminSessionBean  implements Serializable {
 	
 	@PreDestroy
 	void destr() {
-		System.out.println("AdminSessionBean @PreDestroy ");
+		//System.out.println("AdminSessionBean @PreDestroy ");
 	}
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "SessionBean [mA_loadProvider=" + mA_loadProvider + "]";
-	}
-
 
 
 	

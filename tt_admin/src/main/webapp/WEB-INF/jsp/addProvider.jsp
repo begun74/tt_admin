@@ -116,7 +116,7 @@
 							  			enctype="multipart/form-data" 
 							  			action="${pageContext.request.contextPath}/admin/addProvider?${_csrf.parameterName}=${_csrf.token}" 
 							  			method="POST"
-							  			modelAttribute="dirProvider">
+							  			modelAttribute="provider">
 							  			
 							  			<div class="clearfix">
 										         <div class="lab">
@@ -238,15 +238,15 @@
 
 									<div align="center" style="overflow-y:scroll; overflow-x: none; height:400px; width:100%;">
 										<table class="tab tab-drag">
-											<c:forEach items="${dirProviders}" var="dirProvider" varStatus="loop">
+											<c:forEach items="${providers}" var="provider" varStatus="loop">
 												<tr class="table_row">
 													<td class="dragHandle">&nbsp;</td>
 													<td>${loop.count}</td>
-													<td style="cursor:pointer;" onclick="$('#name').val('${dirProvider.name}'); $('#code').val('${dirProvider.code}');">(${dirProvider.id}) ${dirProvider.name}</td>
-													<td style="cursor:pointer;" onclick="$('#name').val('${dirProvider.name}'); $('#code').val('${dirProvider.code}');">${dirProvider.code}</td>
+													<td style="cursor:pointer;" onclick="$('#name').val('${provider.name}'); $('#code').val('${provider.code}');">(${provider.id}) ${provider.name}</td>
+													<td style="cursor:pointer;" onclick="$('#name').val('${provider.name}'); $('#code').val('${provider.code}');">${provider.code}</td>
 							         				<td>
-							         					<!-- a href="javascript:editBrand(${dirProvider.id});" class="ico ico-edit" onclick=""></a -->
-							         					<a href="javascript:delObject('DirProvider', ${dirProvider.id},'1');" class="ico ico-delete" onclick=""></a>
+							         					<!-- a href="javascript:editBrand(${provider.id});" class="ico ico-edit" onclick=""></a -->
+							         					<a href="javascript:delObject('provider', ${provider.id},'1');" class="ico ico-delete" onclick=""></a>
 							         				</td>
 												</tr>
 											</c:forEach>

@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
+
 import ttadm.service.TT_AdminServiceImpl;
 
 
@@ -38,7 +40,6 @@ public class AdminCtrl {
 	private AppBean appBean;
 
 	@Autowired
-	@Qualifier("adminSessionBean")
 	private AdminSessionBean adminSessBean;
 	
 	@Autowired
@@ -82,7 +83,6 @@ public class AdminCtrl {
 		{
 			case "1":
 				model = new ModelAndView("addProvider");
-				model.addObject("dirProviders",ttadmService.getProviderList());
 			break;
 
 			case "2":
@@ -92,7 +92,7 @@ public class AdminCtrl {
 
 			case "3":
 				model = new ModelAndView("addTails");
-				//model.addObject("tempTails", adminSessBean.getTempListTails());
+				model.addObject("tempTails", adminSessBean.getTempListTails());
 				model.addObject("tails", ttadmService.getTailsList());
 			break;
 
@@ -120,4 +120,47 @@ public class AdminCtrl {
 		return model;
 	}
 
+	
+	@RequestMapping(value = "addFileProvider" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processFileProvidere( @ModelAttribute  MultipartFile file,
+										@Valid MA_loadProvider mA_loadProvider ,
+										BindingResult result,
+										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act)
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+
+		
+		if(result.hasErrors())
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return model;
+		}
+		
+		
+		
+		if(mA_loadProvider.isSave())
+		{
+			try {
+				appBean.addToMapStore(mA_loadProvider);
+				adminSessBean.setmA_loadProvider(mA_loadProvider);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException dve) 
+			{
+				dve.printStackTrace();
+				adminSessBean.getErrorList().add("Настройки уже существуют! ");
+			}
+			catch(Exception ioe)
+			{
+				ioe.printStackTrace();
+				adminSessBean.getErrorList().add("Параметры не записаны! ");
+			}
+		}
+		
+		adminSessBean.setmA_loadProvider(mA_loadProvider);
+		
+		
+		
+		
+		return model;
+	}
 }

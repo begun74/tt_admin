@@ -34,7 +34,7 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 
 //@ComponentScan( {"wood.service.*","wood.dao.*","wood.model.*","wood.controller.*","wood.controller2.*"} )
-@ComponentScan(basePackages = {"ttadm"})
+@ComponentScan(basePackages = {"ttadm","tt"})
 @PropertySource("classpath:app.properties")
 public class TT_AdminConfiguration  extends WebMvcConfigurerAdapter {
 

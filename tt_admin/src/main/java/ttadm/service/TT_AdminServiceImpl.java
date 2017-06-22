@@ -76,7 +76,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<DirNomenclature> getNomenclatureList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getNomenclatureList();
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<DirNomenclGroup> getNomenclGroupList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getNomenclGroupList();
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<DirNomenclGroupRoot> getNomenclGroupRootList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getNomenclGroupRootList();
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<Tail> getTailsList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getTailsList();
 	}
 
 	@Override

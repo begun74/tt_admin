@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -23,7 +25,6 @@ import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
-import ttadm.model.Order;
 import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
@@ -86,7 +87,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public List<DirNomenclature> getNomenclatureList() {
 		// TODO Auto-generated method stub
-		return null;
+		return getSession().createSQLQuery("select * from dir_nomenclature order by name").addEntity(DirNomenclature.class).list();
 	}
 
 	@Override
@@ -132,10 +133,11 @@ public class DaoImpl implements Dao {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DirNomenclGroup> getNomenclGroupList() {
 		// TODO Auto-generated method stub
-		return null;
+		return getSession().createQuery("from DirNomenclGroup order by name").list();
 	}
 
 	@Override
@@ -150,10 +152,11 @@ public class DaoImpl implements Dao {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<DirNomenclGroupRoot> getNomenclGroupRootList() {
 		// TODO Auto-generated method stub
-		return null;
+		return getSession().createQuery("from DirNomenclGroupRoot order by name").list();
 	}
 
 	@Override
@@ -189,7 +192,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public List<Tail> getTailsList() {
 		// TODO Auto-generated method stub
-		return null;
+		return getSession().createCriteria(Tail.class).add(Restrictions.isNull("destruction_date")).addOrder(Order.asc("id")).list();
 	}
 
 	@Override
@@ -242,19 +245,19 @@ public class DaoImpl implements Dao {
 	}
 
 	@Override
-	public void addOrder(Order order) {
+	public void addOrder(ttadm.model.Order order) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public Order getOrder(Long order) {
+	public ttadm.model.Order getOrder(Long order) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Order> getOrdersList() {
+	public List<ttadm.model.Order> getOrdersList() {
 		// TODO Auto-generated method stub
 		return null;
 	}
