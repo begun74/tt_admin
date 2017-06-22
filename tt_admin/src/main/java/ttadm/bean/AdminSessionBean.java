@@ -160,7 +160,7 @@ public class AdminSessionBean  implements Serializable {
 
 	@PostConstruct
 	void init(){
-		//System.out.println("AdminSessionBean @PostConstruct ");
+		System.out.println("AdminSessionBean @PostConstruct ");
 		
 		if(appBean.findBySerialVerUID(mA_loadNomencl.getSerialversionuid()) == null)
 			setmA_loadNomencl(new MA_loadNomencl());
@@ -186,7 +186,7 @@ public class AdminSessionBean  implements Serializable {
 	
 	@PreDestroy
 	void destr() {
-		//System.out.println("AdminSessionBean @PreDestroy ");
+		System.out.println("AdminSessionBean @PreDestroy ");
 	}
 
 

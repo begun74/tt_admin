@@ -79,10 +79,10 @@ public class ReadExcelFile {
 		        		dirProvider = new DirProvider();
 		        		
 		        	
-		        		dirProvider.setName(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadProvider.getCol_name())) ));
+		        		dirProvider.setName(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadProvider.getCol_name()-1)) ));
 		        		//HSSFCell cell = (HSSFCell) tmp.getCell(mA_loadProvider.getCol_code()-1);
 		        		//cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-		        		long code = Long.parseLong(df.formatCellValue( setCellTypeToString( tmp.getCell(mA_loadProvider.getCol_code()) ) ) );
+		        		long code = Long.parseLong(df.formatCellValue( setCellTypeToString( tmp.getCell(mA_loadProvider.getCol_code()-1) ) ) );
 		        		dirProvider.setCode(code );
 		        	
 			        	lProvs.add(dirProvider);

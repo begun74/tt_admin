@@ -18,11 +18,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import tt.modelattribute.IMAmodel;
 import tt.modelattribute.MA_loadProvider;
 import ttadm.model.DirProvider;
 
 
-@Component
+@Service
 //@Scope("session")
 public class XLS_fileHandler  implements Callable<Long>, Serializable {
 
@@ -37,13 +38,12 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	private static final String[][] ALLOWED_FILE_TYPES_PICS = {{"image/jpeg","jpeg"}, {"image/jpg","jpg"}, {"image/gif","gif"}};
 	private static final String[][] ALLOWED_FILE_TYPES_XLS = {{"application/vnd.ms-excel","xls"},{"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","xlsx"}};
 	
+	
 	@Autowired
 	private FileUpload fileUpload ;
 	
 	
-	@Autowired
-	@Qualifier("mA_loadProvider")
-	private MA_loadProvider mA_loadProvider;
+	private IMAmodel IMAmodel;
 
 	
 	@PostConstruct
@@ -51,18 +51,9 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 		System.out.println("XLS_fileHandler - @PostConstruct");
 	}
 	
-	@Bean
-	public FileUpload fileUpload () {
-		return new FileUpload();
-		
-	}
 	
-	@Bean
-	public MA_loadProvider mA_loadProvider() {
-		return new MA_loadProvider();
-		
-	}
-
+	
+	
 	public XLS_fileHandler(MultipartFile file)  
 	{
 		if (!file.isEmpty())
@@ -94,10 +85,12 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 
 	}
 
-	public void loadXLS(MultipartFile file)
+	public void loadXLS(MultipartFile file, IMAmodel IMAmodel)
 	{
 		if (!file.isEmpty())
 		{
+			this.IMAmodel = IMAmodel;
+			
 			String contentType = file.getContentType().toString().toLowerCase();
 			String extention ;
 			
@@ -122,10 +115,10 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	@Override
 	public Long call() throws Exception {
 		// TODO Auto-generated method stub
-		fileUpload.process(new DirProvider(), file, mA_loadProvider);
-		System.out.println("File - " + file.length());
+		long c = fileUpload.process(new DirProvider(), file, IMAmodel).size();
+		System.out.println("File - " + c);
 		
-		return file.length();
+		return c;
 	}
 	
 	

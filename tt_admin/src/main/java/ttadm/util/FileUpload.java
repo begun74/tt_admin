@@ -49,7 +49,7 @@ import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-//@Transactional()
+@Transactional(readOnly = true)
 //@Scope("session")
 public class FileUpload {
 	
@@ -79,18 +79,20 @@ public class FileUpload {
 	
 	@PreDestroy
 	void destr() {
-		//System.out.println("BacketBean @PreDestroy ");
+		System.out.println("FileUpload @PreDestroy ");
 	}    
 
 	
-	@SuppressWarnings("finally")
+	
 	public Collection<?>  process(IModel model , File file, IMAmodel IMAmodel) throws Exception {
             	
-            	
+			Collection collection = null;
 			try {
 
 					if(model instanceof DirProvider)
-						return ReadExcelFile.processFile(file,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
+					{
+						collection = ReadExcelFile.processFile(file,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
+					}
 
 					
 					else if(model instanceof DirNomenclature)
@@ -110,7 +112,7 @@ public class FileUpload {
 						for(DirProvider dP: lDProv)
 							hmDProv.put(dP.getCode(),dP);
 						
-						return ReadExcelFile.processFile(file,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
+						collection = ReadExcelFile.processFile(file,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
 					}
 
 					
@@ -122,12 +124,12 @@ public class FileUpload {
 						for(DirNomenclGroupRoot dngr: lNGR) 
 							hmNomenclGroupRoot.put(dngr.getCode(), dngr);
 					
-						return ReadExcelFile.processFile(file,(DirNomenclGroup) model, (MA_loadNomenclGroup) IMAmodel, hmNomenclGroupRoot) ;
+						collection = ReadExcelFile.processFile(file,(DirNomenclGroup) model, (MA_loadNomenclGroup) IMAmodel, hmNomenclGroupRoot) ;
 					}
 
 					
 					else if(model instanceof DirNomenclGroupRoot)
-						return ReadExcelFile.processFile(file,(DirNomenclGroupRoot) model, (MA_loadNomenclGroupRoot) IMAmodel) ;
+						collection = ReadExcelFile.processFile(file,(DirNomenclGroupRoot) model, (MA_loadNomenclGroupRoot) IMAmodel) ;
 
 					
 					else if(model instanceof Tail)
@@ -139,7 +141,7 @@ public class FileUpload {
 							hmNomencl.put(dn.getCode(), dn);
 
 						
-						return ReadExcelFile.processFile(file,(Tail) model, (MA_loadTail) IMAmodel, hmNomencl) ;
+						collection = ReadExcelFile.processFile(file,(Tail) model, (MA_loadTail) IMAmodel, hmNomencl) ;
 					}
 				
 			} 
@@ -151,7 +153,7 @@ public class FileUpload {
 			finally 
 			{
 					file.delete();
-					return null;
+					return collection;
 			}
 		
 

@@ -1,9 +1,5 @@
 package ttadm.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -163,7 +159,7 @@ public class AdminCtrl {
 		adminSessBean.setmA_loadProvider(mA_loadProvider);
 		
 		
-		processingFiles.loadFile(file);
+		processingFiles.loadFile(file, adminSessBean.getmA_loadProvider());
 		
 		return model;
 	}

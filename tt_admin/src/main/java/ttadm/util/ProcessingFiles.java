@@ -18,6 +18,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import tt.modelattribute.IMAmodel;
+import tt.modelattribute.MA_loadProvider;
+import ttadm.bean.AdminSessionBean;
+
 @Service
 public class ProcessingFiles implements Serializable {
 	
@@ -28,8 +32,14 @@ public class ProcessingFiles implements Serializable {
 	 */
 	private static final long serialVersionUID = -3365768209076569422L;
 
+	@Autowired
+	private  XLS_fileHandler xls_fileHandler ;
 	
-	static XLS_fileHandler xls_fileHandler = new XLS_fileHandler();
+	@Autowired
+	private AdminSessionBean adminSessBean;
+	
+	//@Autowired
+	//private FileUpload fileUpload ;
 
 	private static ScheduledExecutorService service ;
 	private static ExecutorService photoFileService ;
@@ -46,20 +56,15 @@ public class ProcessingFiles implements Serializable {
 	}
 
 	
-	public static void loadFile(MultipartFile file) 
+	public  void loadFile(MultipartFile file, IMAmodel IMAmodel) 
 	{
-		xls_fileHandler.loadXLS(file);
+		xls_fileHandler.loadXLS(file, IMAmodel);
 		photoFileService.submit(xls_fileHandler);
 	}	
 	
 	
 	
-	@Bean
-	public XLS_fileHandler xls_fileHandler()
-	{
-		XLS_fileHandler xlsfh = new XLS_fileHandler();
-		return xlsfh;
-	}
+
 	
 	public static void startAutoLoad(List<Handler> pool)
 	{
