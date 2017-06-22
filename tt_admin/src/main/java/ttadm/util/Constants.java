@@ -30,7 +30,8 @@ public class Constants {
     public static String IMAGES_SERVER = null;
     public static File UPLOAD_FILE_PATH = null;
     
-    public Constants() {
+    public Constants()
+    {
     	
     }
     
@@ -43,8 +44,8 @@ public class Constants {
 		tempDirectory = (File) context.getAttribute("javax.servlet.context.tempdir");
 		UPLOAD_FILE_PATH = new File(env.getRequiredProperty("UPLOAD_FILE_PATH"));
 		//UPLOAD_FILE_PATH = new File(context.getRealPath("/pics/products/"));
-		System.out.println("getParent - " +new File(context.getRealPath("/")).getParent());
-		System.out.println("Constants tempDirectory " +tempDirectory);
+		//System.out.println("getParent - " +new File(context.getRealPath("/")).getParent());
+		System.out.println("Temp Directory " +tempDirectory);
 		System.out.println("IMAGES_SERVER - " +IMAGES_SERVER);
 		System.out.println("UPLOAD_FILE_PATH - " +UPLOAD_FILE_PATH);
 		

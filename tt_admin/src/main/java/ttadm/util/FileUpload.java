@@ -31,6 +31,7 @@ import javax.servlet.ServletContext;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -48,13 +49,14 @@ import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-@Transactional()
+//@Transactional()
+//@Scope("session")
 public class FileUpload {
 	
 	
 	
 	@Autowired
-	private TT_AdminServiceImpl ttService;  //Service which will do all data retrieval/manipulation work
+	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
 
 	private static final String[][] ALLOWED_FILE_TYPES_PICS = {{"image/jpeg","jpeg"}, {"image/jpg","jpg"}, {"image/gif","gif"}};
 	private static final String[][] ALLOWED_FILE_TYPES_XLS = {{"application/vnd.ms-excel","xls"},{"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","xlsx"}};
@@ -81,74 +83,77 @@ public class FileUpload {
 	}    
 
 	
-	public Collection<?>  process(IModel model , MultipartFile file, IMAmodel IMAmodel) throws Exception {
-		if (!file.isEmpty()) {
-			String contentType = file.getContentType().toString().toLowerCase();
-			String extention ;
-			
-			if ((extention = isValidContentType(ALLOWED_FILE_TYPES_XLS,contentType)) != null) {
-            	File tmpFile = new File(TEMP_FILE_PATH + File.separator+"tmp."+extention );
-
-				try {
-					file.transferTo(tmpFile);
-
+	@SuppressWarnings("finally")
+	public Collection<?>  process(IModel model , File file, IMAmodel IMAmodel) throws Exception {
+            	
+            	
+			try {
 
 					if(model instanceof DirProvider)
-					return ReadExcelFile.processFile(tmpFile,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
+						return ReadExcelFile.processFile(file,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
+
 					
 					else if(model instanceof DirNomenclature)
 					{
-						List<DirNomenclGroup> lNG = ttService.getNomenclGroupList();
+						List<DirNomenclGroup> lNG = ttadmService.getNomenclGroupList();
 						HashMap<Long,DirNomenclGroup> hmNomenclGroup = new HashMap<Long,DirNomenclGroup>();
 						for(DirNomenclGroup dng: lNG) 
 							hmNomenclGroup.put(dng.getCode(), dng);
 						
-						List<DirGender> lDGen = ttService.getGenderList();
+						List<DirGender> lDGen = ttadmService.getGenderList();
 						HashMap<String,DirGender> hmDGen = new HashMap<String,DirGender>();
 						for(DirGender dG: lDGen) 
 							hmDGen.put(dG.getName(), dG);
 
-						List<DirProvider> lDProv = ttService.getProviderList();
+						List<DirProvider> lDProv = ttadmService.getProviderList();
 						HashMap<Long,DirProvider> hmDProv = new HashMap<Long,DirProvider>();
 						for(DirProvider dP: lDProv)
 							hmDProv.put(dP.getCode(),dP);
 						
-						return ReadExcelFile.processFile(tmpFile,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
+						return ReadExcelFile.processFile(file,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
 					}
 
+					
 					else if(model instanceof DirNomenclGroup)
 					{
-						List<DirNomenclGroupRoot> lNGR = ttService.getNomenclGroupRootList();
+						List<DirNomenclGroupRoot> lNGR = ttadmService.getNomenclGroupRootList();
 						HashMap<Long,DirNomenclGroupRoot> hmNomenclGroupRoot = new HashMap<Long,DirNomenclGroupRoot>();
 						
 						for(DirNomenclGroupRoot dngr: lNGR) 
 							hmNomenclGroupRoot.put(dngr.getCode(), dngr);
 					
-						return ReadExcelFile.processFile(tmpFile,(DirNomenclGroup) model, (MA_loadNomenclGroup) IMAmodel, hmNomenclGroupRoot) ;
+						return ReadExcelFile.processFile(file,(DirNomenclGroup) model, (MA_loadNomenclGroup) IMAmodel, hmNomenclGroupRoot) ;
 					}
 
+					
 					else if(model instanceof DirNomenclGroupRoot)
-						return ReadExcelFile.processFile(tmpFile,(DirNomenclGroupRoot) model, (MA_loadNomenclGroupRoot) IMAmodel) ;
+						return ReadExcelFile.processFile(file,(DirNomenclGroupRoot) model, (MA_loadNomenclGroupRoot) IMAmodel) ;
+
 					
 					else if(model instanceof Tail)
 					{
 
-						List<DirNomenclature> lN = ttService.getNomenclatureList();
+						List<DirNomenclature> lN = ttadmService.getNomenclatureList();
 						HashMap<Long,DirNomenclature> hmNomencl = new HashMap<Long,DirNomenclature>();
 						for(DirNomenclature dn: lN) 
 							hmNomencl.put(dn.getCode(), dn);
 
 						
-						return ReadExcelFile.processFile(tmpFile,(Tail) model, (MA_loadTail) IMAmodel, hmNomencl) ;
+						return ReadExcelFile.processFile(file,(Tail) model, (MA_loadTail) IMAmodel, hmNomencl) ;
 					}
-				} 
-				finally {
-					tmpFile.delete();
-				}
+				
+			} 
+			catch(Exception exc)
+			{
+					exc.printStackTrace();
+					return null;
 			}
-		}
+			finally 
+			{
+					file.delete();
+					return null;
+			}
 		
-		return null;
 
 	}
 

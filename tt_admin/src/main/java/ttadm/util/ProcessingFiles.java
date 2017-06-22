@@ -13,7 +13,10 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ProcessingFiles implements Serializable {
@@ -25,6 +28,8 @@ public class ProcessingFiles implements Serializable {
 	 */
 	private static final long serialVersionUID = -3365768209076569422L;
 
+	
+	static XLS_fileHandler xls_fileHandler = new XLS_fileHandler();
 
 	private static ScheduledExecutorService service ;
 	private static ExecutorService photoFileService ;
@@ -40,6 +45,21 @@ public class ProcessingFiles implements Serializable {
 		System.out.println("ProcessFiles @PostConstruct ");
 	}
 
+	
+	public static void loadFile(MultipartFile file) 
+	{
+		xls_fileHandler.loadXLS(file);
+		photoFileService.submit(xls_fileHandler);
+	}	
+	
+	
+	
+	@Bean
+	public XLS_fileHandler xls_fileHandler()
+	{
+		XLS_fileHandler xlsfh = new XLS_fileHandler();
+		return xlsfh;
+	}
 	
 	public static void startAutoLoad(List<Handler> pool)
 	{

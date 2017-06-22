@@ -12,12 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ttadm.util.*;
 
 
 @Service
-@Scope("session")
+@Scope("request")
 public class FileHandler implements Callable<Long> {
 	
 	private String pathToShare;
@@ -25,12 +26,20 @@ public class FileHandler implements Callable<Long> {
 	private List<String> listPaths;
 	//private Thread thread;
 	
-	//@Autowired
-	private FileUpload fileUpload = new FileUpload();
+	@Autowired
+	private FileUpload fileUpload ;
 	
 	
-	public FileHandler(){}
+	public FileHandler()
+	{
+		
+	}
 	
+	public FileHandler(MultipartFile file)
+	{
+		
+	}
+
 	public FileHandler(Long code,String pathToShare) 
 	{
 		//thread = new Thread(this, "FileHandler(Long code,String pathToShare)");
@@ -86,6 +95,10 @@ public class FileHandler implements Callable<Long> {
     	
 		System.out.println("FileHandler init " + fileUpload);
 	}
+	
+	
+	
+	
 	
 	@PreDestroy
 	void destr() {

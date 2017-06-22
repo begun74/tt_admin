@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Component("mA_loadProvider")
-@Scope(value="session")
+@Service("mA_loadProvider")
+//@Scope(value="session")
 public class MA_loadProvider implements IMAmodel {
 	
 	

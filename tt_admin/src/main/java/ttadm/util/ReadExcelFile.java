@@ -65,7 +65,7 @@ public class ReadExcelFile {
         Sheet firstSheet = workbook.getSheetAt(0);  
         Iterator<Row> rowIterator = firstSheet.iterator();
         DataFormatter df = new DataFormatter();
-        FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+        //FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
         
 		
 		int row_ = 0;
@@ -77,11 +77,13 @@ public class ReadExcelFile {
         		if(row_ >= mA_loadProvider.getRow()) {
         			try {
 		        		dirProvider = new DirProvider();
+		        		
 		        	
-		        		dirProvider.setName(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadProvider.getCol_name()-1)) ));
+		        		dirProvider.setName(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadProvider.getCol_name())) ));
 		        		//HSSFCell cell = (HSSFCell) tmp.getCell(mA_loadProvider.getCol_code()-1);
 		        		//cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-		        		dirProvider.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadProvider.getCol_code()-1))) ) );
+		        		long code = Long.parseLong(df.formatCellValue( setCellTypeToString( tmp.getCell(mA_loadProvider.getCol_code()) ) ) );
+		        		dirProvider.setCode(code );
 		        	
 			        	lProvs.add(dirProvider);
         			} catch (java.lang.NumberFormatException nfe) {

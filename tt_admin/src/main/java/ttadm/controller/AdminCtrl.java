@@ -27,6 +27,7 @@ import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
 
 import ttadm.service.TT_AdminServiceImpl;
+import ttadm.util.ProcessingFiles;
 
 
 
@@ -41,6 +42,9 @@ public class AdminCtrl {
 
 	@Autowired
 	private AdminSessionBean adminSessBean;
+	
+	@Autowired
+	private ProcessingFiles processingFiles;
 	
 	@Autowired
 	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
@@ -121,7 +125,7 @@ public class AdminCtrl {
 	}
 
 	
-	@RequestMapping(value = "addFileProvider" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value = "/admin/addFileProvider" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileProvidere( @ModelAttribute  MultipartFile file,
 										@Valid MA_loadProvider mA_loadProvider ,
 										BindingResult result,
@@ -159,7 +163,7 @@ public class AdminCtrl {
 		adminSessBean.setmA_loadProvider(mA_loadProvider);
 		
 		
-		
+		processingFiles.loadFile(file);
 		
 		return model;
 	}
