@@ -29,7 +29,6 @@ import ttadm.model.IModel;
 
 
 @Service
-
 public class XLS_fileHandler  implements Callable<Long>, Serializable {
 
 	/**
@@ -47,8 +46,7 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	@Autowired
 	private FileUpload fileUpload ;
 	
-	@Autowired 
-	private HttpSession httpSession;
+	private AdminSessionBean adminSessBean;
 	
 	
 	private IMAmodel IMAmodel;
@@ -94,6 +92,13 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 
 	}
 
+	public void injectAdminSessBean(AdminSessionBean adminSessBean)
+	{
+		
+		this.adminSessBean = adminSessBean;
+	}
+
+	
 	public void loadXLS(IModel IModel, MultipartFile file, IMAmodel IMAmodel)
 	{
 		if (!file.isEmpty())
@@ -128,7 +133,7 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 		Collection<?> collection = fileUpload.process(IModel, file, IMAmodel);
 		
 		//System.out.println(((AdminSessionBean)httpSession.getAttribute("sessionBean")).getHmLog_LoadMA_loadProvider());
-		//((AdminSessionBean)httpSession.getAttribute("sessionBean")).addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Добавлено "+collection.size()+" поставщиков");
+		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Добавлено "+collection.size()+" поставщиков");
 		System.out.println("File - " + collection.size());
 		
 		return (long) collection.size();

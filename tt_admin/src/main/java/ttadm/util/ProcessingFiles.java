@@ -36,12 +36,7 @@ public class ProcessingFiles implements Serializable {
 	@Autowired
 	private  XLS_fileHandler xls_fileHandler ;
 	
-	//@Autowired
-	//private AdminSessionBean adminSessBean;
 	
-	//@Autowired
-	//private FileUpload fileUpload ;
-
 	private static ScheduledExecutorService service ;
 	private static ExecutorService photoFileService ;
 
@@ -66,8 +61,10 @@ public class ProcessingFiles implements Serializable {
 	{
 		
 		System.out.println(httpSession.getAttribute("adminCtrl"));
-		System.out.println(httpSession.getAttribute("sessionBean"));
+		System.out.println(httpSession.getAttribute("adminSessionBean"));
+		
 		xls_fileHandler.loadXLS(IModel,file, IMAmodel);
+		xls_fileHandler.injectAdminSessBean((AdminSessionBean)httpSession.getAttribute("adminSessionBean"));
 		photoFileService.submit(xls_fileHandler);
 	}	
 	
