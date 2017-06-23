@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import tt.modelattribute.MA_loadNomencl;
 import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
-
+import ttadm.model.DirNomenclature;
+import ttadm.model.DirProvider;
 import ttadm.service.TT_AdminServiceImpl;
 import ttadm.util.ProcessingFiles;
 
@@ -30,6 +33,7 @@ import ttadm.util.ProcessingFiles;
 
 @Controller
 @Scope("session")
+@SessionAttributes("adminCtrl")
 @RequestMapping(value = {"/"} , method = RequestMethod.GET)
 public class AdminCtrl {
 	
@@ -121,7 +125,7 @@ public class AdminCtrl {
 	}
 
 	
-	@RequestMapping(value = "/admin/addFileProvider" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value = {"/admin/addFileProvider"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileProvidere( @ModelAttribute  MultipartFile file,
 										@Valid MA_loadProvider mA_loadProvider ,
 										BindingResult result,
@@ -159,8 +163,49 @@ public class AdminCtrl {
 		adminSessBean.setmA_loadProvider(mA_loadProvider);
 		
 		
-		processingFiles.loadFile(file, adminSessBean.getmA_loadProvider());
+		processingFiles.loadFile(new DirProvider(), file, adminSessBean.getmA_loadProvider());
 		
 		return model;
 	}
+	
+	
+	@RequestMapping(value = {"/admin/addFileNomencl"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processFileNomencl( @ModelAttribute  MultipartFile file,
+										@Valid MA_loadNomencl mA_loadNomencl ,
+										BindingResult result,
+										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act) 
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		if(result.hasErrors())
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return model;
+		}
+		
+		
+		if(mA_loadNomencl.isSave())
+		{
+			try {
+				appBean.addToMapStore(mA_loadNomencl);
+				adminSessBean.setmA_loadNomencl(mA_loadNomencl);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException dve) 
+			{
+				dve.printStackTrace();
+				adminSessBean.getErrorList().add("Настройки уже существуют! ");
+			}
+			catch(Exception ioe)
+			{
+				ioe.printStackTrace();
+				adminSessBean.getErrorList().add("Параметры не записаны! ");
+			}
+		}
+		
+		
+		adminSessBean.setmA_loadNomencl(mA_loadNomencl);
+		processingFiles.loadFile(new DirNomenclature(), file, adminSessBean.getmA_loadNomencl());
+		
+		return model;
+	}	
 }

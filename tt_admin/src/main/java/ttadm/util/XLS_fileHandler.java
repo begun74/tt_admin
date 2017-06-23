@@ -4,27 +4,32 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import tt.modelattribute.IMAmodel;
 import tt.modelattribute.MA_loadProvider;
+import ttadm.bean.AdminSessionBean;
 import ttadm.model.DirProvider;
+import ttadm.model.IModel;
 
 
 @Service
-//@Scope("session")
+
 public class XLS_fileHandler  implements Callable<Long>, Serializable {
 
 	/**
@@ -42,14 +47,18 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	@Autowired
 	private FileUpload fileUpload ;
 	
+	@Autowired 
+	private HttpSession httpSession;
+	
 	
 	private IMAmodel IMAmodel;
-
+	private IModel IModel;
 	
 	@PostConstruct
 	void init() {
 		System.out.println("XLS_fileHandler - @PostConstruct");
 	}
+	
 	
 	
 	
@@ -85,11 +94,12 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 
 	}
 
-	public void loadXLS(MultipartFile file, IMAmodel IMAmodel)
+	public void loadXLS(IModel IModel, MultipartFile file, IMAmodel IMAmodel)
 	{
 		if (!file.isEmpty())
 		{
 			this.IMAmodel = IMAmodel;
+			this.IModel = IModel;
 			
 			String contentType = file.getContentType().toString().toLowerCase();
 			String extention ;
@@ -115,10 +125,13 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	@Override
 	public Long call() throws Exception {
 		// TODO Auto-generated method stub
-		long c = fileUpload.process(new DirProvider(), file, IMAmodel).size();
-		System.out.println("File - " + c);
+		Collection<?> collection = fileUpload.process(IModel, file, IMAmodel);
 		
-		return c;
+		//System.out.println(((AdminSessionBean)httpSession.getAttribute("sessionBean")).getHmLog_LoadMA_loadProvider());
+		//((AdminSessionBean)httpSession.getAttribute("sessionBean")).addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Добавлено "+collection.size()+" поставщиков");
+		System.out.println("File - " + collection.size());
+		
+		return (long) collection.size();
 	}
 	
 	

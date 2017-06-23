@@ -12,15 +12,16 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import tt.modelattribute.IMAmodel;
-import tt.modelattribute.MA_loadProvider;
+
 import ttadm.bean.AdminSessionBean;
+import ttadm.model.IModel;
 
 @Service
 public class ProcessingFiles implements Serializable {
@@ -35,8 +36,8 @@ public class ProcessingFiles implements Serializable {
 	@Autowired
 	private  XLS_fileHandler xls_fileHandler ;
 	
-	@Autowired
-	private AdminSessionBean adminSessBean;
+	//@Autowired
+	//private AdminSessionBean adminSessBean;
 	
 	//@Autowired
 	//private FileUpload fileUpload ;
@@ -44,6 +45,9 @@ public class ProcessingFiles implements Serializable {
 	private static ScheduledExecutorService service ;
 	private static ExecutorService photoFileService ;
 
+	@Autowired 
+	private HttpSession httpSession;
+	
 	private static int pool_size = 1;
 
 
@@ -56,9 +60,14 @@ public class ProcessingFiles implements Serializable {
 	}
 
 	
-	public  void loadFile(MultipartFile file, IMAmodel IMAmodel) 
+	
+	
+	public  void loadFile(IModel IModel,MultipartFile file, IMAmodel IMAmodel) 
 	{
-		xls_fileHandler.loadXLS(file, IMAmodel);
+		
+		System.out.println(httpSession.getAttribute("adminCtrl"));
+		System.out.println(httpSession.getAttribute("sessionBean"));
+		xls_fileHandler.loadXLS(IModel,file, IMAmodel);
 		photoFileService.submit(xls_fileHandler);
 	}	
 	

@@ -161,7 +161,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<DirGender> getGenderList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getGenderList();
 	}
 
 	@Override

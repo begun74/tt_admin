@@ -36,8 +36,8 @@ import tt.modelattribute.MA_loadTail;
 @Service
 public class ReadExcelFile {
 	
-	@Autowired
-	private static ProcessingFiles processFiles;
+	//@Autowired
+	//private static ProcessingFiles processFiles;
 		
     private static Workbook getWorkbook(File tmpFile) throws IOException {
         
@@ -172,7 +172,6 @@ public class ReadExcelFile {
         //System.out.println(hmPollPaths);
         //MainAutoLoad.startPhotoFileService2(hmPollPaths);
         
-        processFiles.startPhotoFileService2(hmPollPaths);
         
 		return lNomencls;
 		

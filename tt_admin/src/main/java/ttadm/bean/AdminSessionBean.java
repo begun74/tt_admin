@@ -2,6 +2,7 @@ package ttadm.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,8 @@ import javax.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +25,8 @@ import ttadm.model.Tail;
 
 
 @Component
-@Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "session")
+@SessionAttributes("adminSessionBean")
 public class AdminSessionBean  implements Serializable {
 
 	/**
@@ -59,7 +63,7 @@ public class AdminSessionBean  implements Serializable {
 	private List<String> successList = new ArrayList<String>();
 	private List<Tail> tempListTails = new ArrayList<Tail>();
 	
-
+	private HashMap<Long,String> hmLog_LoadMA_loadProvider = new HashMap<Long,String>();
 
 
 	public List<Tail> getTempListTails() {
@@ -149,6 +153,17 @@ public class AdminSessionBean  implements Serializable {
 	public void clearError() {
 		getErrorList().clear();
 	}
+	
+	
+	public void addToHmLog_LoadMA_loadProvider(long timestamp, String message) {
+		
+		hmLog_LoadMA_loadProvider.put(timestamp, message);
+		
+	}
+
+	public HashMap<Long, String> getHmLog_LoadMA_loadProvider() {
+		return hmLog_LoadMA_loadProvider;
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -186,6 +201,7 @@ public class AdminSessionBean  implements Serializable {
 	
 	@PreDestroy
 	void destr() {
+		System.out.println(this.hmLog_LoadMA_loadProvider);
 		System.out.println("AdminSessionBean @PreDestroy ");
 	}
 

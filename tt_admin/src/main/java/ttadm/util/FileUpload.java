@@ -38,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import ttadm.bean.AdminSessionBean;
 import ttadm.model.*;
 import tt.modelattribute.IMAmodel;
 import tt.modelattribute.MA_loadNomencl;
@@ -50,7 +51,7 @@ import ttadm.service.TT_AdminServiceImpl;
 
 @Service
 @Transactional(readOnly = true)
-//@Scope("session")
+
 public class FileUpload {
 	
 	
@@ -69,6 +70,7 @@ public class FileUpload {
     
     @Resource
     private Environment env;
+    
     
     
     @PostConstruct
@@ -92,6 +94,8 @@ public class FileUpload {
 					if(model instanceof DirProvider)
 					{
 						collection = ReadExcelFile.processFile(file,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
+						
+						
 					}
 
 					
