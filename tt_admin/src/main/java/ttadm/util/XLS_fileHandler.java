@@ -124,7 +124,6 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 				}
 			}
 		}
-		
 	}
 	
 	@Override
@@ -132,7 +131,6 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 		// TODO Auto-generated method stub
 		Collection<?> collection = fileUpload.process(IModel, file, IMAmodel);
 		
-		//System.out.println(((AdminSessionBean)httpSession.getAttribute("sessionBean")).getHmLog_LoadMA_loadProvider());
 		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Добавлено "+collection.size()+" поставщиков");
 		System.out.println("File - " + collection.size());
 		
