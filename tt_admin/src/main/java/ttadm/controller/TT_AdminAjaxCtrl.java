@@ -62,7 +62,7 @@ public class TT_AdminAjaxCtrl {
 		catch (NullPointerException exc) {
 			result = null;
 			response.setStatus(400);
-			response.getWriter().write(exc.getMessage());
+			//response.getWriter().write(exc.getMessage());
 		}
 		
 		return new ResponseEntity<String>(result,HttpStatus.OK);

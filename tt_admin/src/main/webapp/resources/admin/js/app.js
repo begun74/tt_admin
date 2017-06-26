@@ -42,12 +42,13 @@ $(document).ready(function(){
     
     //alert($(".progressBar").attr("id"));
     
-    
-	setInterval( function() { 
-		//alert(this.name);
-		$(".monitorProgress").text( MonitorLoads.progress($(".monitorProgress").attr("id")) );
-	} , 1000);
-
+    try {
+		setInterval( function() { 
+			//alert(this.name);
+			$(".monitorProgress").text( MonitorLoads.progress($(".monitorProgress").attr("id")) );
+		} , 1000);
+    }
+	catch(Error ) {}
     
     /*
     $(".progressBar").each(function() {
