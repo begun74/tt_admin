@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 
 import javax.annotation.PostConstruct;
@@ -26,10 +27,11 @@ import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
 import ttadm.model.DirProvider;
 import ttadm.model.IModel;
+import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-public class XLS_fileHandler  implements Callable<Long>, Serializable {
+public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 
 	/**
 	 * 
@@ -45,6 +47,10 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	
 	@Autowired
 	private FileUpload fileUpload ;
+	
+	@Autowired
+	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
+
 	
 	private AdminSessionBean adminSessBean;
 	
@@ -116,7 +122,7 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 					file.transferTo(tmpFile);
 	
 					this.file = tmpFile;
-					System.out.println("File - " +file.getName());
+					//System.out.println("File - " +file.getName());
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -127,14 +133,56 @@ public class XLS_fileHandler  implements Callable<Long>, Serializable {
 	}
 	
 	@Override
-	public Long call() throws Exception {
+	public Integer call() throws Exception {
 		// TODO Auto-generated method stub
-		Collection<?> collection = fileUpload.process(IModel, file, IMAmodel);
 		
-		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Добавлено "+collection.size()+" поставщиков");
-		System.out.println("File - " + collection.size());
+		adminSessBean.getHmLog_LoadMA_loadProvider().clear();
+		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Processing "+file.getName() +" file.");
 		
-		return (long) collection.size();
+		Thread.currentThread().sleep(3000);
+		
+		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Load 0 record");
+		
+		int rec = 1;
+		try {
+
+			TreeSet<DirProvider> sP = new TreeSet<DirProvider>();
+			sP.addAll((List<DirProvider>) fileUpload.process(IModel, file, IMAmodel));
+			//Collection<?> collection = fileUpload.process(IModel, file, IMAmodel);
+			
+			
+			for(DirProvider dp: sP) 
+			{
+				try {
+					ttadmService.addProvider(dp);
+					adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Load "+rec+" record");
+					Thread.currentThread().sleep(100);
+					rec++;
+				}
+				catch(org.springframework.dao.DataIntegrityViolationException dve) {
+					//dve.printStackTrace(); 
+					adminSessBean.getErrorList().add(dp.getName()+" уже существует! ");
+				}
+				
+			}
+			
+			
+
+		}
+		catch (java.lang.NumberFormatException nfe) {
+			nfe.printStackTrace();
+			adminSessBean.addError(nfe.getMessage());
+			
+		}
+		catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					adminSessBean.addError("Ошибка загрузки файла!");
+		}
+
+		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Successfully load "+rec+" records!");
+		
+		return rec;
 	}
 	
 	

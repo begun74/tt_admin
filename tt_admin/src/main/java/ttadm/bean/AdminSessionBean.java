@@ -3,7 +3,10 @@ package ttadm.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -63,7 +66,7 @@ public class AdminSessionBean  implements Serializable {
 	private List<String> successList = new ArrayList<String>();
 	private List<Tail> tempListTails = new ArrayList<Tail>();
 	
-	private HashMap<Long,String> hmLog_LoadMA_loadProvider = new HashMap<Long,String>();
+	private NavigableMap<Long,String> hmLog_LoadMA_loadProvider = new TreeMap<Long,String>();
 
 
 	public List<Tail> getTempListTails() {
@@ -161,7 +164,7 @@ public class AdminSessionBean  implements Serializable {
 		
 	}
 
-	public HashMap<Long, String> getHmLog_LoadMA_loadProvider() {
+	public NavigableMap<Long, String> getHmLog_LoadMA_loadProvider() {
 		return hmLog_LoadMA_loadProvider;
 	}
 
@@ -175,7 +178,8 @@ public class AdminSessionBean  implements Serializable {
 
 	@PostConstruct
 	void init(){
-		System.out.println("AdminSessionBean @PostConstruct ");
+		//System.out.println("AdminSessionBean INIT() ");
+		//System.out.println(this.hmLog_LoadMA_loadProvider);
 		
 		if(appBean.findBySerialVerUID(mA_loadNomencl.getSerialversionuid()) == null)
 			setmA_loadNomencl(new MA_loadNomencl());
@@ -199,10 +203,11 @@ public class AdminSessionBean  implements Serializable {
 	}
 	
 	
+	
 	@PreDestroy
 	void destr() {
-		System.out.println(this.hmLog_LoadMA_loadProvider);
-		System.out.println("AdminSessionBean @PreDestroy ");
+		//System.out.println(this.hmLog_LoadMA_loadProvider);
+		//System.out.println("AdminSessionBean DESTROY() ");
 	}
 
 

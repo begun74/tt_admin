@@ -60,8 +60,8 @@ public class ProcessingFiles implements Serializable {
 	public  void loadFile(IModel IModel,MultipartFile file, IMAmodel IMAmodel) 
 	{
 		
-		System.out.println(httpSession.getAttribute("adminCtrl"));
-		System.out.println(httpSession.getAttribute("adminSessionBean"));
+		//System.out.println("adminCtrl - "+httpSession.getAttribute("adminCtrl"));
+		//System.out.println("adminSessionBean - " +httpSession.getAttribute("adminSessionBean"));
 		
 		xls_fileHandler.loadXLS(IModel,file, IMAmodel);
 		xls_fileHandler.injectAdminSessBean((AdminSessionBean)httpSession.getAttribute("adminSessionBean"));

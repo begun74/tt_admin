@@ -92,11 +92,7 @@ public class FileUpload {
 			try {
 
 					if(model instanceof DirProvider)
-					{
 						collection = ReadExcelFile.processFile(file,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
-						
-						
-					}
 
 					
 					else if(model instanceof DirNomenclature)

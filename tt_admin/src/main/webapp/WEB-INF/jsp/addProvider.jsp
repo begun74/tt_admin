@@ -207,9 +207,14 @@
 						
 							        				<div class="clearfix">
 								        				<div class="lab">	
-								        					<button type="submit" class="" onclick="if(file.value.length == 0) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
+								        					<button type="submit" id="loadFileProvider" onclick="if(file.value.length == 0) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
+	
 								        				</div>
 							        				</div>
+
+													<div id="0" class="form-message correct monitorProgress">									        
+													</div>
+		
 							        				
 							         <input type="hidden" name ="act" id ="act" value="1"/>
 						</form:form>

@@ -1,6 +1,8 @@
 package ttadm.controller;
 
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -32,7 +34,7 @@ import ttadm.util.ProcessingFiles;
 
 
 @Controller
-@Scope("session")
+@Scope("request")
 @SessionAttributes("adminCtrl")
 @RequestMapping(value = {"/"} , method = RequestMethod.GET)
 public class AdminCtrl {
@@ -78,7 +80,7 @@ public class AdminCtrl {
 		if (logout != null) {
 			SecurityContextHolder.clearContext();
 			session.invalidate();
-			model = new ModelAndView("index");
+			model = new ModelAndView("redirect:/admin");
 			return model;
 		}
 		
@@ -208,4 +210,16 @@ public class AdminCtrl {
 		
 		return model;
 	}	
+	
+	
+	@PostConstruct
+	void init(){
+		//System.out.println(this + " INIT() ");
+	}
+
+	@PreDestroy
+	void destr() {
+		//System.out.println(this  +" DESTROY() ");
+	}
+
 }
