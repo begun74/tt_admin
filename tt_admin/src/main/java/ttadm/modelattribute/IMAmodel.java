@@ -1,4 +1,4 @@
-package tt.modelattribute;
+package ttadm.modelattribute;
 
 import java.io.Serializable;
 

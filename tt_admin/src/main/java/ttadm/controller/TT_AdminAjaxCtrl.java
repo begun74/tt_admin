@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import tt.modelattribute.MA_loadNomencl;
-import tt.modelattribute.MA_loadNomenclGroup;
-import tt.modelattribute.MA_loadNomenclGroupRoot;
-import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
+import ttadm.modelattribute.MA_loadNomencl;
+import ttadm.modelattribute.MA_loadNomenclGroup;
+import ttadm.modelattribute.MA_loadNomenclGroupRoot;
+import ttadm.modelattribute.MA_loadProvider;
 
 @Controller
 @Scope("session")

@@ -1,4 +1,4 @@
-package tt.modelattribute;
+package ttadm.modelattribute;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,10 @@ public class MA_loadNomencl  implements IMAmodel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -765852209444376374L;
+	private static final long serialVersionUID = -1861337158762214916L;
+	/**
+	 * 
+	 */
 
 
 	

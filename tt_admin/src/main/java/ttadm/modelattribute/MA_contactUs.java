@@ -1,4 +1,4 @@
-package tt.modelattribute;
+package ttadm.modelattribute;
 
 import java.io.Serializable;
 
@@ -13,6 +13,15 @@ public class MA_contactUs implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2930619694465138014L;
+	private static final long serialVersionUID = 7318262762957207013L;
+
+	@Override
+	public String toString() {
+		return "MA_contactUs []";
+	}
+
+	/**
+	 * 
+	 */
 
 }

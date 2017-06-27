@@ -18,10 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import tt.modelattribute.IMAmodel;
-
 import ttadm.bean.AdminSessionBean;
 import ttadm.model.IModel;
+import ttadm.modelattribute.IMAmodel;
 
 @Service
 public class ProcessingFiles implements Serializable {

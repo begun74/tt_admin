@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.hibernate.criterion.Criterion;
 
-import tt.modelattribute.MA_search;
 import ttadm.model.*;
+import ttadm.modelattribute.MA_search;
 
 
 public interface Dao {

@@ -20,7 +20,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
-import tt.modelattribute.MA_search;
 import ttadm.model.ContactUsMessages;
 import ttadm.model.DirGender;
 import ttadm.model.DirNomenclGroup;
@@ -32,6 +31,7 @@ import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
 import ttadm.model.User;
+import ttadm.modelattribute.MA_search;
 
 
 @PropertySource("classpath:sql.properties")
@@ -226,7 +226,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public void addStore(Store store) {
 		// TODO Auto-generated method stub
-
+		getSession().saveOrUpdate(store);
 	}
 
 	@Override

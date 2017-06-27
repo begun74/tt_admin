@@ -40,12 +40,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ttadm.bean.AdminSessionBean;
 import ttadm.model.*;
-import tt.modelattribute.IMAmodel;
-import tt.modelattribute.MA_loadNomencl;
-import tt.modelattribute.MA_loadNomenclGroup;
-import tt.modelattribute.MA_loadNomenclGroupRoot;
-import tt.modelattribute.MA_loadProvider;
-import tt.modelattribute.MA_loadTail;
+import ttadm.modelattribute.IMAmodel;
+import ttadm.modelattribute.MA_loadNomencl;
+import ttadm.modelattribute.MA_loadNomenclGroup;
+import ttadm.modelattribute.MA_loadNomenclGroupRoot;
+import ttadm.modelattribute.MA_loadProvider;
+import ttadm.modelattribute.MA_loadTail;
 import ttadm.service.TT_AdminServiceImpl;
 
 

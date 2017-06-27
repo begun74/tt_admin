@@ -19,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import tt.modelattribute.IMAmodel;
 import ttadm.model.*;
+import ttadm.modelattribute.IMAmodel;
 import ttadm.service.TT_AdminServiceImpl;
 
 
@@ -71,7 +71,8 @@ public class AppBean implements Serializable {
 						mapStore.put(s.getSerialVersionUID(), bytesToObject(s.getBytearray()));
 					} catch (ClassNotFoundException | IOException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						//e.printStackTrace();
+						System.out.println(s + "  not found in store!");
 					}
 				}
 		}

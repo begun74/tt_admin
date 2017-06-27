@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import tt.modelattribute.MA_search;
 import ttadm.dao.Dao;
 import ttadm.dao.DaoImpl;
 import ttadm.model.ContactUsMessages;
@@ -27,6 +26,7 @@ import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
 import ttadm.model.User;
+import ttadm.modelattribute.MA_search;
 
 @Service("ttadmService")
 @Transactional()
@@ -210,7 +210,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public void addStore(Store store) {
 		// TODO Auto-generated method stub
-
+		dao.addStore(store);
 	}
 
 	@Override

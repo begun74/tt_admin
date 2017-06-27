@@ -22,11 +22,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import tt.modelattribute.IMAmodel;
-import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
 import ttadm.model.DirProvider;
 import ttadm.model.IModel;
+import ttadm.modelattribute.IMAmodel;
+import ttadm.modelattribute.MA_loadProvider;
 import ttadm.service.TT_AdminServiceImpl;
 
 
