@@ -1,6 +1,7 @@
 package ttadm.dao;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
+import ttadm.model.IModel;
 import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
@@ -307,28 +310,43 @@ public class DaoImpl implements Dao {
 			return null;
 	}
 
-	@Override
-	public BigInteger countGender(Long id_gender) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public BigInteger countCategory(Long id_category) {
-		// TODO Auto-generated method stub
-		return null;
+	public void saveIModel(IModel imodel) {
+
+		if(imodel instanceof DirNomenclature)
+		{
+				DirNomenclature	dirNomenclature = (DirNomenclature)imodel;		
+				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				//Во избежании ERROR: duplicate key value violates unique constraint "dir_nomenclature_code_name_key"
+				//Уникальные поля code, name
+				//ищем существующюю запись
+				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				DirNomenclature dN_old = new DirNomenclature();
+				dN_old.setCode(dirNomenclature.getCode());
+				dN_old.setName(dirNomenclature.getName());
+				
+				dN_old = (DirNomenclature) getSession().createCriteria(DirNomenclature.class).add(Example.create(dN_old)).uniqueResult();
+				
+				try {
+					dN_old.setArticle(dirNomenclature.getArticle());
+					dN_old.setComposition(dirNomenclature.getComposition());
+					dN_old.setModel(dirNomenclature.getModel());
+					dN_old.setDirGender(dirNomenclature.getDirGender());
+					
+					dN_old.setAccess_date( new Timestamp(new java.util.Date().getTime() )); // Обновляем дату последней загрузки этой номенклатуры
+		
+					getSession().saveOrUpdate(dN_old);
+				}
+				catch(java.lang.NullPointerException nexc)
+				{
+					getSession().saveOrUpdate(dirNomenclature);
+					
+				}
+		}
+		else
+				getSession().saveOrUpdate(imodel);
 	}
 
-	@Override
-	public BigInteger countProvider(Long id_provider) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigInteger countType(Long id_type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

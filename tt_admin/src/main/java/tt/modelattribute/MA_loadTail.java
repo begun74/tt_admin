@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Scope(value="session")
 public class MA_loadTail implements IMAmodel {
 
-	/**
+		/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3950229997785369170L;

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Scope("session")
 public class MA_search implements Serializable {
 
+
 	/**
 	 * 
 	 */

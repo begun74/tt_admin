@@ -19,6 +19,7 @@ import org.springframework.web.context.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import tt.modelattribute.IMAmodel;
 import tt.modelattribute.MA_loadNomencl;
 import tt.modelattribute.MA_loadNomenclGroup;
 import tt.modelattribute.MA_loadNomenclGroupRoot;
@@ -67,6 +68,9 @@ public class AdminSessionBean  implements Serializable {
 	private List<Tail> tempListTails = new ArrayList<Tail>();
 	
 	private NavigableMap<Long,String> hmLog_LoadMA_loadProvider = new TreeMap<Long,String>();
+	private NavigableMap<Long,String> hmLog_LoadMA_loadNomencl = new TreeMap<Long,String>();
+	private NavigableMap<Long,String> hmLog_LoadMA_loadNomenclGroup = new TreeMap<Long,String>();
+	private NavigableMap<Long,String> hmLog_LoadMA_loadNomenclGroupRoot = new TreeMap<Long,String>();
 
 
 	public List<Tail> getTempListTails() {
@@ -138,8 +142,15 @@ public class AdminSessionBean  implements Serializable {
 
 
 
+	public  List<String> getTailErrorList(int sizeErrList) {
+		 sizeErrList++;
+		return  errorList.size() > sizeErrList-1?errorList.subList(errorList.size()-sizeErrList, errorList.size()-1):errorList;
+		
+	}
+	
 	public List<String> getErrorList() {
-		return errorList;
+		
+		return  errorList;
 	}
 
 	public void setErrorList(List<String> errorList) {
@@ -158,16 +169,42 @@ public class AdminSessionBean  implements Serializable {
 	}
 	
 	
-	public void addToHmLog_LoadMA_loadProvider(long timestamp, String message) {
+	public void addToHmLog_Load(IMAmodel IMAmodel, long timestamp, String message) {
 		
-		hmLog_LoadMA_loadProvider.put(timestamp, message);
-		
+		if(IMAmodel instanceof MA_loadProvider)
+			hmLog_LoadMA_loadProvider.put(timestamp, message);
+		else if (IMAmodel instanceof MA_loadNomencl)
+			hmLog_LoadMA_loadNomencl.put(timestamp, message);
+		else if (IMAmodel instanceof MA_loadNomenclGroup)
+			hmLog_LoadMA_loadNomenclGroup.put(timestamp, message);
+		else
+			hmLog_LoadMA_loadNomenclGroupRoot.put(timestamp, message);
 	}
 
-	public NavigableMap<Long, String> getHmLog_LoadMA_loadProvider() {
-		return hmLog_LoadMA_loadProvider;
+
+	public NavigableMap<Long, String> getHmLog_Load(IMAmodel IMAmodel) {
+		if(IMAmodel instanceof MA_loadProvider)
+			return hmLog_LoadMA_loadProvider;
+		else if (IMAmodel instanceof MA_loadNomencl)
+			return hmLog_LoadMA_loadNomencl;
+		else if (IMAmodel instanceof MA_loadNomenclGroup)
+			return hmLog_LoadMA_loadNomenclGroup;
+		else 
+			return hmLog_LoadMA_loadNomenclGroupRoot;
 	}
 
+	public void clearHmLog_Load(IMAmodel IMAmodel) 
+	{
+		if(IMAmodel instanceof MA_loadProvider)
+			hmLog_LoadMA_loadProvider.clear();
+		else if (IMAmodel instanceof MA_loadNomencl)
+			hmLog_LoadMA_loadNomencl.clear();
+		else if (IMAmodel instanceof MA_loadNomenclGroup)
+			hmLog_LoadMA_loadNomenclGroup.clear();
+		else
+			hmLog_LoadMA_loadNomenclGroupRoot.clear();
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

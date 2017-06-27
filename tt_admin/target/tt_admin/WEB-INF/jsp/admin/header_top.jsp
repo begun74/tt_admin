@@ -5,12 +5,12 @@
 <div id="header"> 
       <!-- #logo --> 
       <div id="logo">
-        <a href="index.html" title="Go to Homepage"><span>Great Admin</span></a>
+        <a href="http://trikotag.by/index.html" title="На главную"><span>Great Admin</span></a>
       </div>
       <!-- /#logo -->
       <!-- #user -->                        
       <div id="user">
-        <h2><a href="">settings</a> - <a href="?logout">Выход</a></h2>
+        <h2><a href="?logout">Выход</a></h2>
       </div>
       <!-- /#user -->  
 </div>

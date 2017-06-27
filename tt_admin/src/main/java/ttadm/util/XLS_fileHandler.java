@@ -135,33 +135,34 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 	@Override
 	public Integer call() throws Exception {
 		// TODO Auto-generated method stub
+		adminSessBean.getHmLog_Load(IMAmodel).clear();
 		
-		adminSessBean.getHmLog_LoadMA_loadProvider().clear();
-		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Processing "+file.getName() +" file.");
 		
-		Thread.currentThread().sleep(3000);
+		adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Parsing "+file.getName() +" file.");
 		
-		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Load 0 record");
 		
-		int rec = 1;
+		int rec = 0;
 		try {
 
-			TreeSet<DirProvider> sP = new TreeSet<DirProvider>();
-			sP.addAll((List<DirProvider>) fileUpload.process(IModel, file, IMAmodel));
-			//Collection<?> collection = fileUpload.process(IModel, file, IMAmodel);
+			TreeSet<IModel> IModelSet = new TreeSet<IModel>();
+			IModelSet.addAll((List<IModel>) fileUpload.process(IModel, file, IMAmodel));
+
+			Thread.currentThread().sleep(2000);
 			
 			
-			for(DirProvider dp: sP) 
+			for(IModel imodel: IModelSet) 
 			{
 				try {
-					ttadmService.addProvider(dp);
-					adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Load "+rec+" record");
-					Thread.currentThread().sleep(100);
+					ttadmService.saveIModel(imodel);
 					rec++;
+					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Processing "+rec+" ...");
+					
+					//Thread.currentThread().sleep(100);
+
 				}
 				catch(org.springframework.dao.DataIntegrityViolationException dve) {
 					//dve.printStackTrace(); 
-					adminSessBean.getErrorList().add(dp.getName()+" уже существует! ");
+					adminSessBean.getErrorList().add(imodel.getName()+" уже существует! ");
 				}
 				
 			}
@@ -180,7 +181,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 					adminSessBean.addError("Ошибка загрузки файла!");
 		}
 
-		adminSessBean.addToHmLog_LoadMA_loadProvider(System.currentTimeMillis(), "Successfully load "+rec+" records!");
+		adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" records successfully processed!");
 		
 		return rec;
 	}

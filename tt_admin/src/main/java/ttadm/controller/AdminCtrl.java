@@ -22,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import tt.modelattribute.MA_loadNomencl;
+import tt.modelattribute.MA_loadNomenclGroup;
 import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
+import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
 import ttadm.service.TT_AdminServiceImpl;
@@ -118,7 +120,7 @@ public class AdminCtrl {
 			break;
 		}
 		
-		model.addObject("error",adminSessBean.getErrorList().toString().length() > 512 ?adminSessBean.getErrorList().toString().substring(0, 512)+" ...":adminSessBean.getErrorList());
+		//model.addObject("error",adminSessBean.getErrorList().toString().length() > 512 ?adminSessBean.getErrorList().toString().substring(0, 512)+" ...":adminSessBean.getErrorList());
 		model.addObject("sessionBean",adminSessBean);
 		model.addObject("providers", ttadmService.getProviderList());
 		
@@ -212,6 +214,46 @@ public class AdminCtrl {
 	}	
 	
 	
+	@RequestMapping(value = {"/admin/addFileNomenclGroup"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processFileNomenclGroup( @ModelAttribute  MultipartFile file,
+										@Valid MA_loadNomenclGroup mA_loadNomenclGroup ,
+										BindingResult result,
+										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act) 
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		if(result.hasErrors())
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return model;
+		}
+		
+		
+		if(mA_loadNomenclGroup.isSave())
+		{
+			try {
+				appBean.addToMapStore(mA_loadNomenclGroup);
+				adminSessBean.setmA_loadNomenclGroup(mA_loadNomenclGroup);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException dve) 
+			{
+				dve.printStackTrace();
+				adminSessBean.getErrorList().add("Настройки уже существуют! ");
+			}
+			catch(Exception ioe)
+			{
+				ioe.printStackTrace();
+				adminSessBean.getErrorList().add("Параметры не записаны! ");
+			}
+		}
+		
+		
+		adminSessBean.setmA_loadNomenclGroup(mA_loadNomenclGroup);
+		processingFiles.loadFile(new DirNomenclGroup(), file, adminSessBean.getmA_loadNomenclGroup());
+		
+		return model;
+	}	
+
 	@PostConstruct
 	void init(){
 		//System.out.println(this + " INIT() ");

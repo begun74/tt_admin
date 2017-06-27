@@ -170,6 +170,12 @@ public class OrderItems implements IModel {
 				+ destruction_date + ", price=" + price + ", order=" + order + "]";
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "OrderItem "+id;
+	}
+
 
 	
 }

@@ -69,15 +69,12 @@ public interface Dao {
 	
 	public Object getObject(Class clazz,Long id);
 	public void delObject(Object obj);
+	public void saveIModel(IModel imodel);
 	
 	public void updateTails();
 	
 	User findByUserName(String username);
 	
 	//================== AJAX request ===================
-	public BigInteger countGender(Long id_gender);
-	public BigInteger countCategory(Long id_category);
-	public BigInteger countProvider(Long id_provider);
-	public BigInteger countType(Long id_type);
 	
 }

@@ -21,6 +21,7 @@ import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
+import ttadm.model.IModel;
 import ttadm.model.Order;
 import ttadm.model.OrderItems;
 import ttadm.model.Store;
@@ -285,27 +286,10 @@ public class TT_AdminServiceImpl implements Dao {
 	}
 
 	@Override
-	public BigInteger countGender(Long id_gender) {
+	public void saveIModel(IModel imodel) {
 		// TODO Auto-generated method stub
-		return null;
+		dao.saveIModel(imodel);
 	}
 
-	@Override
-	public BigInteger countCategory(Long id_category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigInteger countProvider(Long id_provider) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigInteger countType(Long id_type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

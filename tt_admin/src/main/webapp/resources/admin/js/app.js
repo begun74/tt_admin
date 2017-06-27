@@ -1,7 +1,7 @@
 var errAjax = 'Error connect to AJAX server!';
 
 
-var MonitorLoads = {
+var Monitor = {
 		result: "",
 		id:  1,
 		
@@ -17,17 +17,45 @@ var MonitorLoads = {
 					contentType: 'application/json; charset=UTF-8',
 					success : function(data) 
 					{
-						//$("#monitorLoadFile").empty();
-						$(".monitorProgress").show();
-						$(".monitorProgress").text(""+data);
-						//alert(data);
+						if(data.length > 0) {
+							$("#"+id +".monitorProgress").show();
+							$("#"+id +".monitorProgress").text(""+data);
+						}
+						else
+							$("#"+id +".monitorProgress").hide();
+						//alert("'"+data+"'");
 					},
 					error : function(e) {
-						$("#monitorLoadFile").hide();
+						$("#"+id +".monitorProgress").hide();
 						//display(e);
 					}
 				});
 	
+		},
+		errors: function() {
+				var data = {};
+				
+				$.ajax({
+					type : "GET",
+					url : "monitorErrors",
+					//timeout : 10000,
+					data : JSON.stringify(data),
+					contentType: 'application/json; charset=UTF-8',
+					success : function(data) 
+					{
+						if(data.length > 0) {
+							$(".monitorErrors").show();
+							
+							$(".monitorErrors").text(""+data);
+						} else
+							$(".monitorErrors").hide();
+						//alert("'"+data+"'");
+					},
+					error : function(e) {
+						//$("#"+id +".monitorProgress").hide();
+						//display(e);
+					}
+				});
 		}
 }
 
@@ -36,28 +64,26 @@ $(document).ready(function(){
 	
     
     
-    $("#loadFileProvider").click(function() {
-    	//alert("Click loadFileProvider");
-    });
-    
-    //alert($(".progressBar").attr("id"));
-    
-    try {
-		setInterval( function() { 
-			//alert(this.name);
-			$(".monitorProgress").text( MonitorLoads.progress($(".monitorProgress").attr("id")) );
+//========== Мониторинг Загрузки файлов ==========================	
+    $(".monitorProgress").each(function() {
+    	var id = this.id;
+    	setInterval( function() { 
+			 Monitor.progress(id);
+			 Monitor.errors();
 		} , 1000);
-    }
-	catch(Error ) {}
-    
-    /*
-    $(".progressBar").each(function() {
-			setInterval( function() { 
-				//alert(this.name);
-				$(".monitorProgress").text( MonitorLoads.progress(this.id) );
-			} , 1000);
+			
 	});
-	*/
+
+    $(".monitorProgress").click(function() {
+    	clearMonitorProgress(this.id);
+	});
+    
+    
+    $(".monitorErrors").click(function() {
+    	clearErrors();
+	});
+//======================================================    
+    	
     
 });
 
@@ -66,8 +92,9 @@ $(document).ready(function(){
 
 
 (function (d, w, c) {
-	
-	$("#monitorLoadFileProvider").hide();	/*
+
+
+	/*
     (w[c] = w[c] || []).push(function() {
         try {
             w.yaCounter44908546 = new Ya.Metrika({
@@ -144,11 +171,11 @@ function clearErrors() {
 
 	$.ajax({
 		type : "GET",
-		url : "clearErrors",
+		url : "clearMonitorErrors",
 		timeout : 100000,
-		success : function() 
+		success : function(data) 
 		{
-			/*$("#compareItems").text(data.allItems);*/
+			
 		},
 		error : function(e) {
 			//alert("ERROR: addToCompare()", e);
@@ -157,6 +184,24 @@ function clearErrors() {
 	});
 }
 	
+
+function clearMonitorProgress(id) {
+
+	$.ajax({
+		type : "GET",
+		url : "clearMonitorProgress?id="+id,
+		timeout : 100000,
+		success : function(data) 
+		{
+			
+		},
+		error : function(e) {
+			//alert("ERROR: addToCompare()", e);
+			display(e);
+		}
+	});
+}
+
 function checkboxAny(flag,clazz)
 {
 	/* flag - boolean */

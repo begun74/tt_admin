@@ -230,6 +230,12 @@ public class Tail implements  IModel {
 		
 		return cSize+cDN;
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Остаток "+id;
+	}
 	
 	
 	

@@ -202,6 +202,10 @@
 								        				</div>
 							        				</div>
 							        				
+													<div id="MA_loadNomenclGroupRoot" class="form-message correct monitorProgress">									        
+													</div>
+							        				
+							        				
 							         <input type="hidden" name ="act" id ="act" value="6"/>
 						</form:form>
 				</div>
