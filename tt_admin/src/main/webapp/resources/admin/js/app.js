@@ -17,9 +17,12 @@ var Monitor = {
 					contentType: 'application/json; charset=UTF-8',
 					success : function(data) 
 					{
+						
 						if(data.length > 0) {
 							$("#"+id +".monitorProgress").show();
-							$("#"+id +".monitorProgress").text(""+data);
+							for (i=0;i<data.length;i++) 
+								$("#"+id +".monitorProgress").text(""+data[i]+"<br/>");
+							//$("#"+id +".monitorProgress").text(""+data);
 						}
 						else
 							$("#"+id +".monitorProgress").hide();
@@ -38,18 +41,18 @@ var Monitor = {
 				$.ajax({
 					type : "GET",
 					url : "monitorErrors",
-					//timeout : 10000,
+					timeout : 10000,
 					data : JSON.stringify(data),
 					contentType: 'application/json; charset=UTF-8',
 					success : function(data) 
 					{
+						
 						if(data.length > 0) {
 							$(".monitorErrors").show();
-							
-							$(".monitorErrors").text(""+data);
+							for (i=0;i<data.length;i++) 
+								$(".monitorErrors").append(""+data[i]+"<br/>");
 						} else
 							$(".monitorErrors").hide();
-						//alert("'"+data+"'");
 					},
 					error : function(e) {
 						//$("#"+id +".monitorProgress").hide();

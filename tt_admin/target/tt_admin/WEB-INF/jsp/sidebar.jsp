@@ -36,7 +36,8 @@
           	</ul>
           </li>
 
-		<li><a href="${pageContext.request.contextPath}/?logout" >Выход</a></li>
+		<!-- li><button onclick="window.location.href = '${pageContext.request.contextPath}/admin?logout' ">Выход</button></li -->
+		<li><a href="" onclick="window.location.href = '${pageContext.request.contextPath}/admin?logout'">Выход</a></li>
         </ul>
         <!-- /.mainmenu -->
 

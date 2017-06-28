@@ -50,8 +50,6 @@ import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-//@Transactional(readOnly = true)
-
 public class FileUpload {
 	
 	
@@ -118,7 +116,7 @@ public class FileUpload {
 							hmDProv.put(dP.getCode(),dP);
 						
 						collection = ReadExcelFile.processFile(file,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
-						hmPollPaths = ReadExcelFile.getHmPollPaths(); //Список файлов на загрузк
+						hmPollPaths = ReadExcelFile.getHmPollPaths(); //Список файлов на загрузку
 
 					}
 

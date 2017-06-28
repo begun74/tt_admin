@@ -141,13 +141,13 @@ public class AdminSessionBean  implements Serializable {
 
 
 
-
+	/*
 	public  List<String> getTailErrorList(int sizeErrList) {
 		 sizeErrList++;
 		return  errorList.size() > sizeErrList-1?errorList.subList(errorList.size()-sizeErrList, errorList.size()-1):errorList;
 		
 	}
-	
+	*/
 	public List<String> getErrorList() {
 		
 		return  errorList;
@@ -159,7 +159,7 @@ public class AdminSessionBean  implements Serializable {
 
 	
 	public void addError(String error) {
-		getErrorList().clear();
+		//getErrorList().clear();
 		getErrorList().add(error);
 	}
 

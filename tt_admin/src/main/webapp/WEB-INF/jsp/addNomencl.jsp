@@ -102,7 +102,10 @@
           
             <div id="tabs-1">  
    		            <!-- Error form message -->            
-   		            <div class="form-message error monitorErrors"></div>
+   		            <div class="form-message error ">
+   		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 50px">
+   		            	</div>
+   		            </div>
             
               	<div class="form-cols">
 				    		<div class="col1">
@@ -188,7 +191,10 @@
 
             <div id="tabs-2">
    		            <!-- Error form message -->            
-   		           <div class="form-message error monitorErrors" ></div>
+   		            <div class="form-message error ">
+   		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 50px">
+   		            	</div>
+   		            </div>
             		
 					<div class="form-cols">
 	   				<div class="col1">            

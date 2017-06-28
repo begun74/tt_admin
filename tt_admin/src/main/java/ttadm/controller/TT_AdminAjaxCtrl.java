@@ -85,16 +85,16 @@ public class TT_AdminAjaxCtrl {
 			
 			switch (id) {
 				case "MA_loadProvider":
-					result = adminSessionBean.getHmLog_Load(new MA_loadProvider()).lastEntry().getValue();
+					result = adminSessionBean.getHmLog_Load(new MA_loadProvider()).entrySet().toString();
 				break;
 				case "MA_loadNomencl":
-					result = adminSessionBean.getHmLog_Load(new MA_loadNomencl()).lastEntry().getValue();
+					result = adminSessionBean.getHmLog_Load(new MA_loadNomencl()).entrySet().toString();
 				break;
 				case "MA_loadNomenclGroup":
-					result = adminSessionBean.getHmLog_Load(new MA_loadNomenclGroup()).lastEntry().getValue();
+					result = adminSessionBean.getHmLog_Load(new MA_loadNomenclGroup()).entrySet().toString();
 				break;
 				case "MA_loadNomenclGroupRoot":
-					result = adminSessionBean.getHmLog_Load(new MA_loadNomenclGroupRoot()).lastEntry().getValue();
+					result = adminSessionBean.getHmLog_Load(new MA_loadNomenclGroupRoot()).entrySet().toString();
 				break;
 				
 			}
@@ -118,7 +118,7 @@ public class TT_AdminAjaxCtrl {
  		if(httpSession.isNew() || adminSessionBean == null) 
 			return new ResponseEntity<List<String>>(result,HttpStatus.FORBIDDEN);
  		
- 		result = adminSessionBean.getTailErrorList(10);
+ 		result = adminSessionBean.getErrorList();
 
 		return new ResponseEntity<List<String>>(result,HttpStatus.OK);
 
