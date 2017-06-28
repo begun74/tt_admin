@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import ttadm.modelattribute.MA_loadNomenclGroupRoot;
 import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
 import ttadm.model.DirNomenclGroup;
+import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
 import ttadm.modelattribute.MA_loadNomencl;
@@ -38,7 +40,7 @@ import ttadm.util.ProcessingFiles;
 @Controller
 @Scope("request")
 @SessionAttributes("adminCtrl")
-@RequestMapping(value = {"/"} , method = RequestMethod.GET)
+@RequestMapping(value = {"/","/admin"} , method = RequestMethod.GET)
 public class AdminCtrl {
 	
 	@Autowired
@@ -253,6 +255,47 @@ public class AdminCtrl {
 		
 		return model;
 	}	
+	
+	
+	@RequestMapping(value = "addFileNomenclGroupRoot" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processFileNomenclGroupRoot( @ModelAttribute  MultipartFile file,
+										@Valid MA_loadNomenclGroupRoot mA_loadNomenclGroupRoot ,
+										BindingResult result,
+										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act) 
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		if(result.hasErrors())
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return model;
+		}
+		
+		
+		if(mA_loadNomenclGroupRoot.isSave())
+		{
+			try {
+				appBean.addToMapStore(mA_loadNomenclGroupRoot);
+				adminSessBean.setmA_loadNomenclGroupRoot(mA_loadNomenclGroupRoot);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException dve) 
+			{
+				dve.printStackTrace();
+				adminSessBean.getErrorList().add("Настройки уже существуют! ");
+			}
+			catch(Exception ioe)
+			{
+				ioe.printStackTrace();
+				adminSessBean.getErrorList().add("Параметры не записаны! ");
+			}
+		}
+
+		adminSessBean.setmA_loadNomenclGroupRoot(mA_loadNomenclGroupRoot);
+		processingFiles.loadFile(new DirNomenclGroupRoot(), file, adminSessBean.getmA_loadNomenclGroupRoot());
+		
+		return model;
+	}	
+		
 
 	@PostConstruct
 	void init(){

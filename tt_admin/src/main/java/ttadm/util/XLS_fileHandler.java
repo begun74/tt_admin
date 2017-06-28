@@ -146,6 +146,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 
 			TreeSet<IModel> IModelSet = new TreeSet<IModel>();
 			IModelSet.addAll((List<IModel>) fileUpload.process(IModel, file, IMAmodel));
+			System.out.println("HmPollPaths - "+fileUpload.getHmPollPaths().size() );
 
 			Thread.currentThread().sleep(2000);
 			
@@ -153,7 +154,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 			for(IModel imodel: IModelSet) 
 			{
 				try {
-					ttadmService.saveIModel(imodel);
+					//ttadmService.saveIModel(imodel);
 					rec++;
 					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Processing "+rec+" ...");
 					
@@ -167,7 +168,26 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 				
 			}
 			
+			adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" records successfully processed!");
+			Thread.currentThread().sleep(2000);
 			
+			adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Download files ...");
+			Thread.currentThread().sleep(2000);
+			
+			rec=1;
+
+			for(Long code: fileUpload.getHmPollPaths().keySet())
+			{
+				try {
+					fileUpload.downloadPhoto(code, fileUpload.getHmPollPaths().get(code));
+					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Download "+fileUpload.getHmPollPaths().get(code)+"  ...");
+				}
+				catch(Exception exc) {
+					adminSessBean.addError(exc.getMessage());
+				}
+			}
+			
+			adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Download complete!");
 
 		}
 		catch (java.lang.NumberFormatException nfe) {
@@ -181,7 +201,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 					adminSessBean.addError("Ошибка загрузки файла!");
 		}
 
-		adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" records successfully processed!");
+		
 		
 		return rec;
 	}

@@ -105,12 +105,6 @@ public class ProcessingFiles implements Serializable {
 		for(Long code : hmPhotoFile.keySet())
 		{
 			future = photoFileService.submit(new FileHandler(code, hmPhotoFile.get(code)));
-			try {
-				future.get();
-			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		if(future.isDone())

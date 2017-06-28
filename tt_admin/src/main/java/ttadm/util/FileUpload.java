@@ -50,7 +50,7 @@ import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-@Transactional(readOnly = true)
+//@Transactional(readOnly = true)
 
 public class FileUpload {
 	
@@ -58,6 +58,9 @@ public class FileUpload {
 	
 	@Autowired
 	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
+	
+	@Autowired
+	public ReadExcelFile ReadExcelFile;
 
 	private static final String[][] ALLOWED_FILE_TYPES_PICS = {{"image/jpeg","jpeg"}, {"image/jpg","jpg"}, {"image/gif","gif"}};
 	private static final String[][] ALLOWED_FILE_TYPES_XLS = {{"application/vnd.ms-excel","xls"},{"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","xlsx"}};
@@ -66,7 +69,9 @@ public class FileUpload {
     //private static final String UPLOAD_FILE_PATH = "UPLOAD_FILE_PATH";
     private static File TEMP_FILE_PATH = null;
 
-    
+
+	private HashMap<Long,List<String>> hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+
     
     @Resource
     private Environment env;
@@ -113,6 +118,8 @@ public class FileUpload {
 							hmDProv.put(dP.getCode(),dP);
 						
 						collection = ReadExcelFile.processFile(file,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
+						hmPollPaths = ReadExcelFile.getHmPollPaths(); //Список файлов на загрузк
+
 					}
 
 					
@@ -160,7 +167,7 @@ public class FileUpload {
 	}
 
     
-	public void downloadPhoto (long code, List<String> files) 
+	public void downloadPhoto (long code, List<String> files) throws Exception
 	{
 		try {
 			
@@ -243,6 +250,7 @@ public class FileUpload {
 							System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 							fse.printStackTrace(System.err);
 							System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
+							throw new Exception("ERROR: FileUpload.downloadPhoto  not found - "+file);
 						}
 				}
 
@@ -250,18 +258,21 @@ public class FileUpload {
 			catch(java.io.FileNotFoundException fnf)
 			{
 				fnf.getMessage();
+				throw new Exception("ERROR: FileUpload.downloadPhoto!");
 			}
 			catch(NullPointerException e) {
 				System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 				 //System.out.println("Catalog not found - "+files);
 				 e.printStackTrace(System.err);
 				System.err.println("========= ERROR: FileUpload.downloadPhoto ======= \n\n");
+				throw new Exception("ERROR: FileUpload.downloadPhoto!");
 			}
 			catch(Exception e) {
 				System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 				 //System.out.println("pathToShare - "+files);
 				 e.printStackTrace(System.err);
 				System.err.println("========= ERROR: FileUpload.downloadPhoto ======= \n\n");
+				throw new Exception(e.getMessage());
 			}
 
 	}
@@ -543,5 +554,13 @@ public class FileUpload {
 	        return false;
 	    }
 	}
+
+
+	public HashMap<Long, List<String>> getHmPollPaths() {
+		return hmPollPaths;
+	}
+	
+	
+	
 	
 }

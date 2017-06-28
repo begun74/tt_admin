@@ -36,8 +36,9 @@ import ttadm.modelattribute.MA_loadTail;
 @Service
 public class ReadExcelFile {
 	
-	//@Autowired
-	//private static ProcessingFiles processFiles;
+	
+	static HashMap<Long,List<String>> hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+	
 		
     private static Workbook getWorkbook(File tmpFile) throws IOException {
         
@@ -116,7 +117,7 @@ public class ReadExcelFile {
         DataFormatter df = new DataFormatter();
 		
         //HashMap<Long,String> hmPollPaths = new HashMap<Long,String>(); //Список файлов на загрузку
-        HashMap<Long,List<String>> hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+        
 		
 		int row_ = 0;
         while(rowIterator.hasNext() )
@@ -286,4 +287,10 @@ public class ReadExcelFile {
 		return lNomencls;
 	}
 
+	public static HashMap<Long, List<String>> getHmPollPaths() {
+		return hmPollPaths;
+	}
+
+	
+	
 }
