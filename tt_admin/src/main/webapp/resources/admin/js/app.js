@@ -1,5 +1,5 @@
 var errAjax = 'Error connect to AJAX server!';
-
+var monitoring;
 
 var Monitor = {
 		result: "",
@@ -18,15 +18,21 @@ var Monitor = {
 					success : function(data) 
 					{
 						
+						$("#"+id +".monitorProgress").html("");
 						if(data.length > 0) {
 							$("#"+id +".monitorProgress").show();
 							for (i=0;i<data.length;i++) 
-								$("#"+id +".monitorProgress").text(""+data[i]+"<br/>");
+								$("#"+id +".monitorProgress").append(""+data[i]+"<br/>");
 							//$("#"+id +".monitorProgress").text(""+data);
+							
 						}
 						else
 							$("#"+id +".monitorProgress").hide();
-						//alert("'"+data+"'");
+						
+						//var parentDiv = $("#"+id +".monitorProgress"); 
+						//parentDiv.scrollTop($("#"+id +".monitorProgress").height()) ;
+						//$("#"+id +".monitorProgress").scrollTop(5000);
+
 					},
 					error : function(e) {
 						$("#"+id +".monitorProgress").hide();
@@ -46,13 +52,16 @@ var Monitor = {
 					contentType: 'application/json; charset=UTF-8',
 					success : function(data) 
 					{
-						
+						$(".monitorErrors").html("");
 						if(data.length > 0) {
 							$(".monitorErrors").show();
 							for (i=0;i<data.length;i++) 
 								$(".monitorErrors").append(""+data[i]+"<br/>");
 						} else
 							$(".monitorErrors").hide();
+
+						//$('.monitorErrors').scrollTop(500);
+					
 					},
 					error : function(e) {
 						//$("#"+id +".monitorProgress").hide();
@@ -70,9 +79,10 @@ $(document).ready(function(){
 //========== Мониторинг Загрузки файлов ==========================	
     $(".monitorProgress").each(function() {
     	var id = this.id;
-    	setInterval( function() { 
+    	monitoring = setInterval( function() { 
 			 Monitor.progress(id);
 			 Monitor.errors();
+			 //$('.monitors').scrollTop(5000);
 		} , 1000);
 			
 	});

@@ -67,10 +67,10 @@ public class AdminSessionBean  implements Serializable {
 	private List<String> successList = new ArrayList<String>();
 	private List<Tail> tempListTails = new ArrayList<Tail>();
 	
-	private NavigableMap<Long,String> hmLog_LoadMA_loadProvider = new TreeMap<Long,String>();
-	private NavigableMap<Long,String> hmLog_LoadMA_loadNomencl = new TreeMap<Long,String>();
-	private NavigableMap<Long,String> hmLog_LoadMA_loadNomenclGroup = new TreeMap<Long,String>();
-	private NavigableMap<Long,String> hmLog_LoadMA_loadNomenclGroupRoot = new TreeMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadProvider = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomencl = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomenclGroup = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomenclGroupRoot = new LinkedHashMap<Long,String>();
 
 
 	public List<Tail> getTempListTails() {
@@ -182,7 +182,7 @@ public class AdminSessionBean  implements Serializable {
 	}
 
 
-	public NavigableMap<Long, String> getHmLog_Load(IMAmodel IMAmodel) {
+	public LinkedHashMap<Long, String> getHmLog_Load(IMAmodel IMAmodel) {
 		if(IMAmodel instanceof MA_loadProvider)
 			return hmLog_LoadMA_loadProvider;
 		else if (IMAmodel instanceof MA_loadNomencl)

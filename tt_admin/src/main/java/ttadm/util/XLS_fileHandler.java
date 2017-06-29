@@ -138,7 +138,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 		adminSessBean.getHmLog_Load(IMAmodel).clear();
 		
 		
-		adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Parsing "+file.getName() +" file.");
+		adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Парсим файл "+file.getName() +".");
 		
 		
 		int rec = 0;
@@ -154,9 +154,9 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 			for(IModel imodel: IModelSet) 
 			{
 				try {
-					//ttadmService.saveIModel(imodel);
+					ttadmService.saveIModel(imodel);
 					rec++;
-					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Processing "+rec+" ...");
+					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Обработана "+rec+" запись ...");
 					
 					//Thread.currentThread().sleep(100);
 
@@ -168,27 +168,28 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 				
 			}
 			
-			adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" records successfully processed!");
+			adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" успешно обработано!");
 			Thread.currentThread().sleep(2000);
 			
-			adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Download files ...");
-			Thread.currentThread().sleep(2000);
 			
-			rec=1;
-
-			for(Long code: fileUpload.getHmPollPaths().keySet())
+			if(fileUpload.getHmPollPaths().keySet().size() >0) 
 			{
-				try {
-					fileUpload.downloadPhoto(code, fileUpload.getHmPollPaths().get(code));
-					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Download "+fileUpload.getHmPollPaths().get(code)+"  ...");
+				rec=1;
+				adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Грузим картинки ...");
+				Thread.currentThread().sleep(2000);
+	
+				for(Long code: fileUpload.getHmPollPaths().keySet())
+				{
+					try {
+						fileUpload.downloadPhoto(code, fileUpload.getHmPollPaths().get(code));
+						adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Загружена "+fileUpload.getHmPollPaths().get(code)+"  ...");
+					}
+					catch(Exception exc) {
+						adminSessBean.addError(exc.getMessage());
+					}
 				}
-				catch(Exception exc) {
-					adminSessBean.addError(exc.getMessage());
-				}
+				adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Загрузка картинок закончена!");
 			}
-			
-			adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Download complete!");
-
 		}
 		catch (java.lang.NumberFormatException nfe) {
 			nfe.printStackTrace();

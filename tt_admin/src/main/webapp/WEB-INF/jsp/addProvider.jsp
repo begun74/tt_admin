@@ -101,7 +101,10 @@
           
             <div id="tabs-1">  
    		            <!-- Error form message -->            
-		            <div class="form-message error monitorErrors"  onclick="clearErrors()"></div>
+   		            <div class="form-message error ">
+   		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 70px">
+   		            	</div>
+   		            </div>
               	<div class="form-cols">
 				    		<div class="col1">
 							  	<form:form id="addProviderForm" class="formBox" role="form"
@@ -139,8 +142,14 @@
 
             <div id="tabs-2">
    		            <!-- Error form message -->            
-   		            <div class="form-message error monitorErrors"  onclick="clearErrors()"></div>
+   		            <div class="form-message error" >
+   		            	<div class="monitors monitorErrors" ></div>
+   		            </div>
             		
+					<div class="form-message correct" >			
+   		            	<div  id="MA_loadProvider" class="monitors monitorProgress" ></div>
+   					</div>
+	
 					<div class="form-cols">
 	   				<div class="col1">            
 
@@ -198,8 +207,6 @@
 								        				</div>
 							        				</div>
 
-													<div id="MA_loadProvider" class="form-message correct monitorProgress">									        
-													</div>
 
 		
 							        				

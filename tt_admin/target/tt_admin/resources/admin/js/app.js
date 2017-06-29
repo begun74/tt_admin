@@ -1,5 +1,5 @@
 var errAjax = 'Error connect to AJAX server!';
-
+var monitoring;
 
 var Monitor = {
 		result: "",
@@ -17,13 +17,22 @@ var Monitor = {
 					contentType: 'application/json; charset=UTF-8',
 					success : function(data) 
 					{
+						
+						$("#"+id +".monitorProgress").html("");
 						if(data.length > 0) {
 							$("#"+id +".monitorProgress").show();
-							$("#"+id +".monitorProgress").text(""+data);
+							for (i=0;i<data.length;i++) 
+								$("#"+id +".monitorProgress").append(""+data[i]+"<br/>");
+							//$("#"+id +".monitorProgress").text(""+data);
+							
 						}
 						else
 							$("#"+id +".monitorProgress").hide();
-						//alert("'"+data+"'");
+						
+						//var parentDiv = $("#"+id +".monitorProgress"); 
+						//parentDiv.scrollTop($("#"+id +".monitorProgress").height()) ;
+						//$("#"+id +".monitorProgress").scrollTop(5000);
+
 					},
 					error : function(e) {
 						$("#"+id +".monitorProgress").hide();
@@ -38,18 +47,21 @@ var Monitor = {
 				$.ajax({
 					type : "GET",
 					url : "monitorErrors",
-					//timeout : 10000,
+					timeout : 10000,
 					data : JSON.stringify(data),
 					contentType: 'application/json; charset=UTF-8',
 					success : function(data) 
 					{
+						$(".monitorErrors").html("");
 						if(data.length > 0) {
 							$(".monitorErrors").show();
-							
-							$(".monitorErrors").text(""+data);
+							for (i=0;i<data.length;i++) 
+								$(".monitorErrors").append(""+data[i]+"<br/>");
 						} else
 							$(".monitorErrors").hide();
-						//alert("'"+data+"'");
+
+						//$('.monitorErrors').scrollTop(500);
+					
 					},
 					error : function(e) {
 						//$("#"+id +".monitorProgress").hide();
@@ -67,9 +79,10 @@ $(document).ready(function(){
 //========== Мониторинг Загрузки файлов ==========================	
     $(".monitorProgress").each(function() {
     	var id = this.id;
-    	setInterval( function() { 
+    	monitoring = setInterval( function() { 
 			 Monitor.progress(id);
 			 Monitor.errors();
+			 //$('.monitors').scrollTop(5000);
 		} , 1000);
 			
 	});

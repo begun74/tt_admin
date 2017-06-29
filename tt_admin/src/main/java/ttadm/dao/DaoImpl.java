@@ -232,7 +232,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public Store getStoreBySerVerUID(Long serialVersionUID) {
 		// TODO Auto-generated method stub
-		return null;
+		return (Store) getSession().createQuery("from Store s where s.serialVersionUID = :serialVersionUID").setParameter("serialVersionUID", serialVersionUID).uniqueResult();
 	}
 
 	@Override
@@ -280,7 +280,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public Object getObject(Class clazz, Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSession().get(clazz, id);
 	}
 
 	@Override
@@ -347,6 +347,7 @@ public class DaoImpl implements Dao {
 		else
 				getSession().saveOrUpdate(imodel);
 	}
+
 
 
 }

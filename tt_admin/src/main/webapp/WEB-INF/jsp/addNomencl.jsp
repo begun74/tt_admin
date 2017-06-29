@@ -101,12 +101,12 @@
           	<div class="box-content">    
           
             <div id="tabs-1">  
-   		            <!-- Error form message -->            
+   		            <!-- Error form message             
    		            <div class="form-message error ">
    		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 50px">
    		            	</div>
    		            </div>
-            
+            		-->
               	<div class="form-cols">
 				    		<div class="col1">
 							  	<form:form id="addNomenclForm" class="formBox" role="form"
@@ -192,9 +192,13 @@
             <div id="tabs-2">
    		            <!-- Error form message -->            
    		            <div class="form-message error ">
-   		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 50px">
+   		            	<div class="monitors monitorErrors" >
    		            	</div>
    		            </div>
+					<div class="form-message correct">				
+   		            	<div  id="MA_loadNomencl" class="monitors monitorProgress" >
+						</div>
+					</div>
             		
 					<div class="form-cols">
 	   				<div class="col1">            
@@ -308,8 +312,6 @@
 								        				</div>
 							        				</div>
 
-													<div id="MA_loadNomencl" class="form-message correct monitorProgress">									        
-													</div>
 							        				
 													        				
 							         <input type="hidden" name ="act" id ="act" value="2"/>

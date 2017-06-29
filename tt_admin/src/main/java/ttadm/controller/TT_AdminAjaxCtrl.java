@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -72,29 +73,29 @@ public class TT_AdminAjaxCtrl {
 	
 	@ResponseBody
 	@RequestMapping(value = "/progress{id}", method = RequestMethod.GET)
-	public ResponseEntity<String>  progress(HttpSession httpSession, HttpServletResponse response , @RequestParam(value = "id",   required = false) String id) throws IOException 
+	public ResponseEntity<List<String>>  progress(HttpSession httpSession, HttpServletResponse response , @RequestParam(value = "id",   required = false) String id) throws IOException 
 	{
-		String result = "";
+		List<String> result = new ArrayList<String>();
 		AdminSessionBean adminSessionBean = (AdminSessionBean)httpSession.getAttribute("adminSessionBean");
 		
  		if(httpSession.isNew() || adminSessionBean == null) 
-			return new ResponseEntity<String>("",HttpStatus.FORBIDDEN);
+			return new ResponseEntity<List<String>>(result,HttpStatus.FORBIDDEN);
 		
 		
 		try {
 			
 			switch (id) {
 				case "MA_loadProvider":
-					result = adminSessionBean.getHmLog_Load(new MA_loadProvider()).entrySet().toString();
+					result.addAll(adminSessionBean.getHmLog_Load(new MA_loadProvider()).values().stream().collect(Collectors.toList()));
 				break;
 				case "MA_loadNomencl":
-					result = adminSessionBean.getHmLog_Load(new MA_loadNomencl()).entrySet().toString();
+					result.addAll(adminSessionBean.getHmLog_Load(new MA_loadNomencl()).values().stream().collect(Collectors.toList()));
 				break;
 				case "MA_loadNomenclGroup":
-					result = adminSessionBean.getHmLog_Load(new MA_loadNomenclGroup()).entrySet().toString();
+					result.addAll(adminSessionBean.getHmLog_Load(new MA_loadNomenclGroup()).values().stream().collect(Collectors.toList()));
 				break;
 				case "MA_loadNomenclGroupRoot":
-					result = adminSessionBean.getHmLog_Load(new MA_loadNomenclGroupRoot()).entrySet().toString();
+					result.addAll(adminSessionBean.getHmLog_Load(new MA_loadNomenclGroupRoot()).values().stream().collect(Collectors.toList()));
 				break;
 				
 			}
@@ -104,7 +105,7 @@ public class TT_AdminAjaxCtrl {
 			response.setStatus(400);
 		}
 		
-		return new ResponseEntity<String>(result,HttpStatus.OK);
+		return new ResponseEntity<List<String>>(result,HttpStatus.OK);
 
 	}
 	
@@ -112,7 +113,7 @@ public class TT_AdminAjaxCtrl {
 	@RequestMapping(value = "/monitorErrors", method = RequestMethod.GET)
 	public ResponseEntity<List<String>>  monitorErrors(HttpSession httpSession, HttpServletResponse response) throws IOException 
 	{
-		List<String> result = new ArrayList<String>(0);
+		List<String> result = new ArrayList<String>();
 		AdminSessionBean adminSessionBean = (AdminSessionBean)httpSession.getAttribute("adminSessionBean");
 		
  		if(httpSession.isNew() || adminSessionBean == null) 

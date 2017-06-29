@@ -93,9 +93,11 @@ public class AppBean implements Serializable {
 	public void addToMapStore(IMAmodel IMAmodel) throws Exception 
 	{
 			Store s = ttadmService.getStoreBySerVerUID(IMAmodel.getSerialversionuid()) == null? new Store() : ttadmService.getStoreBySerVerUID(IMAmodel.getSerialversionuid());
+			//Store s = new Store();
 			s.setSerialVersionUID(IMAmodel.getSerialversionuid());
 			s.setBytearray(objectToBytes(IMAmodel));
 			
+			//ttadmService.getStore(s)
 			ttadmService.addStore(s);
 			
 			mapStore.put(s.getSerialVersionUID(), bytesToObject(s.getBytearray()));

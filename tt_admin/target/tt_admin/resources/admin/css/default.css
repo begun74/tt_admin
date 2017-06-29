@@ -390,6 +390,10 @@ a:hover.ico   { background-position: 0 0; }
     bottom: 0;
 }
 
-
+.monitors {
+	overflow-x: hidden; 
+	overflow-y: scroll; 
+	height: 70px;
+}
 
 

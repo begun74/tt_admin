@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -216,7 +217,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public Store getStoreBySerVerUID(Long serialVersionUID) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getStoreBySerVerUID(serialVersionUID);
 	}
 
 	@Override
@@ -264,7 +265,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public Object getObject(Class clazz, Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getObject(clazz, id);
 	}
 
 	@Override

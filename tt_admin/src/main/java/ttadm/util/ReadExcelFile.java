@@ -116,10 +116,10 @@ public class ReadExcelFile {
         Iterator<Row> rowIterator = firstSheet.iterator();
         DataFormatter df = new DataFormatter();
 		
-        //HashMap<Long,String> hmPollPaths = new HashMap<Long,String>(); //Список файлов на загрузку
         
-		
-		int row_ = 0;
+        hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+
+        int row_ = 0;
         while(rowIterator.hasNext() )
         {
         	Row tmp = rowIterator.next();
@@ -145,7 +145,6 @@ public class ReadExcelFile {
         			String path = df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_pathToImage()-1)).trim();
         			//System.out.println(path);
 
-
         			if(path.length() >0)
         			{
         				
@@ -161,7 +160,6 @@ public class ReadExcelFile {
         				hmPollPaths.put(dirNomenclature.getCode(),files);
         				//System.out.println(files);
         			}
-        			
         			
         			
 		        	lNomencls.add(dirNomenclature);

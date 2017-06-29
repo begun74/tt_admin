@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 
 import ttadm.model.*;
 import ttadm.modelattribute.MA_search;
@@ -53,7 +54,6 @@ public interface Dao {
 
 	public List<Store> getStoreList();
 	public void addStore(Store store);
-	//public Store getStore(long id);
 	public Store getStoreBySerVerUID(Long serialVersionUID);
 	
 	
