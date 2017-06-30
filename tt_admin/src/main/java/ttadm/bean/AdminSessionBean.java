@@ -71,6 +71,7 @@ public class AdminSessionBean  implements Serializable {
 	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomencl = new LinkedHashMap<Long,String>();
 	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomenclGroup = new LinkedHashMap<Long,String>();
 	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomenclGroupRoot = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadTail = new LinkedHashMap<Long,String>();
 
 
 	public List<Tail> getTempListTails() {
@@ -177,8 +178,10 @@ public class AdminSessionBean  implements Serializable {
 			hmLog_LoadMA_loadNomencl.put(timestamp, message);
 		else if (IMAmodel instanceof MA_loadNomenclGroup)
 			hmLog_LoadMA_loadNomenclGroup.put(timestamp, message);
-		else
+		else if(IMAmodel instanceof MA_loadNomenclGroupRoot)
 			hmLog_LoadMA_loadNomenclGroupRoot.put(timestamp, message);
+		else
+			hmLog_LoadMA_loadTail.put(timestamp, message);
 	}
 
 
@@ -189,8 +192,10 @@ public class AdminSessionBean  implements Serializable {
 			return hmLog_LoadMA_loadNomencl;
 		else if (IMAmodel instanceof MA_loadNomenclGroup)
 			return hmLog_LoadMA_loadNomenclGroup;
-		else 
+		else if(IMAmodel instanceof MA_loadNomenclGroupRoot) 
 			return hmLog_LoadMA_loadNomenclGroupRoot;
+		else
+			return hmLog_LoadMA_loadTail;
 	}
 
 	public void clearHmLog_Load(IMAmodel IMAmodel) 

@@ -25,13 +25,14 @@ import org.springframework.web.multipart.MultipartFile;
 import ttadm.bean.AdminSessionBean;
 import ttadm.model.DirProvider;
 import ttadm.model.IModel;
+import ttadm.model.Tail;
 import ttadm.modelattribute.IMAmodel;
 import ttadm.modelattribute.MA_loadProvider;
 import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-public class XLS_fileHandler  implements Callable<Integer>, Serializable {
+public class XLS_fileHandler  implements Runnable, AutoCloseable {
 
 	/**
 	 * 
@@ -58,17 +59,24 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 	private IMAmodel IMAmodel;
 	private IModel IModel;
 	
+	private final Thread currThread;
+	
 	@PostConstruct
 	void init() {
 		System.out.println("XLS_fileHandler - @PostConstruct");
 	}
 	
 	
+	@PreDestroy
+	void destr() {
+		System.out.println("XLS_fileHandler - @PreDestroy");
+	}
 	
 	
 	
 	public XLS_fileHandler(MultipartFile file)  
 	{
+		currThread = new Thread(this,"XLS_fileHandler(MultipartFile file)");
 		if (!file.isEmpty())
 		{
 			String contentType = file.getContentType().toString().toLowerCase();
@@ -95,7 +103,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 	
 	public XLS_fileHandler() 
 	{
-
+		currThread = new Thread(this,"XLS_fileHandler");
 	}
 
 	public void injectAdminSessBean(AdminSessionBean adminSessBean)
@@ -133,7 +141,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 	}
 	
 	@Override
-	public Integer call() throws Exception {
+	public  void run() {
 		// TODO Auto-generated method stub
 		adminSessBean.getHmLog_Load(IMAmodel).clear();
 		
@@ -143,53 +151,63 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 		
 		int rec = 0;
 		try {
-
 			TreeSet<IModel> IModelSet = new TreeSet<IModel>();
-			IModelSet.addAll((List<IModel>) fileUpload.process(IModel, file, IMAmodel));
-			System.out.println("HmPollPaths - "+fileUpload.getHmPollPaths().size() );
 
-			Thread.currentThread().sleep(2000);
-			
-			
-			for(IModel imodel: IModelSet) 
+			if(IModel instanceof Tail)
 			{
-				try {
-					ttadmService.saveIModel(imodel);
-					rec++;
-					adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Обработана "+rec+" запись ...");
+				adminSessBean.setTempListTails((List<Tail>) fileUpload.process(IModel, file, IMAmodel));
+				System.out.println("adminSessBean.getTempListTails() - "+adminSessBean.getTempListTails().size() );
+			}
+			else
+			{
+			
+					IModelSet.addAll((List<IModel>) fileUpload.process(IModel, file, IMAmodel));
+					System.out.println("HmPollPaths - "+fileUpload.getHmPollPaths().size() );
+		
+					Thread.currentThread().sleep(2000);
 					
-					//Thread.currentThread().sleep(100);
-
-				}
-				catch(org.springframework.dao.DataIntegrityViolationException dve) {
-					//dve.printStackTrace(); 
-					adminSessBean.getErrorList().add(imodel.getName()+" уже существует! ");
-				}
-				
-			}
-			
-			adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" успешно обработано!");
-			Thread.currentThread().sleep(2000);
-			
-			
-			if(fileUpload.getHmPollPaths().keySet().size() >0) 
-			{
-				rec=1;
-				adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Грузим картинки ...");
-				Thread.currentThread().sleep(2000);
-	
-				for(Long code: fileUpload.getHmPollPaths().keySet())
-				{
-					try {
-						fileUpload.downloadPhoto(code, fileUpload.getHmPollPaths().get(code));
-						adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Загружена "+fileUpload.getHmPollPaths().get(code)+"  ...");
+					
+					for(IModel imodel: IModelSet) 
+					{
+						try {
+							ttadmService.saveIModel(imodel);
+							rec++;
+							adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Обработана "+rec+" запись ...");
+							
+							//Thread.currentThread().sleep(100);
+		
+						}
+						catch(org.springframework.dao.DataIntegrityViolationException dve) {
+							//dve.printStackTrace(); 
+							adminSessBean.getErrorList().add(imodel.getName()+" уже существует! ");
+						}
+						
 					}
-					catch(Exception exc) {
-						adminSessBean.addError(exc.getMessage());
+					
+					adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), rec+" успешно обработано!");
+					Thread.currentThread().sleep(2000);
+					
+					
+					if(fileUpload.getHmPollPaths().keySet().size() >0) 
+					{
+						rec=1;
+						adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Грузим картинки ...");
+						Thread.currentThread().sleep(2000);
+			
+						for(Long code: fileUpload.getHmPollPaths().keySet())
+						{
+							try {
+								fileUpload.downloadPhoto(code, fileUpload.getHmPollPaths().get(code));
+								adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Загружена "+fileUpload.getHmPollPaths().get(code)+"  ...");
+							}
+							catch(Exception exc) {
+								adminSessBean.addError(exc.getMessage());
+							}
+						}
+						adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Загрузка картинок закончена!");
 					}
-				}
-				adminSessBean.addToHmLog_Load(IMAmodel,System.currentTimeMillis(), "Загрузка картинок закончена!");
-			}
+			
+			}//else
 		}
 		catch (java.lang.NumberFormatException nfe) {
 			nfe.printStackTrace();
@@ -204,7 +222,7 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
 
 		
 		
-		return rec;
+		//return rec;
 	}
 	
 	
@@ -220,9 +238,13 @@ public class XLS_fileHandler  implements Callable<Integer>, Serializable {
     }
 
 
-	
-	@PreDestroy
-	void destr() {
-		System.out.println("XLS_fileHandler - @PreDestroy");
+	@Override
+	public void close() throws Exception {
+		// TODO Auto-generated method stub 
+		System.out.println(currThread +" - close()");
+		currThread.interrupt();
 	}
+
+
+	
 }

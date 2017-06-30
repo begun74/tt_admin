@@ -15,6 +15,8 @@ import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,15 +55,13 @@ public class ProcessingFiles implements Serializable {
 		System.out.println("ProcessFiles @PostConstruct ");
 	}
 
-	
-	
-	
+
 	public  void loadFile(IModel IModel,MultipartFile file, IMAmodel IMAmodel) 
 	{
 		
 		//System.out.println("adminCtrl - "+httpSession.getAttribute("adminCtrl"));
 		//System.out.println("adminSessionBean - " +httpSession.getAttribute("adminSessionBean"));
-		
+		//XLS_fileHandler xls_fileHandler = xls_fileHandler();
 		xls_fileHandler.loadXLS(IModel,file, IMAmodel);
 		xls_fileHandler.injectAdminSessBean((AdminSessionBean)httpSession.getAttribute("adminSessionBean"));
 		photoFileService.submit(xls_fileHandler);

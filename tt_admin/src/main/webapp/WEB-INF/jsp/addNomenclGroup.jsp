@@ -136,8 +136,17 @@
             </div>
 
             <div id="tabs-2">
-   		            <!-- Error form message -->            
-   		            <div id="MA_loadNomenclGroup" class="form-message error monitorErrors" ></div>
+            		
+   		            <!-- Monitoring -->            
+   		            <div class="form-message error ">
+   		            	<div class="monitors monitorErrors" >
+   		            	</div>
+   		            </div>
+					<div class="form-message correct">				
+   		            	<div  id="MA_loadNomenclGroup" class="monitors monitorProgress" >
+						</div>
+					</div>
+            		
             		
 					<div class="form-cols">
 	   				<div class="col1">            
@@ -202,9 +211,6 @@
 								        					<button type="submit" class="" onclick="if(file.value.length == 0) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
 								        				</div>
 							        				</div>
-							        				
-													<div id="MA_loadNomenclGroup" class="form-message correct monitorProgress">									        
-													</div>
 							        				
 							        				
 							         <input type="hidden" name ="act" id ="act" value="4"/>

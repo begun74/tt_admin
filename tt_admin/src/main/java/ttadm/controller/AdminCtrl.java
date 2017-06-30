@@ -1,6 +1,9 @@
 package ttadm.controller;
 
 
+import java.util.List;
+import java.util.TreeSet;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
@@ -28,9 +31,11 @@ import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
+import ttadm.model.Tail;
 import ttadm.modelattribute.MA_loadNomencl;
 import ttadm.modelattribute.MA_loadNomenclGroup;
 import ttadm.modelattribute.MA_loadProvider;
+import ttadm.modelattribute.MA_loadTail;
 import ttadm.service.TT_AdminServiceImpl;
 import ttadm.util.ProcessingFiles;
 
@@ -131,7 +136,7 @@ public class AdminCtrl {
 	}
 
 	
-	@RequestMapping(value = {"/admin/addFileProvider"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value = {"addFileProvider"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileProvidere( @ModelAttribute  MultipartFile file,
 										@Valid MA_loadProvider mA_loadProvider ,
 										BindingResult result,
@@ -175,7 +180,7 @@ public class AdminCtrl {
 	}
 	
 	
-	@RequestMapping(value = {"/admin/addFileNomencl"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value = {"addFileNomencl"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileNomencl( @ModelAttribute  MultipartFile file,
 										@Valid MA_loadNomencl mA_loadNomencl ,
 										BindingResult result,
@@ -216,7 +221,7 @@ public class AdminCtrl {
 	}	
 	
 	
-	@RequestMapping(value = {"/admin/addFileNomenclGroup"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value = {"addFileNomenclGroup"} , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileNomenclGroup( @ModelAttribute  MultipartFile file,
 										@Valid MA_loadNomenclGroup mA_loadNomenclGroup ,
 										BindingResult result,
@@ -257,6 +262,45 @@ public class AdminCtrl {
 	}	
 	
 	
+	@RequestMapping(value = "addTempFileTail" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processTempFileTail( @ModelAttribute  MultipartFile file,
+										@Valid MA_loadTail mA_loadTail ,
+										BindingResult result,
+										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act) 
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		if(result.hasErrors())
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return model;
+		}
+		
+		
+		if(mA_loadTail.isSave())
+		{
+			try {
+				appBean.addToMapStore(mA_loadTail);
+				adminSessBean.setmA_loadTail(mA_loadTail);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException dve) 
+			{
+				dve.printStackTrace();
+				adminSessBean.getErrorList().add("Настройки уже существуют! ");
+			}
+			catch(Exception ioe)
+			{
+				ioe.printStackTrace();
+				adminSessBean.getErrorList().add("Параметры не записаны! ");
+			}
+		}
+
+		adminSessBean.setmA_loadTail(mA_loadTail);
+		processingFiles.loadFile(new Tail(), file, adminSessBean.getmA_loadTail());
+		
+		return model;
+	}	
+		
 	@RequestMapping(value = "addFileNomenclGroupRoot" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileNomenclGroupRoot( @ModelAttribute  MultipartFile file,
 										@Valid MA_loadNomenclGroupRoot mA_loadNomenclGroupRoot ,
@@ -295,7 +339,6 @@ public class AdminCtrl {
 		
 		return model;
 	}	
-		
 
 	@PostConstruct
 	void init(){

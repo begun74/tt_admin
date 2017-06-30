@@ -1,6 +1,7 @@
 package ttadm.controller;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +28,15 @@ import ttadm.modelattribute.MA_loadProvider;
 
 @Controller
 @Scope("session")
-public class TT_AdminAjaxCtrl {
+public class TT_AdminAjaxCtrl implements Serializable{
 
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6173721887621931115L;
+
 	@ResponseBody
 	@RequestMapping(value = "/clearMonitorErrors", method = RequestMethod.GET)
 	public HttpStatus  clearMonitorErrors(HttpSession httpSession) 
