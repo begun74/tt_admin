@@ -190,7 +190,7 @@
             </div>
 
             <div id="tabs-2">
-   		            <!-- Error form message -->            
+   		            <!-- Monitoring -->            
    		            <div class="form-message error ">
    		            	<div class="monitors monitorErrors" >
    		            	</div>
