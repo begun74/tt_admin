@@ -55,6 +55,11 @@ public class Store {
 		this.bytearray = bytearray;
 	}
 
+	@Override
+	public String toString() {
+		return "Store [id=" + id + ", serialVersionUID = " + serialVersionUID + "]";
+	}
+
 	
 	
 

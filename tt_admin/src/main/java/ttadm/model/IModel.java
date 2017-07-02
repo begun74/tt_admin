@@ -8,5 +8,7 @@ public interface IModel extends Comparable<Object> , Serializable {
 	
 	public Long getId();
 	public void setId(Long id);
+	
+	public String getName();
 
 }

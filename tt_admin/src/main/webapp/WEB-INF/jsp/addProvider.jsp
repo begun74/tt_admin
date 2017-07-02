@@ -101,14 +101,10 @@
           
             <div id="tabs-1">  
    		            <!-- Error form message -->            
-   		            <c:if test="${not empty error}">
-		            <div class="form-message error"  onclick="clearErrors()">
-		              <p>Ошибка :</p>
-		              <ul>
-		                <li>"${error}"</li>
-		              </ul>
-		            </div>
-		            </c:if>
+   		            <div class="form-message error ">
+   		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 70px">
+   		            	</div>
+   		            </div>
               	<div class="form-cols">
 				    		<div class="col1">
 							  	<form:form id="addProviderForm" class="formBox" role="form"
@@ -146,15 +142,14 @@
 
             <div id="tabs-2">
    		            <!-- Error form message -->            
-   		            <c:if test="${not empty error}">
-		            <div class="form-message error"  onclick="clearErrors()">
-		              <p>Ошибка :</p>
-		              <ul>
-		                <li>"${error}"</li>
-		              </ul>
-		            </div>
-		            </c:if>
+   		            <div class="form-message error" >
+   		            	<div class="monitors monitorErrors" ></div>
+   		            </div>
             		
+					<div class="form-message correct" >			
+   		            	<div  id="MA_loadProvider" class="monitors monitorProgress" ></div>
+   					</div>
+	
 					<div class="form-cols">
 	   				<div class="col1">            
 
@@ -207,9 +202,13 @@
 						
 							        				<div class="clearfix">
 								        				<div class="lab">	
-								        					<button type="submit" class="" onclick="if(file.value.length == 0) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
+								        					<button type="submit" id="loadFileProvider" onclick="if(file.value.length == 0) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
+	
 								        				</div>
 							        				</div>
+
+
+		
 							        				
 							         <input type="hidden" name ="act" id ="act" value="1"/>
 						</form:form>

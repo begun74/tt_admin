@@ -8,11 +8,11 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import tt.modelattribute.MA_search;
 import ttadm.dao.Dao;
 import ttadm.dao.DaoImpl;
 import ttadm.model.ContactUsMessages;
@@ -21,11 +21,13 @@ import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
+import ttadm.model.IModel;
 import ttadm.model.Order;
 import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
 import ttadm.model.User;
+import ttadm.modelattribute.MA_search;
 
 @Service("ttadmService")
 @Transactional()
@@ -161,7 +163,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public List<DirGender> getGenderList() {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getGenderList();
 	}
 
 	@Override
@@ -209,13 +211,13 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public void addStore(Store store) {
 		// TODO Auto-generated method stub
-
+		dao.addStore(store);
 	}
 
 	@Override
 	public Store getStoreBySerVerUID(Long serialVersionUID) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getStoreBySerVerUID(serialVersionUID);
 	}
 
 	@Override
@@ -263,7 +265,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public Object getObject(Class clazz, Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.getObject(clazz, id);
 	}
 
 	@Override
@@ -285,27 +287,10 @@ public class TT_AdminServiceImpl implements Dao {
 	}
 
 	@Override
-	public BigInteger countGender(Long id_gender) {
+	public void saveIModel(IModel imodel) {
 		// TODO Auto-generated method stub
-		return null;
+		dao.saveIModel(imodel);
 	}
 
-	@Override
-	public BigInteger countCategory(Long id_category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigInteger countProvider(Long id_provider) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigInteger countType(Long id_type) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

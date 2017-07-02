@@ -10,19 +10,23 @@ import javax.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.*;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import tt.modelattribute.MA_loadNomencl;
-import tt.modelattribute.MA_loadNomenclGroup;
-import tt.modelattribute.MA_loadNomenclGroupRoot;
-import tt.modelattribute.MA_loadProvider;
-import tt.modelattribute.MA_loadTail;
 import ttadm.model.Tail;
+import ttadm.modelattribute.IMAmodel;
+import ttadm.modelattribute.MA_loadNomencl;
+import ttadm.modelattribute.MA_loadNomenclGroup;
+import ttadm.modelattribute.MA_loadNomenclGroupRoot;
+import ttadm.modelattribute.MA_loadProvider;
+import ttadm.modelattribute.MA_loadTail;
 
 
 @Component
-@Scope(value="session", proxyMode=ScopedProxyMode.TARGET_CLASS)
+@Scope(value = "session")
+@SessionAttributes("adminSessionBean")
 public class AdminSessionBean  implements Serializable {
 
 	/**
@@ -59,7 +63,11 @@ public class AdminSessionBean  implements Serializable {
 	private List<String> successList = new ArrayList<String>();
 	private List<Tail> tempListTails = new ArrayList<Tail>();
 	
-
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadProvider = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomencl = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomenclGroup = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomenclGroupRoot = new LinkedHashMap<Long,String>();
+	private LinkedHashMap<Long,String> hmLog_LoadMA_loadTail = new LinkedHashMap<Long,String>();
 
 
 	public List<Tail> getTempListTails() {
@@ -130,9 +138,16 @@ public class AdminSessionBean  implements Serializable {
 
 
 
-
+	/*
+	public  List<String> getTailErrorList(int sizeErrList) {
+		 sizeErrList++;
+		return  errorList.size() > sizeErrList-1?errorList.subList(errorList.size()-sizeErrList, errorList.size()-1):errorList;
+		
+	}
+	*/
 	public List<String> getErrorList() {
-		return errorList;
+		
+		return  errorList;
 	}
 
 	public void setErrorList(List<String> errorList) {
@@ -141,7 +156,7 @@ public class AdminSessionBean  implements Serializable {
 
 	
 	public void addError(String error) {
-		getErrorList().clear();
+		//getErrorList().clear();
 		getErrorList().add(error);
 	}
 
@@ -149,7 +164,48 @@ public class AdminSessionBean  implements Serializable {
 	public void clearError() {
 		getErrorList().clear();
 	}
+	
+	
+	public void addToHmLog_Load(IMAmodel IMAmodel, long timestamp, String message) {
+		
+		if(IMAmodel instanceof MA_loadProvider)
+			hmLog_LoadMA_loadProvider.put(timestamp, message);
+		else if (IMAmodel instanceof MA_loadNomencl)
+			hmLog_LoadMA_loadNomencl.put(timestamp, message);
+		else if (IMAmodel instanceof MA_loadNomenclGroup)
+			hmLog_LoadMA_loadNomenclGroup.put(timestamp, message);
+		else if(IMAmodel instanceof MA_loadNomenclGroupRoot)
+			hmLog_LoadMA_loadNomenclGroupRoot.put(timestamp, message);
+		else
+			hmLog_LoadMA_loadTail.put(timestamp, message);
+	}
 
+
+	public LinkedHashMap<Long, String> getHmLog_Load(IMAmodel IMAmodel) {
+		if(IMAmodel instanceof MA_loadProvider)
+			return hmLog_LoadMA_loadProvider;
+		else if (IMAmodel instanceof MA_loadNomencl)
+			return hmLog_LoadMA_loadNomencl;
+		else if (IMAmodel instanceof MA_loadNomenclGroup)
+			return hmLog_LoadMA_loadNomenclGroup;
+		else if(IMAmodel instanceof MA_loadNomenclGroupRoot) 
+			return hmLog_LoadMA_loadNomenclGroupRoot;
+		else
+			return hmLog_LoadMA_loadTail;
+	}
+
+	public void clearHmLog_Load(IMAmodel IMAmodel) 
+	{
+		if(IMAmodel instanceof MA_loadProvider)
+			hmLog_LoadMA_loadProvider.clear();
+		else if (IMAmodel instanceof MA_loadNomencl)
+			hmLog_LoadMA_loadNomencl.clear();
+		else if (IMAmodel instanceof MA_loadNomenclGroup)
+			hmLog_LoadMA_loadNomenclGroup.clear();
+		else
+			hmLog_LoadMA_loadNomenclGroupRoot.clear();
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -160,7 +216,8 @@ public class AdminSessionBean  implements Serializable {
 
 	@PostConstruct
 	void init(){
-		System.out.println("AdminSessionBean @PostConstruct ");
+		//System.out.println("AdminSessionBean INIT() ");
+		//System.out.println(this.hmLog_LoadMA_loadProvider);
 		
 		if(appBean.findBySerialVerUID(mA_loadNomencl.getSerialversionuid()) == null)
 			setmA_loadNomencl(new MA_loadNomencl());
@@ -184,9 +241,11 @@ public class AdminSessionBean  implements Serializable {
 	}
 	
 	
+	
 	@PreDestroy
 	void destr() {
-		System.out.println("AdminSessionBean @PreDestroy ");
+		//System.out.println(this.hmLog_LoadMA_loadProvider);
+		//System.out.println("AdminSessionBean DESTROY() ");
 	}
 
 

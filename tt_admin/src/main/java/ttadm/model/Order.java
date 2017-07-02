@@ -153,6 +153,12 @@ public class Order implements IModel {
 	public String toString() {
 		return "Order [id=" + id + ", creation_date=" + creation_date + "]";
 	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "Order "+id;
+	}
 	
 	
 

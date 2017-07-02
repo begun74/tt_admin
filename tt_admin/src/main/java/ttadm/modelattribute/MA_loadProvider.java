@@ -1,4 +1,4 @@
-package tt.modelattribute;
+package ttadm.modelattribute;
 
 
 import org.springframework.context.annotation.Scope;
@@ -14,11 +14,10 @@ public class MA_loadProvider implements IMAmodel {
 	/**
 	 * 
 	 */
-	//private static final long serialVersionUID = 2428882008313022746L;
+	private static final long serialVersionUID = 6240274181301156824L;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3311752620276929488L;
 	
 	
 	private int row=1;

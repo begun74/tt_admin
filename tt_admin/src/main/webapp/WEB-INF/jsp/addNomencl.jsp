@@ -101,16 +101,12 @@
           	<div class="box-content">    
           
             <div id="tabs-1">  
-   		            <!-- Error form message -->            
-   		            <c:if test="${not empty error}">
-		            <div class="form-message error"  onclick="clearErrors()">
-		              <p>Ошибка :</p>
-		              <ul>
-		                <li>"${error}"</li>
-		              </ul>
-		            </div>
-		            </c:if>
-            
+   		            <!-- Error form message             
+   		            <div class="form-message error ">
+   		            	<div class="monitorErrors" style="overflow-x: hidden; overflow-y: scroll; height: 50px">
+   		            	</div>
+   		            </div>
+            		-->
               	<div class="form-cols">
 				    		<div class="col1">
 							  	<form:form id="addNomenclForm" class="formBox" role="form"
@@ -194,15 +190,15 @@
             </div>
 
             <div id="tabs-2">
-   		            <!-- Error form message -->            
-   		            <c:if test="${not empty error}">
-		            <div class="form-message error"  onclick="clearErrors()">
-		              <p>Ошибка :</p>
-		              <ul>
-		                <li>"${error}"</li>
-		              </ul>
-		            </div>
-		            </c:if>
+   		            <!-- Monitoring -->            
+   		            <div class="form-message error ">
+   		            	<div class="monitors monitorErrors" >
+   		            	</div>
+   		            </div>
+					<div class="form-message correct">				
+   		            	<div  id="MA_loadNomencl" class="monitors monitorProgress" >
+						</div>
+					</div>
             		
 					<div class="form-cols">
 	   				<div class="col1">            
@@ -315,6 +311,8 @@
 								        					<button type="submit" class="" onclick="if(file.value.length == 0 ) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
 								        				</div>
 							        				</div>
+
+							        				
 													        				
 							         <input type="hidden" name ="act" id ="act" value="2"/>
 						</form:form>

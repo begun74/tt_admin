@@ -26,18 +26,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ttadm.model.*;
-import tt.modelattribute.MA_loadNomencl;
-import tt.modelattribute.MA_loadNomenclGroup;
-import tt.modelattribute.MA_loadNomenclGroupRoot;
-import tt.modelattribute.MA_loadProvider;
-import tt.modelattribute.MA_loadTail;
+import ttadm.modelattribute.MA_loadNomencl;
+import ttadm.modelattribute.MA_loadNomenclGroup;
+import ttadm.modelattribute.MA_loadNomenclGroupRoot;
+import ttadm.modelattribute.MA_loadProvider;
+import ttadm.modelattribute.MA_loadTail;
 
 
 @Service
 public class ReadExcelFile {
 	
-	@Autowired
-	private static ProcessingFiles processFiles;
+	
+	static HashMap<Long,List<String>> hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+	
 		
     private static Workbook getWorkbook(File tmpFile) throws IOException {
         
@@ -115,10 +116,10 @@ public class ReadExcelFile {
         Iterator<Row> rowIterator = firstSheet.iterator();
         DataFormatter df = new DataFormatter();
 		
-        //HashMap<Long,String> hmPollPaths = new HashMap<Long,String>(); //Список файлов на загрузку
-        HashMap<Long,List<String>> hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
-		
-		int row_ = 0;
+        
+        hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+
+        int row_ = 0;
         while(rowIterator.hasNext() )
         {
         	Row tmp = rowIterator.next();
@@ -144,7 +145,6 @@ public class ReadExcelFile {
         			String path = df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_pathToImage()-1)).trim();
         			//System.out.println(path);
 
-
         			if(path.length() >0)
         			{
         				
@@ -162,7 +162,6 @@ public class ReadExcelFile {
         			}
         			
         			
-        			
 		        	lNomencls.add(dirNomenclature);
         		}
         	
@@ -172,7 +171,6 @@ public class ReadExcelFile {
         //System.out.println(hmPollPaths);
         //MainAutoLoad.startPhotoFileService2(hmPollPaths);
         
-        processFiles.startPhotoFileService2(hmPollPaths);
         
 		return lNomencls;
 		
@@ -287,4 +285,10 @@ public class ReadExcelFile {
 		return lNomencls;
 	}
 
+	public static HashMap<Long, List<String>> getHmPollPaths() {
+		return hmPollPaths;
+	}
+
+	
+	
 }

@@ -32,31 +32,34 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import ttadm.bean.AdminSessionBean;
 import ttadm.model.*;
-import tt.modelattribute.IMAmodel;
-import tt.modelattribute.MA_loadNomencl;
-import tt.modelattribute.MA_loadNomenclGroup;
-import tt.modelattribute.MA_loadNomenclGroupRoot;
-import tt.modelattribute.MA_loadProvider;
-import tt.modelattribute.MA_loadTail;
+import ttadm.modelattribute.IMAmodel;
+import ttadm.modelattribute.MA_loadNomencl;
+import ttadm.modelattribute.MA_loadNomenclGroup;
+import ttadm.modelattribute.MA_loadNomenclGroupRoot;
+import ttadm.modelattribute.MA_loadProvider;
+import ttadm.modelattribute.MA_loadTail;
 import ttadm.service.TT_AdminServiceImpl;
 
 
 @Service
-@Transactional(readOnly = true)
-//@Scope("session")
 public class FileUpload {
 	
 	
 	
 	@Autowired
 	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
+	
+	@Autowired
+	public ReadExcelFile ReadExcelFile;
 
 	private static final String[][] ALLOWED_FILE_TYPES_PICS = {{"image/jpeg","jpeg"}, {"image/jpg","jpg"}, {"image/gif","gif"}};
 	private static final String[][] ALLOWED_FILE_TYPES_XLS = {{"application/vnd.ms-excel","xls"},{"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","xlsx"}};
@@ -65,10 +68,13 @@ public class FileUpload {
     //private static final String UPLOAD_FILE_PATH = "UPLOAD_FILE_PATH";
     private static File TEMP_FILE_PATH = null;
 
-    
+
+	private HashMap<Long,List<String>> hmPollPaths = new HashMap<Long,List<String>>(); //Список файлов на загрузку
+
     
     @Resource
     private Environment env;
+    
     
     
     @PostConstruct
@@ -90,9 +96,7 @@ public class FileUpload {
 			try {
 
 					if(model instanceof DirProvider)
-					{
 						collection = ReadExcelFile.processFile(file,(DirProvider) model, (MA_loadProvider) IMAmodel) ;
-					}
 
 					
 					else if(model instanceof DirNomenclature)
@@ -113,6 +117,8 @@ public class FileUpload {
 							hmDProv.put(dP.getCode(),dP);
 						
 						collection = ReadExcelFile.processFile(file,(DirNomenclature) model, (MA_loadNomencl) IMAmodel, hmNomenclGroup, hmDGen, hmDProv) ;
+						hmPollPaths = ReadExcelFile.getHmPollPaths(); //Список файлов на загрузку
+
 					}
 
 					
@@ -160,7 +166,7 @@ public class FileUpload {
 	}
 
     
-	public void downloadPhoto (long code, List<String> files) 
+	public void downloadPhoto (long code, List<String> files) throws Exception
 	{
 		try {
 			
@@ -243,6 +249,7 @@ public class FileUpload {
 							System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 							fse.printStackTrace(System.err);
 							System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
+							throw new Exception("ERROR: FileUpload.downloadPhoto  not found - "+file);
 						}
 				}
 
@@ -250,18 +257,21 @@ public class FileUpload {
 			catch(java.io.FileNotFoundException fnf)
 			{
 				fnf.getMessage();
+				throw new Exception("ERROR: FileUpload.downloadPhoto!");
 			}
 			catch(NullPointerException e) {
 				System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 				 //System.out.println("Catalog not found - "+files);
 				 e.printStackTrace(System.err);
 				System.err.println("========= ERROR: FileUpload.downloadPhoto ======= \n\n");
+				throw new Exception("ERROR: FileUpload.downloadPhoto!");
 			}
 			catch(Exception e) {
 				System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 				 //System.out.println("pathToShare - "+files);
 				 e.printStackTrace(System.err);
 				System.err.println("========= ERROR: FileUpload.downloadPhoto ======= \n\n");
+				throw new Exception(e.getMessage());
 			}
 
 	}
@@ -543,5 +553,13 @@ public class FileUpload {
 	        return false;
 	    }
 	}
+
+
+	public HashMap<Long, List<String>> getHmPollPaths() {
+		return hmPollPaths;
+	}
+	
+	
+	
 	
 }

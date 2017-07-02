@@ -136,15 +136,17 @@
             </div>
 
             <div id="tabs-2">
-   		            <!-- Error form message -->            
-   		            <c:if test="${not empty error}">
-		            <div class="form-message error"  onclick="clearErrors()">
-		              <p>Ошибка :</p>
-		              <ul>
-		                <li>"${error}"</li>
-		              </ul>
-		            </div>
-		            </c:if>
+            		
+   		            <!-- Monitoring -->            
+   		            <div class="form-message error ">
+   		            	<div class="monitors monitorErrors" >
+   		            	</div>
+   		            </div>
+					<div class="form-message correct">				
+   		            	<div  id="MA_loadNomenclGroup" class="monitors monitorProgress" >
+						</div>
+					</div>
+            		
             		
 					<div class="form-cols">
 	   				<div class="col1">            
@@ -209,6 +211,7 @@
 								        					<button type="submit" class="" onclick="if(file.value.length == 0) {alert('Выберите файл!'); return false};" ><spring:message code="load"/></button>
 								        				</div>
 							        				</div>
+							        				
 							        				
 							         <input type="hidden" name ="act" id ="act" value="4"/>
 						</form:form>

@@ -12,15 +12,17 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import tt.modelattribute.IMAmodel;
-import tt.modelattribute.MA_loadProvider;
 import ttadm.bean.AdminSessionBean;
+import ttadm.model.IModel;
+import ttadm.modelattribute.IMAmodel;
 
 @Service
 public class ProcessingFiles implements Serializable {
@@ -35,15 +37,13 @@ public class ProcessingFiles implements Serializable {
 	@Autowired
 	private  XLS_fileHandler xls_fileHandler ;
 	
-	@Autowired
-	private AdminSessionBean adminSessBean;
 	
-	//@Autowired
-	//private FileUpload fileUpload ;
-
 	private static ScheduledExecutorService service ;
 	private static ExecutorService photoFileService ;
 
+	@Autowired 
+	private HttpSession httpSession;
+	
 	private static int pool_size = 1;
 
 
@@ -55,10 +55,15 @@ public class ProcessingFiles implements Serializable {
 		System.out.println("ProcessFiles @PostConstruct ");
 	}
 
-	
-	public  void loadFile(MultipartFile file, IMAmodel IMAmodel) 
+
+	public  void loadFile(IModel IModel,MultipartFile file, IMAmodel IMAmodel) 
 	{
-		xls_fileHandler.loadXLS(file, IMAmodel);
+		
+		//System.out.println("adminCtrl - "+httpSession.getAttribute("adminCtrl"));
+		//System.out.println("adminSessionBean - " +httpSession.getAttribute("adminSessionBean"));
+		//XLS_fileHandler xls_fileHandler = xls_fileHandler();
+		xls_fileHandler.loadXLS(IModel,file, IMAmodel);
+		xls_fileHandler.injectAdminSessBean((AdminSessionBean)httpSession.getAttribute("adminSessionBean"));
 		photoFileService.submit(xls_fileHandler);
 	}	
 	
@@ -100,12 +105,6 @@ public class ProcessingFiles implements Serializable {
 		for(Long code : hmPhotoFile.keySet())
 		{
 			future = photoFileService.submit(new FileHandler(code, hmPhotoFile.get(code)));
-			try {
-				future.get();
-			} catch (InterruptedException | ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		if(future.isDone())

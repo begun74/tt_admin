@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import tt.modelattribute.IMAmodel;
 import ttadm.model.*;
+import ttadm.modelattribute.IMAmodel;
 import ttadm.service.TT_AdminServiceImpl;
 
 
@@ -71,7 +72,8 @@ public class AppBean implements Serializable {
 						mapStore.put(s.getSerialVersionUID(), bytesToObject(s.getBytearray()));
 					} catch (ClassNotFoundException | IOException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						//e.printStackTrace();
+						System.out.println(s + "  not found in store!");
 					}
 				}
 		}
@@ -92,9 +94,11 @@ public class AppBean implements Serializable {
 	public void addToMapStore(IMAmodel IMAmodel) throws Exception 
 	{
 			Store s = ttadmService.getStoreBySerVerUID(IMAmodel.getSerialversionuid()) == null? new Store() : ttadmService.getStoreBySerVerUID(IMAmodel.getSerialversionuid());
+			//Store s = new Store();
 			s.setSerialVersionUID(IMAmodel.getSerialversionuid());
 			s.setBytearray(objectToBytes(IMAmodel));
 			
+			//ttadmService.getStore(s)
 			ttadmService.addStore(s);
 			
 			mapStore.put(s.getSerialVersionUID(), bytesToObject(s.getBytearray()));

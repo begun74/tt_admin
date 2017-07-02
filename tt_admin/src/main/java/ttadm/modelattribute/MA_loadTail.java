@@ -1,4 +1,4 @@
-package tt.modelattribute;
+package ttadm.modelattribute;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 @Scope(value="session")
 public class MA_loadTail implements IMAmodel {
 
-	/**
+		/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3950229997785369170L;
+	private static final long serialVersionUID = -7267099638600370070L;
+		/**
+	 * 
+	 */
 	
 	private int row=1;
 	private int col_amountTail = 1; //Кол-во

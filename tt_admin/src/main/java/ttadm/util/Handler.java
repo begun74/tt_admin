@@ -1,6 +1,6 @@
 package ttadm.util;
 
-import tt.modelattribute.IMAmodel;
+import ttadm.modelattribute.IMAmodel;
 
 public class Handler implements Runnable {
 

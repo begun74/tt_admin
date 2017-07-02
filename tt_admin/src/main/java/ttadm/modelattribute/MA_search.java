@@ -1,4 +1,4 @@
-package tt.modelattribute;
+package ttadm.modelattribute;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,10 +15,15 @@ import org.springframework.stereotype.Service;
 @Scope("session")
 public class MA_search implements Serializable {
 
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 4012114965391013096L;
+	private static final long serialVersionUID = -4567616272460513994L;
+
+	/**
+	 * 
+	 */
 	
 	List<Long> pn = new ArrayList<Long>();
 	
