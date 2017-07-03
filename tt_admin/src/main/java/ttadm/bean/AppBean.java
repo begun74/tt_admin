@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import tt.modelattribute.IMAmodel;
+
 import ttadm.model.*;
 import ttadm.modelattribute.IMAmodel;
 import ttadm.service.TT_AdminServiceImpl;

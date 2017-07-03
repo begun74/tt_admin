@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.hibernate.criterion.Criterion;
 
-import tt.modelattribute.MA_search;
+import ttadm.modelattribute.*;
 import ttadm.model.*;
 
 
@@ -79,5 +79,6 @@ public interface Dao {
 	public BigInteger countCategory(Long id_category);
 	public BigInteger countProvider(Long id_provider);
 	public BigInteger countType(Long id_type);
+	void saveIModel(IModel imodel);
 	
 }

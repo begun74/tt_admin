@@ -18,17 +18,19 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
-import tt.modelattribute.MA_search;
+
 import ttadm.model.ContactUsMessages;
 import ttadm.model.DirGender;
 import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
+import ttadm.model.IModel;
 import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
 import ttadm.model.User;
+import ttadm.modelattribute.MA_search;
 
 
 @PropertySource("classpath:sql.properties")
@@ -329,6 +331,13 @@ public class DaoImpl implements Dao {
 	public BigInteger countType(Long id_type) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void saveIModel(IModel imodel) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -292,5 +292,29 @@ public class TT_AdminServiceImpl implements Dao {
 		dao.saveIModel(imodel);
 	}
 
+	@Override
+	public BigInteger countGender(Long id_gender) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigInteger countCategory(Long id_category) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigInteger countProvider(Long id_provider) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigInteger countType(Long id_type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
