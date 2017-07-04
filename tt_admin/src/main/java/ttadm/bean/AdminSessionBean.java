@@ -2,7 +2,6 @@ package ttadm.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NavigableMap;
@@ -20,12 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ttadm.model.Tail;
-import ttadm.modelattribute.IMAmodel;
-import ttadm.modelattribute.MA_loadNomencl;
-import ttadm.modelattribute.MA_loadNomenclGroup;
-import ttadm.modelattribute.MA_loadNomenclGroupRoot;
-import ttadm.modelattribute.MA_loadProvider;
-import ttadm.modelattribute.MA_loadTail;
+import ttadm.modelattribute.*;
 
 
 @Component

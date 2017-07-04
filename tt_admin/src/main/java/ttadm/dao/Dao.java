@@ -8,8 +8,10 @@ import java.util.Set;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 
+
+import ttadm.modelattribute.*;
 import ttadm.model.*;
-import ttadm.modelattribute.MA_search;
+
 
 
 public interface Dao {
@@ -75,6 +77,5 @@ public interface Dao {
 	
 	User findByUserName(String username);
 	
-	//================== AJAX request ===================
-	
+
 }
