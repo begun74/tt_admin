@@ -82,6 +82,12 @@ public class TT_AdminServiceImpl implements Dao {
 	}
 
 	@Override
+	public Object[] getNomenclatureList(int p, int itemOnPage, String sortby) {
+		// TODO Auto-generated method stub
+		return dao.getNomenclatureList(p,itemOnPage,sortby);
+	}
+
+	@Override
 	public List<DirNomenclature> getNomenclatureList(Collection<Criterion> criterions) {
 		// TODO Auto-generated method stub
 		return null;

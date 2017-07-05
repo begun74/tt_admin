@@ -80,7 +80,10 @@ public class AdminCtrl {
 	@RequestMapping(value = {"/admin"},method = RequestMethod.GET)
 	public ModelAndView  loginPOST(HttpSession session, @RequestParam(value = "logout",	required = false) String logout,
 				@RequestParam(value = "act",   defaultValue = "0") String act,
-				@RequestParam(value = "error",   defaultValue = "") String error) 
+				@RequestParam(value = "error",   defaultValue = "") String error,
+				@RequestParam(value = "p", defaultValue = "1") int p,
+				@RequestParam(value = "p_p", defaultValue = "10") int perPage,
+				@RequestParam(value = "sortby",   defaultValue = "name") String sortby) 
 	{
 		ModelAndView model = new ModelAndView("main");
 
@@ -99,8 +102,11 @@ public class AdminCtrl {
 			break;
 
 			case "2":
+				Object[] nomencList = ttadmService.getNomenclatureList(p,perPage, sortby);
 				model = new ModelAndView("addNomencl");
-				model.addObject("dirNomencls", ttadmService.getNomenclatureList());
+				model.addObject("dirNomencls", nomencList[1]);
+				model.addObject("allItems", nomencList[0]);
+				model.addObject("sortby", sortby);
 			break;
 
 			case "3":

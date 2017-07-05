@@ -27,6 +27,7 @@ public interface Dao {
 	
 
 	public List<DirNomenclature> getNomenclatureList();
+	public Object [] getNomenclatureList(int p, int itemOnPage, String sortby);
 	public List<DirNomenclature> getNomenclatureList(Collection<Criterion> criterions);
 	public void addNomenclature(DirNomenclature dirNomenclature);
 	public Set<DirNomenclature> getTailsNomenclature(Tail tail_example, Collection<Criterion> criterions ,int p);

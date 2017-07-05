@@ -9,11 +9,13 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -86,6 +88,42 @@ public class DaoImpl implements Dao {
 	public DirProvider getProviderByCode(Integer code) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	@Override
+	public Object[] getNomenclatureList(int p, int itemOnPage,String sortby) {
+		// TODO Auto-generated method stub
+		
+		System.out.println(sortby);
+		Order order = null;
+		String order_ = "name";
+		switch(sortby) {
+			case "name":
+				order = Order.asc(sortby);
+				order_ = sortby;
+			break;
+			case "code":
+				order = Order.asc(sortby);
+				order_ = sortby;
+			break;
+			
+			default:
+				order = Order.asc("name");
+				
+		}
+		
+		
+		Object[] result = {null,null};
+		result[0] = ((BigInteger )getSession().createSQLQuery("select count(dn.*) from dir_nomenclature dn").uniqueResult()).longValue();
+
+		result[1] = (List<DirNomenclature>)getSession().createSQLQuery("select * from dir_nomenclature order by "+order_).addEntity(DirNomenclature.class)
+				.setFirstResult(p*itemOnPage-itemOnPage)
+				.setMaxResults(itemOnPage)
+				.list();
+			
+		
+		return result;
 	}
 
 	@Override

@@ -121,9 +121,23 @@ public class ProcessingFiles implements Serializable {
 			//System.out.println("=========== stopPhotoFileService =========");
 			photoFileService.awaitTermination(3, TimeUnit.SECONDS);
 			System.out.println("=========== photoFileService.awaitTermination ! =========");
+			
+			service.awaitTermination(3, TimeUnit.SECONDS);
+			System.out.println("=========== service.awaitTermination ! =========");
+			
 		} catch (InterruptedException e) {
+			
+			
+		}
+		finally {
 			photoFileService.shutdownNow();
+			photoFileService = null;
 			System.out.println("===========photoFileService.shutdownNow ! =========");
+
+			service.shutdownNow();
+			service = null;
+			System.out.println("===========service.shutdownNow ! =========");
+
 		}
 	}
 	
