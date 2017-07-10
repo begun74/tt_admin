@@ -27,7 +27,7 @@ public interface Dao {
 	
 
 	public List<DirNomenclature> getNomenclatureList();
-	public Object [] getNomenclatureList(int p, int itemOnPage, String sortby);
+	public Object [] getNomenclatureList(int p, long itemOnPage, String sortby);
 	public List<DirNomenclature> getNomenclatureList(Collection<Criterion> criterions);
 	public void addNomenclature(DirNomenclature dirNomenclature);
 	public Set<DirNomenclature> getTailsNomenclature(Tail tail_example, Collection<Criterion> criterions ,int p);
@@ -51,6 +51,7 @@ public interface Dao {
 	
 	public void addTail(Tail tail);
 	public List<Tail> getTailsList();
+	public Object [] getTailsList(int p, long itemOnPage, String sortby);
 	public List<Tail> getTailsList(Tail tail_example, Collection<Criterion> criterions, int p );
 	public List<Tail> getTailsList(long id_dirNomenclature);
 	public List<DirNomenclature> findByText(String text);

@@ -334,7 +334,10 @@
         <!-- /box -->
         <div class="box">
         
-								<c:set var="p_p" value="21"/>
+								<c:set var="p_p" value="${param.p_p}"/>
+								<c:if test="${empty param.p_p}" >
+									<c:set var="p_p" value="20"/>
+								</c:if>
 	
 	
 								<c:set var="p" value="${param.p}"/>
@@ -346,8 +349,8 @@
 				    				<tr align="center">
 				    					<td width="5%"class="dragHandle">&nbsp;</td>
 				    					<td width="5%" >&nbsp;</td>
-					    				<th width="17%"><a id="sortByName" href="" ><spring:message code="name2"/></a></th>
-					    				<th width="66%"><a id="sortByCode" href="" ><spring:message code="code"/></a></th>
+					    				<th id="head_dirNomencl_name" width="17%"><a id="sortByName" href="" ><spring:message code="name2"/></a></th>
+					    				<th id="head_dirNomencl_code" width="66%"><a id="sortByCode" href="" ><spring:message code="code"/></a></th>
 					    				<th width="5%">Удалить</th>
 				    				</tr>
 				    			</table>
@@ -358,8 +361,8 @@
 												<tr class="table_row">
 													<td class="dragHandle">&nbsp;</td>
 													<td>${loop.count+(p*p_p-p_p)}</td>
-													<td style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');">${dirNomencl.name}</td>
-													<td style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');">${dirNomencl.code}</td>
+													<td  id="dirNomencl_name" style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');"><div>${dirNomencl.name}</div></td>
+													<td  id="dirNomencl_code" style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');"><div>${dirNomencl.code}</div></td>
 													<td style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');">${dirNomencl.model}</td>
 													<td style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');">${dirNomencl.article}</td>
 													<td style="cursor:pointer;" onclick="$('#name').val('${dirNomencl.name}'); $('#code').val('${dirNomencl.code}'); $('#article').val('${dirNomencl.article}'); viewPhotoNomencl('${dirNomencl.code}');">${dirNomencl.dirNomenclGroup.name}(${dirNomencl.dirNomenclGroup.code})</td>
@@ -372,9 +375,24 @@
 										</table>
 									</div>
 									
-									<div id="light-pagination" class="" style="margin: 5px"></div>
-									
+									<div style="margin: 10px">
+										<div id="light-pagination" class="" style="display: table; margin: 0 auto;"></div>
+										
+										<div style="display: table;  margin: 0 auto;">
+											<label for="selectperp">
+													<span>Показывать</span>
+											</label>
+											<select id="selectperp" class="" name="p_p">
+		        										<option value="20" <c:if test="${p_p eq 20 }">selected</c:if> >20</option>
+		        										<option value="50" <c:if test="${p_p eq 50 }">selected</c:if> >50</option>
+		        										<option value="100" <c:if test="${p_p eq 100 }">selected</c:if> >100</option>
+		        										<option value="-1" <c:if test="${p_p le 0 }">selected</c:if> >Все</option>
+											</select>
+										</div>
+									</div>
+										
 									<input type="hidden" id="sortby" name="sortby" value="${sortby}">
+										
         </div>
         <!-- /box -->
     
@@ -401,7 +419,9 @@
 		  });
   
   		$(document).ready(function(){
-  			
+  			//alert($("#dirNomencl_name").width()+"   "+$("#dirNomencl_code").width());
+  			//$("#head_dirNomencl_name").width($("#dirNomencl_name").width());
+  			//$("#head_dirNomencl_code").width($("#dirNomencl_code").width());
 			/*$("#save").attr("checked","checked");*/
 			$('#submitPhoto').attr('disabled','disabled');
 			
@@ -420,6 +440,12 @@
 				$("#sortby").val("code")
 				window.location = this.href;
 			});
+			
+		    $("#selectperp").change(function() {
+				var p_p = $(this).val();
+				window.location = '?act=2&p_p='+p_p+'&p='+${p}+'&sortby='+$("#sortby").val();
+		    });
+
 
 			$('#light-pagination').pagination({
 	            items: ${allItems},

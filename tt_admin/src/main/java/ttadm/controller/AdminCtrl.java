@@ -82,8 +82,8 @@ public class AdminCtrl {
 				@RequestParam(value = "act",   defaultValue = "0") String act,
 				@RequestParam(value = "error",   defaultValue = "") String error,
 				@RequestParam(value = "p", defaultValue = "1") int p,
-				@RequestParam(value = "p_p", defaultValue = "10") int perPage,
-				@RequestParam(value = "sortby",   defaultValue = "name") String sortby) 
+				@RequestParam(value = "p_p", defaultValue = "20") int perPage,
+				@RequestParam(value = "sortby",  required=false) String sortby) 
 	{
 		ModelAndView model = new ModelAndView("main");
 
@@ -110,9 +110,12 @@ public class AdminCtrl {
 			break;
 
 			case "3":
+				Object[] tailsList = ttadmService.getTailsList(p,perPage, sortby);
 				model = new ModelAndView("addTails");
 				model.addObject("tempTails", adminSessBean.getTempListTails());
-				model.addObject("tails", ttadmService.getTailsList());
+				model.addObject("tails", tailsList[1]);
+				model.addObject("allItems", tailsList[0]);
+				model.addObject("sortby", sortby);
 			break;
 
 			case "4":

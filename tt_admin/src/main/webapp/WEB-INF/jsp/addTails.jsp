@@ -304,6 +304,18 @@
         
         <!-- /box -->
         <div class="box">
+
+								<c:set var="p_p" value="${param.p_p}"/>
+								<c:if test="${empty param.p_p}" >
+									<c:set var="p_p" value="20"/>
+								</c:if>
+	
+	
+								<c:set var="p" value="${param.p}"/>
+								<c:if test="${empty param.p}" >
+									<c:set var="p" value="1"/>
+								</c:if>
+        
         				<h4>Текущие остатки</h4>
 	 				    			<table class="tab" border="0">
 						    				<tr align="center">
@@ -335,6 +347,26 @@
 											</c:forEach>
 										</table>
 									</div>
+									
+									
+									<div style="margin: 10px">
+										<div id="light-pagination" class="" style="display: table; margin: 0 auto;"></div>
+										
+										<div style="display: table;  margin: 0 auto;">
+											<label for="selectperp">
+													<span>Показывать</span>
+											</label>
+											<select id="selectperp" class="" name="p_p">
+		        										<option value="20" <c:if test="${p_p eq 20 }">selected</c:if> >20</option>
+		        										<option value="50" <c:if test="${p_p eq 50 }">selected</c:if> >50</option>
+		        										<option value="100" <c:if test="${p_p eq 100 }">selected</c:if> >100</option>
+		        										<option value="-1" <c:if test="${p_p le 0 }">selected</c:if> >Все</option>
+											</select>
+										</div>
+									</div>
+										
+									<input type="hidden" id="sortby" name="sortby" value="${sortby}">
+									
         </div>
         <!-- /box -->
     
@@ -358,6 +390,23 @@
 				
   			
 			/*$("#save").attr("checked","checked");*/
+			
+		    $("#selectperp").change(function() {
+				var p_p = $(this).val();
+				window.location = '?act=3&p_p='+p_p+'&p='+${p}+'&sortby='+$("#sortby").val();
+		    });
+			
+			
+			$('#light-pagination').pagination({
+	            items: ${allItems},
+	            itemsOnPage: ${p_p},
+	            cssStyle: 'light-theme',
+	            prevText:"<<",
+	            nextText:">>",
+	            hrefTextPrefix: "?act=2&p_p="+${p_p}+"&sortby="+$("#sortby").val()+"&p=",
+	            currentPage: ${p}
+	        });
+
 	    });
 	    
     </script>

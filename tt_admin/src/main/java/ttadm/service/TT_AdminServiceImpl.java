@@ -82,7 +82,7 @@ public class TT_AdminServiceImpl implements Dao {
 	}
 
 	@Override
-	public Object[] getNomenclatureList(int p, int itemOnPage, String sortby) {
+	public Object[] getNomenclatureList(int p, long itemOnPage, String sortby) {
 		// TODO Auto-generated method stub
 		return dao.getNomenclatureList(p,itemOnPage,sortby);
 	}
@@ -188,6 +188,12 @@ public class TT_AdminServiceImpl implements Dao {
 	public List<Tail> getTailsList() {
 		// TODO Auto-generated method stub
 		return dao.getTailsList();
+	}
+
+	@Override
+	public Object[] getTailsList(int p, long itemOnPage, String sortby) {
+		// TODO Auto-generated method stub
+		return dao.getTailsList(p, itemOnPage, sortby);
 	}
 
 	@Override

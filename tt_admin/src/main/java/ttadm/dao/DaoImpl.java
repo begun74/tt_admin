@@ -15,6 +15,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,31 +94,25 @@ public class DaoImpl implements Dao {
 
 	
 	@Override
-	public Object[] getNomenclatureList(int p, int itemOnPage,String sortby) {
+	public Object[] getNomenclatureList(int p, long itemOnPage,String sortby) {
 		// TODO Auto-generated method stub
 		
 		Sortby sortby_enum = Sortby.name;
 		try {
 			sortby_enum = Sortby.valueOf(sortby);
 		}
-		catch(IllegalArgumentException exc) {
-			//ignore;
+		catch(Exception exc) {
+			sortby_enum = Sortby.name;
 		}
 		
-		Order order = null;
-		String order_ ; 
+		String order_ = sortby_enum.name(); 
 		switch(sortby_enum) {
 			case name:
-				order = Order.asc(sortby);
-				order_ = sortby;
+				order_ = sortby_enum.name();
 			break;
 			case code:
-				order = Order.asc(sortby);
-				order_ = sortby;
+				order_ = sortby_enum.name();
 			break;
-			
-			default:
-				order_= sortby_enum.name();
 				
 		}
 		
@@ -125,9 +120,16 @@ public class DaoImpl implements Dao {
 		Object[] result = {null,null};
 		result[0] = ((BigInteger )getSession().createSQLQuery("select count(dn.*) from dir_nomenclature dn").uniqueResult()).longValue();
 
+
+		if(itemOnPage < 0)
+		{
+			p=1;
+			itemOnPage = (long) result[0];
+		}
+		
 		result[1] = (List<DirNomenclature>)getSession().createSQLQuery("select * from dir_nomenclature order by "+order_).addEntity(DirNomenclature.class)
-				.setFirstResult(p*itemOnPage-itemOnPage)
-				.setMaxResults(itemOnPage)
+				.setFirstResult((int) (p*itemOnPage-itemOnPage))
+				.setMaxResults((int) itemOnPage)
 				.list();
 			
 		
@@ -244,6 +246,45 @@ public class DaoImpl implements Dao {
 		// TODO Auto-generated method stub
 		return getSession().createCriteria(Tail.class).add(Restrictions.isNull("destruction_date")).addOrder(Order.asc("id")).list();
 	}
+	
+	@Override
+	public Object[] getTailsList(int p, long itemOnPage, String sortby) {
+
+
+		Sortby sortby_enum = Sortby.id;
+		try {
+			sortby_enum = Sortby.valueOf(sortby);
+		}
+		catch(Exception exc) {
+			sortby_enum = Sortby.id;
+		}
+		
+		//Order order = null;
+		String order_ = sortby_enum.name(); 
+		switch(sortby_enum) {
+			/*
+			case name:
+				//order = Order.asc(sortby);
+				order_ = sortby_enum.name();
+			break;
+			case code:
+				//order = Order.asc(sortby);
+				order_ = sortby_enum.name();
+			break;
+			*/
+				
+		}
+		
+		long count = (long) getSession().createCriteria(Tail.class).add(Restrictions.isNull("destruction_date")).setProjection(Projections.rowCount()).uniqueResult();
+		List<Tail> tailList = getSession().createCriteria(Tail.class).add(Restrictions.isNull("destruction_date")).addOrder(Order.asc(order_))
+				.setFirstResult((int) (p*itemOnPage-itemOnPage))
+				.setMaxResults((int) itemOnPage)
+				.list();
+		
+		Object[] result = {count,tailList};
+		return result;
+	}
+
 
 	@Override
 	public List<Tail> getTailsList(Tail tail_example, Collection<Criterion> criterions, int p) {
@@ -394,8 +435,6 @@ public class DaoImpl implements Dao {
 		else
 				getSession().saveOrUpdate(imodel);
 	}
-
-
 
 
 

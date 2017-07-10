@@ -73,8 +73,6 @@ var Monitor = {
 
 $(document).ready(function(){
     var progress = 0;
-	
-    
     
 //========== Мониторинг Загрузки файлов ==========================	
     $(".monitorProgress").each(function() {
@@ -97,6 +95,7 @@ $(document).ready(function(){
 	});
 //======================================================    
     	
+
     
 });
 
