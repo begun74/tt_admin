@@ -23,9 +23,12 @@
     <link href="resources/admin/css/wysiwyg.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/fancybox-1.3.1.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/visualize.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="resources/css/simplePagination.css" rel="stylesheet" type="text/css">
+    
 
 	<script type="text/javascript" src="resources/admin/js/jquery-1.4.2.min.js"></script>   
     <script type="text/javascript" src="resources/admin/js/jquery.dimensions.min.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.simplePagination.js"></script>
     
     <!-- // Tabs // -->
     <script type="text/javascript" src="resources/admin/js/ui.core.js"></script>
@@ -307,7 +310,7 @@
 
 								<c:set var="p_p" value="${param.p_p}"/>
 								<c:if test="${empty param.p_p}" >
-									<c:set var="p_p" value="20"/>
+									<c:set var="p_p" value="100"/>
 								</c:if>
 	
 	
@@ -360,7 +363,8 @@
 		        										<option value="20" <c:if test="${p_p eq 20 }">selected</c:if> >20</option>
 		        										<option value="50" <c:if test="${p_p eq 50 }">selected</c:if> >50</option>
 		        										<option value="100" <c:if test="${p_p eq 100 }">selected</c:if> >100</option>
-		        										<option value="-1" <c:if test="${p_p le 0 }">selected</c:if> >Все</option>
+		        										<option value="200" <c:if test="${p_p eq 200 }">selected</c:if> >200</option>
+		        										<!-- option value="-1" <c:if test="${p_p le 0 }">selected</c:if> >Все</option -->
 											</select>
 										</div>
 									</div>
