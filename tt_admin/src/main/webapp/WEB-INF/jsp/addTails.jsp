@@ -407,7 +407,7 @@
 	            cssStyle: 'light-theme',
 	            prevText:"<<",
 	            nextText:">>",
-	            hrefTextPrefix: "?act=2&p_p="+${p_p}+"&sortby="+$("#sortby").val()+"&p=",
+	            hrefTextPrefix: "?act=3&p_p="+${p_p}+"&sortby="+$("#sortby").val()+"&p=",
 	            currentPage: ${p}
 	        });
 
