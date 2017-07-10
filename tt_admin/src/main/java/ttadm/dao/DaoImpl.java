@@ -35,6 +35,7 @@ import ttadm.model.Store;
 import ttadm.model.Tail;
 import ttadm.model.User;
 import ttadm.modelattribute.MA_search;
+import ttadm.util.Sortby;
 
 
 @PropertySource("classpath:sql.properties")
@@ -95,21 +96,28 @@ public class DaoImpl implements Dao {
 	public Object[] getNomenclatureList(int p, int itemOnPage,String sortby) {
 		// TODO Auto-generated method stub
 		
-		System.out.println(sortby);
+		Sortby sortby_enum = Sortby.name;
+		try {
+			sortby_enum = Sortby.valueOf(sortby);
+		}
+		catch(IllegalArgumentException exc) {
+			//ignore;
+		}
+		
 		Order order = null;
-		String order_ = "name";
-		switch(sortby) {
-			case "name":
+		String order_ ; 
+		switch(sortby_enum) {
+			case name:
 				order = Order.asc(sortby);
 				order_ = sortby;
 			break;
-			case "code":
+			case code:
 				order = Order.asc(sortby);
 				order_ = sortby;
 			break;
 			
 			default:
-				order = Order.asc("name");
+				order_= sortby_enum.name();
 				
 		}
 		
