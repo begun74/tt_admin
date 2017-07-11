@@ -104,15 +104,16 @@
           
 
             <div id="tabs-1">
-   		            <!-- Error form message -->            
-   		            <c:if test="${not empty error}">
-		            <div class="form-message error"  onclick="clearErrors()">
-		              <p>Ошибка :</p>
-		              <ul>
-		                <li>"${error}"</li>
-		              </ul>
-		            </div>
-		            </c:if>
+   		               		            <!-- Monitoring -->            
+   		            <div class="form-message error ">
+   		            	<div class="monitors monitorErrors" >
+   		            	</div>
+   		            </div>
+					<div class="form-message correct">				
+   		            	<div  id="MA_loadTail" class="monitors monitorProgress" >
+						</div>
+					</div>
+
             		
 					<div class="formBox">
 

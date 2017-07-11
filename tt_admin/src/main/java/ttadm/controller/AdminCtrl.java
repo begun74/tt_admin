@@ -2,6 +2,8 @@ package ttadm.controller;
 
 
 
+import java.util.Iterator;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import ttadm.modelattribute.MA_loadTempTail;
 import ttadm.modelattribute.MA_loadNomenclGroupRoot;
 import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
@@ -269,44 +272,7 @@ public class AdminCtrl {
 	}	
 	
 	
-	@RequestMapping(value = "addTempFileTail" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ModelAndView   processTempFileTail( @ModelAttribute  MultipartFile file,
-										@Valid MA_loadTail mA_loadTail ,
-										BindingResult result,
-										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act) 
-	{
-		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
-		
-		if(result.hasErrors())
-		{
-			adminSessBean.addError("Правильно введите данные!");
-			return model;
-		}
-		
-		
-		if(mA_loadTail.isSave())
-		{
-			try {
-				appBean.addToMapStore(mA_loadTail);
-				adminSessBean.setmA_loadTail(mA_loadTail);
-			}
-			catch(org.springframework.dao.DataIntegrityViolationException dve) 
-			{
-				dve.printStackTrace();
-				adminSessBean.getErrorList().add("Настройки уже существуют! ");
-			}
-			catch(Exception ioe)
-			{
-				ioe.printStackTrace();
-				adminSessBean.getErrorList().add("Параметры не записаны! ");
-			}
-		}
 
-		adminSessBean.setmA_loadTail(mA_loadTail);
-		processingFiles.loadFile(new Tail(), file, adminSessBean.getmA_loadTail());
-		
-		return model;
-	}	
 		
 	@RequestMapping(value = "addFileNomenclGroupRoot" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ModelAndView   processFileNomenclGroupRoot( @ModelAttribute  MultipartFile file,
@@ -347,6 +313,102 @@ public class AdminCtrl {
 		return model;
 	}	
 
+
+	@RequestMapping(value = "addTempFileTail" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processTempFileTail( @ModelAttribute  MultipartFile file,
+										@Valid MA_loadTail mA_loadTail ,
+										BindingResult result,
+										@RequestParam(value = "act",   defaultValue = "-1", required=true) int act) 
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		if(result.hasErrors())
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return model;
+		}
+		
+		
+		if(mA_loadTail.isSave())
+		{
+			try {
+				appBean.addToMapStore(mA_loadTail);
+				adminSessBean.setmA_loadTail(mA_loadTail);
+			}
+			catch(org.springframework.dao.DataIntegrityViolationException dve) 
+			{
+				dve.printStackTrace();
+				adminSessBean.getErrorList().add("Настройки уже существуют! ");
+			}
+			catch(Exception ioe)
+			{
+				ioe.printStackTrace();
+				adminSessBean.getErrorList().add("Параметры не записаны! ");
+			}
+		}
+
+		adminSessBean.setmA_loadTail(mA_loadTail);
+		processingFiles.loadFile(new Tail(), file, adminSessBean.getmA_loadTail());
+		
+		return model;
+	}	
+	
+	
+	@RequestMapping(value = "addFileTail" , method = RequestMethod.POST , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ModelAndView   processFileTail(@ModelAttribute MA_loadTempTail mA_loadTempTail, 
+														@RequestParam(value = "act",   defaultValue = "-1", required=true) int act,
+														@RequestParam(value = "deleteOldTails",   required=false) boolean deleteOldTails)
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		long time = System.currentTimeMillis();
+		try {
+				//Сохраняем "галку" deleteOldTails
+				adminSessBean.getmA_loadTail().setDeleteOldTails(deleteOldTails);
+				appBean.addToMapStore(adminSessBean.getmA_loadTail());
+
+				if(deleteOldTails)
+					ttadmService.updateTails();
+
+				
+					synchronized(this) {
+						
+						ttadmService.addTails(adminSessBean.getTempListTails());
+
+						adminSessBean.getTempListTails().clear();
+						/*
+						Iterator<Tail> iter_lT = adminSessBean.getTempListTails().iterator();
+						
+						while(iter_lT.hasNext()) 
+						{
+								Tail tail = iter_lT.next();
+								if( mA_loadTempTail.getTailIndex().contains(tail.getIndex()) ) //Проверка отмечена ли запись на загрузку
+								{
+									ttadmService.addTail(tail);
+									iter_lT.remove();
+								}
+						}
+						*/
+					}
+					//System.out.println("sessBean.getTempListTails() - " +sessBean.getTempListTails());
+	
+		}
+		catch (javax.validation.ConstraintViolationException cve)
+		{
+			adminSessBean.addError(cve.getLocalizedMessage());
+		}
+		catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					adminSessBean.addError("Ошибка загрузки остатков!");
+		}
+		
+		time = (System.currentTimeMillis() - time)/1000;
+		System.out.println("time - " + time+" sec.");
+		return model;
+	}
+	
+	
 	@PostConstruct
 	void init(){
 		//System.out.println(this + " INIT() ");

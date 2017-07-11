@@ -8,7 +8,7 @@ import java.util.Set;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 
-
+import ttadm.model.Tail;
 import ttadm.modelattribute.*;
 import ttadm.model.*;
 
@@ -50,6 +50,7 @@ public interface Dao {
 
 	
 	public void addTail(Tail tail);
+	public void addTails(Collection<Tail> tails);
 	public List<Tail> getTailsList();
 	public Object [] getTailsList(int p, long itemOnPage, String sortby);
 	public List<Tail> getTailsList(Tail tail_example, Collection<Criterion> criterions, int p );

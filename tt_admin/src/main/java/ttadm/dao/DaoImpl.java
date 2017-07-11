@@ -23,7 +23,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
-
+import ttadm.annotation.ProcessTail;
 import ttadm.model.ContactUsMessages;
 import ttadm.model.DirGender;
 import ttadm.model.DirNomenclGroup;
@@ -240,6 +240,16 @@ public class DaoImpl implements Dao {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void addTails(Collection<Tail> tails) {
+		// TODO Auto-generated method stub
+		Session sess = getSession();
+		for(Tail tail: tails)
+			sess.save(tail);
+		
+	}
+
 
 	@Override
 	public List<Tail> getTailsList() {
@@ -380,7 +390,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public void updateTails() {
 		// TODO Auto-generated method stub
-
+		getSession().createSQLQuery("update tails set destruction_date = now() where destruction_date is null").executeUpdate();
 	}
 
 	@Override

@@ -25,6 +25,7 @@ import ttadm.modelattribute.MA_loadNomencl;
 import ttadm.modelattribute.MA_loadNomenclGroup;
 import ttadm.modelattribute.MA_loadNomenclGroupRoot;
 import ttadm.modelattribute.MA_loadProvider;
+import ttadm.modelattribute.MA_loadTail;
 
 @Controller
 @Scope("session")
@@ -102,6 +103,9 @@ public class TT_AdminAjaxCtrl implements Serializable{
 				break;
 				case "MA_loadNomenclGroupRoot":
 					result.addAll(adminSessionBean.getHmLog_Load(new MA_loadNomenclGroupRoot()).values().stream().collect(Collectors.toList()));
+				break;
+				case "MA_loadTail":
+					result.addAll(adminSessionBean.getHmLog_Load(new MA_loadTail()).values().stream().collect(Collectors.toList()));
 				break;
 				
 			}

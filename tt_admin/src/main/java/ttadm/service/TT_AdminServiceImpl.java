@@ -7,12 +7,14 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ttadm.annotation.ProcessTail;
 import ttadm.dao.Dao;
 import ttadm.dao.DaoImpl;
 import ttadm.model.ContactUsMessages;
@@ -178,11 +180,21 @@ public class TT_AdminServiceImpl implements Dao {
 		return null;
 	}
 
+	@ProcessTail
 	@Override
 	public void addTail(Tail tail) {
 		// TODO Auto-generated method stub
 
 	}
+
+	@ProcessTail
+	@Override
+	public void addTails(Collection<Tail> tails) {
+		// TODO Auto-generated method stub
+		dao.addTails(tails);
+	}
+
+	@ProcessTail
 
 	@Override
 	public List<Tail> getTailsList() {
@@ -289,7 +301,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public void updateTails() {
 		// TODO Auto-generated method stub
-
+		dao.updateTails();
 	}
 
 	@Override
