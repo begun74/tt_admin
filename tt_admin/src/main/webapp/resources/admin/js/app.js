@@ -1,6 +1,26 @@
 var errAjax = 'Error connect to AJAX server!';
 var monitoring;
 
+
+var app = angular.module("myApp", []); 
+
+app.controller('myCtrl', function($scope, $http) {
+	$scope.tails=[];
+	$scope.updTailsTable = function () {
+		$http({
+	        method : "GET",
+	        url : "getTempTails"
+	    }).then(function mySuccess(response) {
+	        $scope.tails = response.data;
+	    }, function myError(response) {
+	        $scope.tails = response.statusText;
+	    });
+	};
+	
+	
+});
+
+
 var Monitor = {
 		result: "",
 		id:  1,

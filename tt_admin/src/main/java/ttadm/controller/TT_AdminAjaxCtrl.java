@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ttadm.bean.AdminSessionBean;
+import ttadm.model.JSON_Tail;
+import ttadm.model.Tail;
 import ttadm.modelattribute.MA_loadNomencl;
 import ttadm.modelattribute.MA_loadNomenclGroup;
 import ttadm.modelattribute.MA_loadNomenclGroupRoot;
@@ -37,6 +40,11 @@ public class TT_AdminAjaxCtrl implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 6173721887621931115L;
+	
+	@Autowired
+	private AdminSessionBean adminSessBean;
+
+	
 
 	@ResponseBody
 	@RequestMapping(value = "/clearMonitorErrors", method = RequestMethod.GET)
@@ -135,5 +143,66 @@ public class TT_AdminAjaxCtrl implements Serializable{
 
 	}
 
+	
+	@RequestMapping(value = "/getTempTails", method = RequestMethod.GET)
+	public ResponseEntity<List<JSON_Tail>> getTempTails(HttpSession httpSession)
+	{
+		
+		
+		//List<OrderItems> orderItems = ttService.getOrderItems(id);
+		
+		List<JSON_Tail> json_tails = new LinkedList<JSON_Tail>();
+
+ 		if(httpSession.isNew()) 
+			return new ResponseEntity<List<JSON_Tail>>(new ArrayList<JSON_Tail>(),HttpStatus.FORBIDDEN);
+ 		
+ 		List<Tail> tempTails = adminSessBean.getTempListTails();
+ 		
+ 		for(Tail tail: tempTails)
+ 		{
+ 			JSON_Tail json_tail = new JSON_Tail();
+ 			
+ 			//json_tail.setId(tail.getId());
+ 			json_tail.setAmountTail(tail.getAmountTail());
+ 			json_tail.setCreate_date(tail.getCreate_date());
+ 			json_tail.setFirstPrice(tail.getFirstPrice());
+ 			//json_tail.setNadb_opt(tail.getNadb_opt());
+ 			//json_tail.setNadb_rozn(tail.getNadb_rozn());
+ 			json_tail.setName(tail.getDirNomenclature().getName());
+ 			json_tail.setIndex(tail.getIndex());
+ 			//json_tail.setDirNomenclature(tail.getDirNomenclature());
+ 			//json_tail.setNds(tail.getNds());
+ 			//json_tail.setOpt_price(tail.getOpt_price());
+ 			//json_tail.setRozn_price(tail.getRozn_price());
+ 			json_tail.setSize(tail.getSize());
+ 			
+ 			json_tails.add(json_tail);
+ 		}
+		
+		//System.out.println("orderItems.size() - " +orderItems.size());
+		/*
+		for(OrderItems orderItem: orderItems) {
+			//System.out.println(orderItem.getId()+":  "+orderItem.getSize()+"  "+ orderItem.getAmount());
+			//System.out.println(orderItem.getOrder()+"  ");
+			//System.out.println(orderItem.getDirNomenclature());
+			JSON_OrderItems json_oitem = new JSON_OrderItems();
+			json_oitem.setId(orderItem.getId());
+			json_oitem.setAmount(orderItem.getAmount());
+			json_oitem.setArticle(orderItem.getTail().getDirNomenclature().getArticle());
+			json_oitem.setCode(orderItem.getTail().getDirNomenclature().getCode());
+			json_oitem.setCreate_date(orderItem.getCreate_date());
+			json_oitem.setModel(orderItem.getTail().getDirNomenclature().getModel());
+			json_oitem.setName(orderItem.getTail().getDirNomenclature().getName());
+			json_oitem.setSize(orderItem.getTail().getSize());
+			json_oitem.setDestruction_date(orderItem.getDestruction_date());
+			
+			json_oitems.add(json_oitem);
+		}
+		*/
+		//System.out.println(" json_oitems - " + json_oitems);
+		
+		return  new ResponseEntity<List<JSON_Tail>>(json_tails,HttpStatus.OK);
+	}	
+	
 
 }

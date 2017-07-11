@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -24,7 +25,9 @@
     <link href="resources/admin/css/fancybox-1.3.1.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/visualize.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/css/simplePagination.css" rel="stylesheet" type="text/css">
+
     
+    <script type="text/javascript" src="resources/js/angular.min.js"></script>
 
 	<script type="text/javascript" src="resources/admin/js/jquery-1.4.2.min.js"></script>   
     <script type="text/javascript" src="resources/admin/js/jquery.dimensions.min.js"></script>
@@ -234,6 +237,7 @@
 									  			action="${pageContext.request.contextPath}/admin/addFileTail?${_csrf.parameterName}=${_csrf.token}#tabs-1" 
 									  			method="POST">
 									  	<fieldset>
+									  	<!-- 
 						 				    			<table class="tab" border="0">
 										    				<tr align="center">
 											    				<th width="5%">№п/п</th>
@@ -259,7 +263,6 @@
 																			<td style="cursor:pointer;">${tail.create_date}</td>
 																			<td class="checkbox"><input name="tailIndex" class="tailIndex" value="${tail.index}" type="checkbox"  style="cursor:pointer;" class="checkbox"/></td>
 													         				<td >
-													         					<!-- a href="javascript:editBrand(${dirProvider.id});" class="ico ico-edit" onclick=""></a -->
 													         					<a href="" class="ico ico-delete" onclick=""></a>
 													         				</td>
 													         				
@@ -267,7 +270,43 @@
 																	</c:forEach>
 																</table>
 															</div>
-	
+											-->
+											<div ng-app="myApp" ng-controller="myCtrl">
+							
+												<button type="button" ng-click="updTailsTable()">Обновить</button>
+												<br>
+								
+													<div>
+										 				    			<table class="tab" border="0">
+															    				<tr align="center">
+																	    				<th width="5%">№п/п</th>
+																	    				<th width="35%">Наименование</th>
+																	    				<th width="5%">Кол-во</th>
+																	    				<th width="5%">Первая цена</th>
+																	    				<th width="37%">Размер</th>
+																	    				<th width="22%">Дата загрузки</th>
+																	    				<th width="4%" class="checkbox"><input type="checkbox" name="" id="tailIndx" class="check-all" onclick='checkboxAny($(this).attr("checked"),"tailIndex");'/></th>
+																	    				<th width="2%"><label for="tailIndx" style="cursor: pointer;">Выделить всё</label></th>
+															    				</tr>
+														    			</table>
+									
+																		<div align="center" style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
+																			<table class="tab tab-drag">
+																				<tr ng-repeat="t in tails | orderBy : 'name'">
+																					<td>{{$index+1}}</td>
+																					<td style="cursor:pointer;" >{{t.name}}</td>
+																					<td style="cursor:pointer;" >{{t.amountTail}}</td>
+																					<td style="cursor:pointer;" >{{t.firstPrice}}</td>
+																					<td style="cursor:pointer;" >{{t.size}}</td>
+																					<td style="cursor:pointer;">{{ t.create_date | date:'yyyy-MM-dd HH:mm'}}</td>
+																					<td class="checkbox"><input name="tailIndex" class="tailIndex" value="${tail.index}" type="checkbox"  style="cursor:pointer;" class="checkbox"/></td>													
+																				</tr>
+																			</table>
+																		</div>		
+													</div>		
+							
+											</div>            
+												
 									        				<div class="clearfix">
 											        					<button type="submit" class="" onclick="" >Загрузить</button>
 											        					<label><input name="deleteOldTails" id="deleteOldTails" type="checkbox" class="checkbox" <c:if test="${sessionBean.mA_loadTail.deleteOldTails == true}">checked="checked" </c:if> />удалить старые остатки</label>
@@ -285,21 +324,42 @@
             </div>
 
             <div id="tabs-2">  
-              	<div class="form-cols">
-				    		<div class="col1">
-							  	<form:form id="addTailForm" class="formBox" role="form"
-							  			commandName="loadTailForm"
-							  			enctype="multipart/form-data" 
-							  			action="${pageContext.request.contextPath}/admin/addTail?${_csrf.parameterName}=${_csrf.token}" 
-							  			method="POST"
-							  			modelAttribute="Tail">
-							  			
-								         
-						         <!-- button type="submit" class=""><spring:message code="label.button.add"/></button -->
-						         <input type="hidden" name ="id_tail" id ="id_tail" value="-1"/>
-						    	</form:form>
-							</div>					    
-					    </div>
+				<div ng-app="myApp" ng-controller="myCtrl">
+
+				<button ng-click="updTailsTable()">Обновить</button>
+				<br>
+
+					<div>
+		 				    			<table class="tab" border="0">
+							    				<tr align="center">
+									    				<th width="5%">№п/п</th>
+									    				<th width="35%">Наименование</th>
+									    				<th width="5%">Кол-во</th>
+									    				<th width="5%">Первая цена</th>
+									    				<th width="37%">Размер</th>
+									    				<th width="22%">Дата загрузки</th>
+									    				<th width="4%" class="checkbox"><input type="checkbox" name="" id="tailIndx" class="check-all" onclick='checkboxAny($(this).attr("checked"),"tailIndex");'/></th>
+									    				<th width="2%"><label for="tailIndx" style="cursor: pointer;">Выделить всё</label></th>
+							    				</tr>
+						    			</table>
+	
+										<div align="center" style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
+											<table class="tab tab-drag">
+												<tr ng-repeat="t in tails | orderBy : 'name'">
+													<td>{{$index+1}}</td>
+													<td style="cursor:pointer;" >{{t.name}}</td>
+													<td style="cursor:pointer;" >{{t.amountTail}}</td>
+													<td style="cursor:pointer;" >{{t.firstPrice}}</td>
+													<td style="cursor:pointer;" >{{t.size}}</td>
+													<td style="cursor:pointer;">{{ t.create_date | date:'yyyy-MM-dd HH:mm'}}</td>
+													<td class="checkbox"><input name="tailIndex" class="tailIndex" value="${tail.index}" type="checkbox"  style="cursor:pointer;" class="checkbox"/></td>													
+												</tr>
+											</table>
+										</div>		
+					</div>		
+
+				</div>            
+
             </div>
             
           </div><!-- /box-content -->  

@@ -3,6 +3,7 @@ package ttadm.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -59,7 +60,7 @@ public class AdminSessionBean  implements Serializable {
 	
 	private List<String> errorList = new ArrayList<String>();
 	private List<String> successList = new ArrayList<String>();
-	private List<Tail> tempListTails = new ArrayList<Tail>();
+	private List<Tail> tempListTails = new LinkedList<Tail>();
 	
 	private LinkedHashMap<Long,String> hmLog_LoadMA_loadProvider = new LinkedHashMap<Long,String>();
 	private LinkedHashMap<Long,String> hmLog_LoadMA_loadNomencl = new LinkedHashMap<Long,String>();
