@@ -9,15 +9,9 @@ public class JSON_RESULT implements IJSON {
 	 */
 	private static final long serialVersionUID = -4453133844151856298L;
 	
-	private long id=0;
 	
 	LinkedList<IModel> ok = new LinkedList<IModel>();
-
-
-	public Long getId() {
-		// TODO Auto-generated method stub
-		return id;
-	}
+	LinkedList<IModel> temp = new LinkedList<IModel>();
 
 
 	public LinkedList<IModel> getOk() {
@@ -27,6 +21,18 @@ public class JSON_RESULT implements IJSON {
 	public void setOk(LinkedList<IModel> ok) {
 		this.ok = ok;
 	}
+	
+	
+
+	public LinkedList<IModel> getTemp() {
+		return temp;
+	}
+
+
+	public void setTemp(LinkedList<IModel> temp) {
+		this.temp = temp;
+	}
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
