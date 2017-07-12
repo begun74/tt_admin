@@ -14,6 +14,8 @@ public class JSON_Tail implements IModel {
 	
 	
 	private Long id;
+	private Long code;
+	
 	private String name;
 
 	private int amountTail; //Кол-во
@@ -38,7 +40,7 @@ public class JSON_Tail implements IModel {
 
 	private int index;
 	
-	private DirNomenclature dirNomenclature;
+	//private DirNomenclature dirNomenclature;
 
 	public Long getId() {
 		// TODO Auto-generated method stub
@@ -51,6 +53,14 @@ public class JSON_Tail implements IModel {
 	}
 
 	
+
+	public Long getCode() {
+		return code;
+	}
+
+	public void setCode(Long code) {
+		this.code = code;
+	}
 
 	public int getIndex() {
 		return index;
@@ -148,13 +158,6 @@ public class JSON_Tail implements IModel {
 		this.opt_price = opt_price;
 	}
 
-	public DirNomenclature getDirNomenclature() {
-		return dirNomenclature;
-	}
-
-	public void setDirNomenclature(DirNomenclature dirNomenclature) {
-		this.dirNomenclature = dirNomenclature;
-	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -171,7 +174,7 @@ public class JSON_Tail implements IModel {
 		return "JSON_Tail [id=" + id + ", name=" + name + ", amountTail=" + amountTail + ", firstPrice=" + firstPrice
 				+ ", create_date=" + create_date + ", destruction_date=" + destruction_date + ", size=" + size
 				+ ", nds=" + nds + ", nadb_opt=" + nadb_opt + ", nadb_rozn=" + nadb_rozn + ", rozn_price=" + rozn_price
-				+ ", opt_price=" + opt_price + ", dirNomenclature.name="+dirNomenclature.getName()+"]";
+				+ ", opt_price=" + opt_price + "]";
 	}
 
 	

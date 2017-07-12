@@ -280,7 +280,8 @@
 										 				    			<table class="tab" border="0">
 															    				<tr align="center">
 																	    				<th width="5%">№п/п</th>
-																	    				<th width="35%">Наименование</th>
+																	    				<th width="25%">Наименование</th>
+																	    				<th width="10%">Код</th>
 																	    				<th width="5%">Кол-во</th>
 																	    				<th width="5%">Первая цена</th>
 																	    				<th width="37%">Размер</th>
@@ -298,6 +299,7 @@
 																				<tr ng-repeat="t in tails ">
 																					<td>{{$index+1}}</td>
 																					<td style="cursor:pointer;" >{{t.name}}</td>
+																					<td style="cursor:pointer;" >{{t.code}}</td>
 																					<td style="cursor:pointer;" >{{t.amountTail}}</td>
 																					<td style="cursor:pointer;" >{{t.firstPrice}}</td>
 																					<td style="cursor:pointer;" >{{t.size}}</td>

@@ -168,6 +168,7 @@ public class TT_AdminAjaxCtrl implements Serializable{
  			json_tail.setCreate_date(tail.getCreate_date());
  			json_tail.setFirstPrice(tail.getFirstPrice());
  			json_tail.setName(tail.getDirNomenclature().getName());
+ 			json_tail.setCode(tail.getDirNomenclature().getCode());
  			json_tail.setIndex(tail.getIndex());
  			json_tail.setSize(tail.getSize());
  			

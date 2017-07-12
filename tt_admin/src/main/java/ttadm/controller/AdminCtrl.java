@@ -377,21 +377,10 @@ public class AdminCtrl {
 						ttadmService.addTails(adminSessBean.getTempListTails());
 
 						adminSessBean.getTempListTails().clear();
-						/*
-						Iterator<Tail> iter_lT = adminSessBean.getTempListTails().iterator();
 						
-						while(iter_lT.hasNext()) 
-						{
-								Tail tail = iter_lT.next();
-								if( mA_loadTempTail.getTailIndex().contains(tail.getIndex()) ) //Проверка отмечена ли запись на загрузку
-								{
-									ttadmService.addTail(tail);
-									iter_lT.remove();
-								}
-						}
-						*/
+						System.gc();
+						
 					}
-					//System.out.println("sessBean.getTempListTails() - " +sessBean.getTempListTails());
 	
 		}
 		catch (javax.validation.ConstraintViolationException cve)
