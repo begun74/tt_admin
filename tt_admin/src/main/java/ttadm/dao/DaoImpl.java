@@ -248,6 +248,7 @@ public class DaoImpl implements Dao {
 		for(Tail tail: tails)
 			sess.save(tail);
 		
+		System.gc();
 	}
 
 

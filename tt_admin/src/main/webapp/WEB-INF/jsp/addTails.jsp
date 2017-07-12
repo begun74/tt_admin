@@ -73,7 +73,7 @@
 
 </head>
 
-<body>
+<body ng-app="myApp" ng-controller="myCtrl">
 <div id="main">
     <!-- #header -->
     	<!-- footer -->
@@ -271,7 +271,7 @@
 																</table>
 															</div>
 											-->
-											<div ng-app="myApp" ng-controller="myCtrl">
+											<div >
 							
 												<button type="button" ng-click="updTailsTable()">Обновить</button>
 												<br>
@@ -285,8 +285,11 @@
 																	    				<th width="5%">Первая цена</th>
 																	    				<th width="37%">Размер</th>
 																	    				<th width="22%">Дата загрузки</th>
-																	    				<th width="4%" class="checkbox"><input type="checkbox" name="" id="tailIndx" class="check-all" onclick='checkboxAny($(this).attr("checked"),"tailIndex");'/></th>
-																	    				<th width="2%"><label for="tailIndx" style="cursor: pointer;">Выделить всё</label></th>
+																	    				<th width="4%" class="checkbox">
+																	    					<label for="tailIndx" style="cursor: pointer;">Выделить всё
+																	    						<input type="checkbox" name="" id="tailIndx" class="check-all" onclick='checkboxAny($(this).attr("checked"),"tailIndex");'/>
+																	    					</label>
+																	    				</th>
 															    				</tr>
 														    			</table>
 									
