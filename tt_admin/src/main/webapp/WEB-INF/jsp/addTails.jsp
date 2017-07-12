@@ -273,7 +273,7 @@
 											-->
 											<div >
 							
-												<button type="button" ng-click="updTailsTable()">Обновить</button>
+												<button class="button_updTailsTable" type="button" ng-click="updTailsTable(); $event.stopPropagation();">Обновить</button>
 												<br>
 								
 													<div>
@@ -295,7 +295,7 @@
 									
 																		<div align="center" style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
 																			<table class="tab tab-drag">
-																				<tr ng-repeat="t in tails | orderBy : 'name'">
+																				<tr ng-repeat="t in tails ">
 																					<td>{{$index+1}}</td>
 																					<td style="cursor:pointer;" >{{t.name}}</td>
 																					<td style="cursor:pointer;" >{{t.amountTail}}</td>

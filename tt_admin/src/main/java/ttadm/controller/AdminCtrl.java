@@ -347,6 +347,7 @@ public class AdminCtrl {
 			}
 		}
 
+		
 		adminSessBean.setmA_loadTail(mA_loadTail);
 		processingFiles.loadFile(new Tail(), file, adminSessBean.getmA_loadTail());
 		
@@ -404,7 +405,7 @@ public class AdminCtrl {
 		}
 		
 		time = (System.currentTimeMillis() - time)/1000;
-		System.out.println("time - " + time+" sec.");
+		System.out.println("time addFileTail - " + time+" sec.");
 		return model;
 	}
 	

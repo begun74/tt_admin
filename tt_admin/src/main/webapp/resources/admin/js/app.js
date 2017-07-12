@@ -1,6 +1,7 @@
 var errAjax = 'Error connect to AJAX server!';
 var monitoring;
 
+var refreshTailsTable;
 
 var app = angular.module("myApp", []); 
 
@@ -10,9 +11,12 @@ app.controller('myCtrl', function($scope, $http) {
 		$http({
 	        method : "GET",
 	        url : "getTempTails"
-	    }).then(function mySuccess(response) {
-	        $scope.tails = response.data;
-	    }, function myError(response) {
+	    }).then(function success(response) {
+	        $scope.tails = response.data.ok;
+	        if($scope.tails.length > 0)
+	        	clearInterval(refreshTailsTable);
+
+	    }, function error(response) {
 	        $scope.tails = response.statusText;
 	    });
 	};
@@ -104,6 +108,18 @@ $(document).ready(function(){
 		} , 1000);
 			
 	});
+    
+    $(".button_updTailsTable").each(function() {
+
+    	var button = $(this);
+    	
+    	button.trigger('click');
+    	
+    	refreshTailsTable = setInterval( function() {
+    		button.trigger('click');
+    	} , 3000);
+    	
+    });
 
     $(".monitorProgress").click(function() {
     	clearMonitorProgress(this.id);

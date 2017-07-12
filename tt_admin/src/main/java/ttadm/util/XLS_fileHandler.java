@@ -155,6 +155,7 @@ public class XLS_fileHandler  implements Runnable, AutoCloseable {
 
 			if(IModel instanceof Tail)
 			{
+				adminSessBean.getTempListTails().clear();
 				adminSessBean.setTempListTails((List<Tail>) fileUpload.process(IModel, file, IMAmodel));
 				//System.out.println("adminSessBean.getTempListTails() - "+adminSessBean.getTempListTails().size() );
 				adminSessBean.addToHmLog_Load(IMAmodel, System.currentTimeMillis(), "Обработано "+adminSessBean.getTempListTails().size()+" записей.");
