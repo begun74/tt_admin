@@ -151,9 +151,6 @@ public class TT_AdminAjaxCtrl implements Serializable{
 	public ResponseEntity<IJSON> getTempTails(HttpSession httpSession)
 	{
 		
-		
-		//List<OrderItems> orderItems = ttService.getOrderItems(id);
-		
 		JSON_RESULT json_tails = new JSON_RESULT();
 
  		if(httpSession.isNew()) 

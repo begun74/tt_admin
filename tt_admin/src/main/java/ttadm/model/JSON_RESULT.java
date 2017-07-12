@@ -40,7 +40,7 @@ public class JSON_RESULT implements IJSON {
 
 	@Override
 	public String toString() {
-		return "JSON_OK";
+		return "JSON_RESULT";
 	}
 	
 	

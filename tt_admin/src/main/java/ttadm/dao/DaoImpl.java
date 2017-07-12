@@ -247,6 +247,8 @@ public class DaoImpl implements Dao {
 		Session sess = getSession();
 		for(Tail tail: tails)
 			sess.save(tail);
+		sess.flush();
+		sess.clear();
 		
 		System.gc();
 	}

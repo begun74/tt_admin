@@ -272,7 +272,7 @@
 															</div>
 											-->
 											<div >
-							
+												<div style="margin: 0 auto;"><h3>На загрузку</h3></div>
 												<button class="button_updTailsTable" type="button" ng-click="updTailsTable(); $event.stopPropagation();">Обновить</button>
 												<br>
 								
@@ -385,7 +385,7 @@
 									<c:set var="p" value="1"/>
 								</c:if>
         
-        				<h4>Текущие остатки</h4>
+        				<div style="margin: 10px;"><h3>Текущие остатки</h3></div>
 	 				    			<table class="tab" border="0">
 						    				<tr align="center">
 								    				<th width="5%">№п/п</th>
