@@ -41,6 +41,8 @@ public class DirProvider  implements  IModel{
 
 	@NotEmpty (message = "Please enter name.") 
 	private String name;
+	
+	private String short_name;
 
 	public Long getId() {
 		return id;
@@ -64,6 +66,20 @@ public class DirProvider  implements  IModel{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	
+	public String getShort_name() {
+		return short_name;
+	}
+
+	public void setShort_name(String short_name) {
+		this.short_name = short_name;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
