@@ -131,11 +131,11 @@ public class ProcessingFiles implements Serializable {
 		}
 		finally {
 			photoFileService.shutdownNow();
-			photoFileService = null;
+			//photoFileService = null;
 			System.out.println("===========photoFileService.shutdownNow ! =========");
 
 			service.shutdownNow();
-			service = null;
+			//service = null;
 			System.out.println("===========service.shutdownNow ! =========");
 
 		}
