@@ -16,9 +16,9 @@ import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
 
 import ttadm.model.*;
 import ttadm.modelattribute.IMAmodel;
@@ -32,6 +32,7 @@ public class AppBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7749935089438907692L;
+	
 	
 	@Resource
     private Environment env;
@@ -60,6 +61,7 @@ public class AppBean implements Serializable {
 
 	@PostConstruct
 	void init() {
+		
 		
 		try {
 		
