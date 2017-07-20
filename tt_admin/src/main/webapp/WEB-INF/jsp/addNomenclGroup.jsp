@@ -24,6 +24,8 @@
     <link href="resources/admin/css/fancybox-1.3.1.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/visualize.css" rel="stylesheet" type="text/css" media="screen" />
 
+    <script type="text/javascript" src="resources/js/angular.min.js"></script>
+
 	<script type="text/javascript" src="resources/admin/js/jquery-1.4.2.min.js"></script>   
     <script type="text/javascript" src="resources/admin/js/jquery.dimensions.min.js"></script>
     
