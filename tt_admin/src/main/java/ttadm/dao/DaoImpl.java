@@ -450,5 +450,12 @@ public class DaoImpl implements Dao {
 	}
 
 
+	@Override
+	public void callProc_DiffOfTails() {
+		// TODO Auto-generated method stub
+		getSession().createSQLQuery("select diffOfTails()");
+	}
+
+
 
 }
