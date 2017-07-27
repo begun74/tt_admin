@@ -150,10 +150,12 @@ public class MA_loadTail implements IMAmodel {
 	@Override
 	public String toString() {
 		return "MA_loadTail [row=" + row + ", col_amountTail=" + col_amountTail + ", col_firstPrice=" + col_firstPrice
-				+ ", autoload=" + autoload + "]";
+				+ ", col_codeNomencl=" + col_codeNomencl + ", col_size=" + col_size + ", nds=" + nds + ", nadb_opt="
+				+ nadb_opt + ", nadb_rozn=" + nadb_rozn + ", rozn_price=" + rozn_price + ", deleteOldTails="
+				+ deleteOldTails + ", autoload=" + autoload + "]";
 	}
-	
-	
+
+
 	
 
 }

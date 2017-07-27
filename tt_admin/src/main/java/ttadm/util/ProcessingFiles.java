@@ -20,7 +20,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javafx.concurrent.Task;
 import ttadm.bean.AdminSessionBean;
+import ttadm.bean.AppBean;
 import ttadm.model.IModel;
 import ttadm.modelattribute.IMAmodel;
 
@@ -38,13 +40,18 @@ public class ProcessingFiles implements Serializable {
 	private  XLS_fileHandler xls_fileHandler ;
 	
 	
-	private static ScheduledExecutorService service ;
 	private static ExecutorService photoFileService ;
 
 	@Autowired 
 	private HttpSession httpSession;
 	
 	private static int pool_size = 1;
+
+	private static ScheduledExecutorService service ;
+	
+	private static boolean flag;
+	
+
 
 
 	@PostConstruct
@@ -71,20 +78,32 @@ public class ProcessingFiles implements Serializable {
 	
 
 	
-	public static void startAutoLoad(List<Handler> pool)
+	public static boolean startAutoLoad(List<Handler> pool)
 	{
 		pool_size = pool.size() == 0?pool_size:pool.size();
 		
-		service = Executors.newScheduledThreadPool(pool_size);
-		for(Handler handler: pool)
-			service.scheduleWithFixedDelay(handler, 5, 5, TimeUnit.SECONDS);
 		
+		if(!flag)
+		{
+			service = Executors.newScheduledThreadPool(pool_size);
+			
+			for(Handler handler: pool)
+			{
+				service.scheduleWithFixedDelay(handler, 1, 5, TimeUnit.SECONDS);
+				flag = true;
+			}
 		
+		}
+		
+		return flag;
 	}
 	
-	public static void stopAutoLoad()
+	
+	public static boolean stopAutoLoad()
 	{
 		service.shutdown();
+		flag = false;
+		return flag;
 	}
 	
 	

@@ -141,15 +141,17 @@ public class MA_loadNomencl  implements IMAmodel {
 	public long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return "MA_loadNomencl [row=" + row + ", col_name=" + col_name + ", col_code=" + col_code + ", col_article="
-				+ col_article + ", save=" + save + ", autoload=" + autoload + "]";
+				+ col_article + ", col_codeNomenclGroup=" + col_codeNomenclGroup + ", col_gender=" + col_gender
+				+ ", col_pathToImage=" + col_pathToImage + ", col_model=" + col_model + ", col_codeProvider="
+				+ col_codeProvider + ", col_composition=" + col_composition + ", autoload=" + autoload + "]";
 	}
 	
 	
+
+
 
 }

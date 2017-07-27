@@ -77,10 +77,11 @@ public class MA_loadProvider implements IMAmodel {
 
 	@Override
 	public String toString() {
-		return "MA_loadProvider [row=" + row + ", col_name=" + col_name + ", col_code=" + col_code + ", autoload=" + autoload + "]";
+		return "MA_loadProvider [row=" + row + ", col_name=" + col_name + ", col_code=" + col_code + ", autoload="
+				+ autoload + "]";
 	}
 
-	
+
 
 
 	

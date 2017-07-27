@@ -2,7 +2,10 @@ package ttadm.controller;
 
 
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -33,11 +36,14 @@ import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
 import ttadm.model.Tail;
+import ttadm.modelattribute.IMAmodel;
 import ttadm.modelattribute.MA_loadNomencl;
 import ttadm.modelattribute.MA_loadNomenclGroup;
 import ttadm.modelattribute.MA_loadProvider;
 import ttadm.modelattribute.MA_loadTail;
 import ttadm.service.TT_AdminServiceImpl;
+import ttadm.util.AutoLoadService;
+import ttadm.util.Handler;
 import ttadm.util.ProcessingFiles;
 
 
@@ -57,6 +63,9 @@ public class AdminCtrl {
 	
 	@Autowired
 	private ProcessingFiles processingFiles;
+	
+	@Autowired
+	AutoLoadService AutoLoadService;
 	
 	@Autowired
 	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
@@ -399,6 +408,35 @@ public class AdminCtrl {
 		System.out.println("time addFileTail - " + time+" sec.");
 		return model;
 	}
+	
+	
+	@RequestMapping(value = "autoLoad" , method = RequestMethod.POST )
+	public ModelAndView   processAutoLoad(@RequestParam(value = "act",   defaultValue = "-1", required=true) int act,
+											@RequestParam(value = "status",   required=false) int status)
+	{
+		ModelAndView model = new ModelAndView("redirect:/admin?act="+act);
+		
+		List<Handler> listHandler = new LinkedList();
+
+		for(IMAmodel mam: appBean.getAutoLoad_IMAmodels())
+			listHandler.add(new Handler(mam));
+		
+		
+		switch (status) {
+			
+			case 0:
+				appBean.setAutoLoadFile(processingFiles.stopAutoLoad());
+				break;
+			
+			case 1:
+				appBean.setAutoLoadFile(processingFiles.startAutoLoad(listHandler));
+				break;
+		}
+
+		//model.addObject("autoLoadFile", appBean.isAutoLoadFile());
+
+		return model;
+	}	
 	
 	
 	@PostConstruct

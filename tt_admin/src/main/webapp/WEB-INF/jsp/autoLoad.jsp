@@ -94,6 +94,8 @@
             <ul class="bookmarks">
 		           	<li><a href="#tab1">Объекты автозагрузки</a></li>
             </ul>
+
+
           	<div class="box-content">    
             	<div id="tab1">
 					<table class="tab" border="0">
@@ -104,7 +106,7 @@
 					    				<th >Auto load</th>
 				    			</tr>
 				    </table>            	
-					<div align="center" style="overflow-y:scroll; overflow-x: none; height:400px; width:100%;">
+					<div align="center" style="overflow-y:scroll; overflow-x: none; height:200px; width:100%;" class="border1px">
 							<table class="tab tab-drag">
 									<c:forEach items="${autoLoadIMAmodels}" var="MAmodel" varStatus="loop">
 										<tr>
@@ -125,12 +127,10 @@
 							  			
 							  			<div class="clearfix">
 								        				<div class="lab">	
-								        					<button type="submit" name="status" value="1" >Старт</button>
-								        				</div>
-								        				<div class="lab">	
-								        					<button type="submit" name="status" value="0" >Стоп</button>
+								        					<button type="submit" name="status" <c:if test="${appBean.autoLoadFile eq true}" >value='0'</c:if><c:if test="${appBean.autoLoadFile ne true}" >value='1'</c:if> ><c:if test="${appBean.autoLoadFile eq true}" >Стоп</c:if><c:if test="${appBean.autoLoadFile ne true}" >Старт</c:if></button>
 								        				</div>
 							        	</div>
+							        	
 							        	
 						<input type="hidden" name ="act" id ="act" value="5"/>
 				</form>

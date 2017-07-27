@@ -17,8 +17,10 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ttadm.model.*;
 import ttadm.modelattribute.IMAmodel;
@@ -26,6 +28,8 @@ import ttadm.service.TT_AdminServiceImpl;
 
 
 @Component(value = "appBean")
+@Scope("application")
+
 public class AppBean implements Serializable {
 
 	/**
@@ -48,6 +52,8 @@ public class AppBean implements Serializable {
 	
 	private  String IMAGES_SERVER = null;
 	
+	private boolean autoLoadFile;
+	
 	
 	public double getVersion() {
 		return version;
@@ -56,6 +62,17 @@ public class AppBean implements Serializable {
 
 	public void setVersion(double version) {
 		this.version = version;
+	}
+
+	
+
+	public boolean isAutoLoadFile() {
+		return autoLoadFile;
+	}
+
+
+	public void setAutoLoadFile(boolean autoLoadFile) {
+		this.autoLoadFile = autoLoadFile;
 	}
 
 
