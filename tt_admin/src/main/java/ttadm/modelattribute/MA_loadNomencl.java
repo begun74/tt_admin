@@ -31,7 +31,8 @@ public class MA_loadNomencl  implements IMAmodel {
 	
 	private transient  boolean save;
 	private boolean autoload;
-	
+	private final int autoloadPriority = 4;
+
 	
 	
 	@Override
@@ -137,6 +138,11 @@ public class MA_loadNomencl  implements IMAmodel {
 	public void setAutoload(boolean autoload) {
 		this.autoload = autoload;
 	}
+	
+	public int getAutoloadPriority() {
+		return autoloadPriority;
+	}
+	
 
 	public long getSerialversionuid() {
 		return serialVersionUID;

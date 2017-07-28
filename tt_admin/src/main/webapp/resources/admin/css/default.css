@@ -396,4 +396,20 @@ a:hover.ico   { background-position: 0 0; }
 	height: 70px;
 }
 
+.colorGreen {
+	color: #22d807;
+}
 
+.colorRed {
+	color: red;
+}
+
+.width400px {
+	width: 400px;
+}
+
+.texarAction {
+	
+	width: 400px;
+	height: 200px;
+}

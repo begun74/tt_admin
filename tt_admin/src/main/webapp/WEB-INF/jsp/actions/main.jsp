@@ -44,8 +44,6 @@
     <script type="text/javascript" src="resources/admin/js/excanvas.js"></script>
     <script type="text/javascript" src="resources/admin/js/jquery.visualize.js"></script>
 
-    <!-- // Fancybox // -->
-  	<script type="text/javascript" src="resources/admin/js/jquery.fancybox-1.3.1.js"></script>
 
     <!-- // File upload // --> 
     <script type="text/javascript" src="resources/admin/js/jquery.filestyle.js"></script>
@@ -68,7 +66,7 @@
 <div id="main">
     <!-- #header -->
     	<!-- footer -->
-			<%@include file="admin/header_top.jsp" %>
+			<%@include file="../admin/header_top.jsp" %>
 		<!-- footer -->
 
     <!-- /header -->
@@ -95,55 +93,36 @@
         <!-- /box -->
         <div id="tabs" class="box">
             <ul class="bookmarks">
-		           	<li><a href="#tab1">Объекты автозагрузки</a></li>
+		           	<li><a href="#tab1">Добавить акцию</a></li>
+		           	<li><a href="#tab2">Все акции</a></li>
             </ul>
 
 
           	<div class="box-content">    
             	<div id="tab1">
-					<table class="tab" border="0">
-				    				<tr align="center">
-					    				<th class="dragHandle">&nbsp;</th>
-					    				<th width="7%">№ п/п</th>
-					    				<th width="83%">Название</th>
-					    				<th >Auto load</th>
-				    			</tr>
-				    </table>            	
-					<div align="center" style="overflow-y:scroll; overflow-x: none; height:200px; width:100%;" class="border1px">
-							<table class="tab tab-drag">
-									<c:forEach items="${autoLoadIMAmodels}" var="MAmodel" varStatus="loop">
-										<tr>
-											<td class="dragHandle">&nbsp;</td>
-											<td>${MAmodel.autoloadPriority}</td>
-											<td style="cursor:pointer;" >${MAmodel}</td>
-											<td><input type="checkbox" style="cursor:pointer;" <c:if test="${MAmodel.autoload}">checked='checked'</c:if> /></td>
-										</tr>
-									</c:forEach>
-							</table>
-					</div>            	
+				 			<div class="clearfix">
+									         <div class="lab">
+							                    <label>Наименование акции</label> 
+									         </div>
+									         <div class="con">
+												<input name="name" id="name" type="text" class="input width400px" >										         
+									         </div>
+							</div>
+				 			<div class="clearfix  textarea-wysiwyg">
+       										<div class="lab"><label for="textarea-two">Техт</label></div>
+          									<div class="con"><textarea cols="" rows="" class="textarea wysiwyg texarAction" id="textarea-two"></textarea></div>
+							</div>
+				 			<div class="clearfix">
+				 							<div class="lab"><label for="input-two">Two cols input <span>*</span></label></div>
+											<div class="con"><input type="text" class="input datepicker" name="from" id="" /></div><!-- // class datepicker switch on jQuery date picker -->
+							</div>
+
+        		</div>
+
+            	<div id="tab2">
+            		<%@include file="allAction.jsp" %>
         		</div>
         		
-        		<form id="autoLoadForm" class="formBox" role="form"  
-							  			enctype="multipart/form-data" 
-							  			action="${pageContext.request.contextPath}/admin/autoLoad?${_csrf.parameterName}=${_csrf.token}#tab1" 
-							  			method="POST">
-							  			
-							  			<div class="clearfix">
-								        				<div class="lab">	
-								        					<button type="submit" name="status" <c:if test="${appBean.autoLoadFile eq true}" >value='0'</c:if><c:if test="${appBean.autoLoadFile ne true}" >value='1'</c:if> ><c:if test="${appBean.autoLoadFile eq true}" >Стоп</c:if><c:if test="${appBean.autoLoadFile ne true}" >Старт</c:if></button>
-								        				</div>
-							        	</div>
-							        	
-							        	
-						<input type="hidden" name ="act" id ="act" value="5"/>
-				</form>
-
-		  			<!-- div class="clearfix">
-				        				<div class="lab">	
-					        					<button type="submit" name="status" <c:if test="${appBean.autoLoadFile eq true}" >value='0'</c:if><c:if test="${appBean.autoLoadFile ne true}" >value='1'</c:if> ><c:if test="${appBean.autoLoadFile eq true}" >Стоп</c:if><c:if test="${appBean.autoLoadFile ne true}" >Старт</c:if></button>
-				        				</div>
-		        	</div -->
-
         	</div>
         </div>
         <!-- /box -->
@@ -152,7 +131,7 @@
     </div>
     <!-- /#content -->
 	<!-- Sidebar -->
-	        <%@include file="sidebar.jsp" %>
+	        <%@include file="../sidebar.jsp" %>
 	<!-- /#sidebar-wrapper -->    
 	        
 	<!-- #footer -->

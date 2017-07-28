@@ -31,6 +31,7 @@ public class MA_loadTail implements IMAmodel {
 	private transient boolean save;
 	private transient boolean deleteOldTails;
 	private boolean autoload;
+	private final int autoloadPriority = 5;
 
 
 	@Override
@@ -139,6 +140,10 @@ public class MA_loadTail implements IMAmodel {
 
 	public void setRozn_price(int rozn_price) {
 		this.rozn_price = rozn_price;
+	}
+
+	public int getAutoloadPriority() {
+		return autoloadPriority;
 	}
 
 	@Override

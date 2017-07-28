@@ -7,7 +7,7 @@
 
         <!-- mainmenu -->
         <ul id="floatMenu" class="mainmenu">
-          <li><a href="#">Автозагрузка</a>
+          <li><a href="#">Автозагрузка  <c:if test="${appBean.autoLoadFile eq true}" ><b class="colorGreen">ON</b></c:if><c:if test="${appBean.autoLoadFile ne true}" ><b class="colorRed">OFF</b></c:if></a>
             <ul class="submenu">
               <li><a href="${pageContext.request.contextPath}/admin?act=5">Автозагрузка (старт/стоп)</a></li>          
             </ul>
@@ -32,7 +32,7 @@
           </li>
           <li><a href="#" >Контент сайта</a>
           	<ul class="submenu">
-          		<li><a href="${pageContext.request.contextPath}/admin/content?act=1" >Реклама/Акции</a></li>
+          		<li><a href="${pageContext.request.contextPath}/content?act=1" >Реклама/Акции</a></li>
           	</ul>
           </li>
 

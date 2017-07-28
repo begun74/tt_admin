@@ -23,6 +23,7 @@ public class MA_loadNomenclGroupRoot implements IMAmodel {
 
 	private transient  boolean save;
 	private boolean autoload;
+	private final int autoloadPriority = 1;
 	
 	
 	public int getRow() {
@@ -63,6 +64,11 @@ public class MA_loadNomenclGroupRoot implements IMAmodel {
 	
 	public void setAutoload(boolean autoload) {
 		this.autoload = autoload;
+	}
+	
+	
+	public int getAutoloadPriority() {
+		return autoloadPriority;
 	}
 	
 	

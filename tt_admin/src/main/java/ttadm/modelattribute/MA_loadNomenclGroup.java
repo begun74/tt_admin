@@ -23,6 +23,7 @@ public class MA_loadNomenclGroup implements IMAmodel {
 
 	private transient  boolean save;
 	private boolean autoload;
+	private final int autoloadPriority = 2;
 
 	@Override
 	public int getRow() {
@@ -79,6 +80,11 @@ public class MA_loadNomenclGroup implements IMAmodel {
 	public void setAutoload(boolean autoload) {
 		this.autoload = autoload;
 	}
+	
+	public int getAutoloadPriority() {
+		return autoloadPriority;
+	}
+	
 
 	@Override
 	public long getSerialversionuid() {

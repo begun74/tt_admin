@@ -437,7 +437,24 @@ public class AdminCtrl {
 
 		return model;
 	}	
+
 	
+	@RequestMapping(value = "/content" , method = RequestMethod.POST )
+	public ModelAndView   content(@RequestParam(value = "act",   defaultValue = "1", required=true) int act)
+	{
+		ModelAndView model = new ModelAndView("redirect:/content?act="+act);
+		
+		switch (act) {
+		
+			case 1:
+			model = new ModelAndView("actions/main");
+			break;
+		
+		}
+		
+		return model;
+		
+	}
 	
 	@PostConstruct
 	void init(){

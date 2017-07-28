@@ -26,7 +26,8 @@ public class MA_loadProvider implements IMAmodel {
 	
 	private transient boolean save;
 	private boolean autoload;
-	
+	private final int autoloadPriority = 3;
+
 	
 	public int getRow() {
 		return row;
@@ -68,6 +69,11 @@ public class MA_loadProvider implements IMAmodel {
 
 	public void setAutoload(boolean autoload) {
 		this.autoload = autoload;
+	}
+	
+	
+	public int getAutoloadPriority() {
+		return autoloadPriority;
 	}
 	
 
