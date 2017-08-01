@@ -20,8 +20,6 @@
     <link href="resources/admin/css/fancybox-1.3.1.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/visualize.css" rel="stylesheet" type="text/css" media="screen" />
 
-	<script type="text/javascript" src="resources/js/angular.min.js"></script>
-
 	<script type="text/javascript" src="resources/admin/js/jquery-1.4.2.min.js"></script>   
     <script type="text/javascript" src="resources/admin/js/jquery.dimensions.min.js"></script>
     
@@ -44,11 +42,14 @@
     <script type="text/javascript" src="resources/admin/js/excanvas.js"></script>
     <script type="text/javascript" src="resources/admin/js/jquery.visualize.js"></script>
 
+    <!-- // Fancybox // -->
+  	<script type="text/javascript" src="resources/admin/js/jquery.fancybox-1.3.1.js"></script>
 
     <!-- // File upload // --> 
     <script type="text/javascript" src="resources/admin/js/jquery.filestyle.js"></script>
     
     <script type="text/javascript" src="resources/admin/js/init.js"></script>
+    
     <script type="text/javascript" src="resources/admin/js/autoLoad.js"></script>
     
     <title><spring:message code="admin.title"/></title>
@@ -100,27 +101,43 @@
 
           	<div class="box-content">    
             	<div id="tab1">
+            	<div class="form-cols">
+            	 <div class="col1">
+            	 	<form class="formBox" method="post" action="">
 				 			<div class="clearfix">
 									         <div class="lab">
-							                    <label>Наименование акции</label> 
+							                    <label>Наименование акции <span>*</span></label> 
 									         </div>
 									         <div class="con">
 												<input name="name" id="name" type="text" class="input width400px" >										         
 									         </div>
 							</div>
-				 			<div class="clearfix  textarea-wysiwyg">
-       										<div class="lab"><label for="textarea-two">Техт</label></div>
-          									<div class="con"><textarea cols="" rows="" class="textarea wysiwyg texarAction" id="textarea-two"></textarea></div>
+				 			<div class="clearfix">
+       										<div class="lab"><label for="textarea-two">Техт <span>*</span></label></div>
+          									<div class="con"><textarea cols="" rows="" name="text" id="name" class="textarea wysiwyg texarAction" id="textarea-two"></textarea></div>
 							</div>
-				 			<!-- div class="clearfix">
-				 							<div class="lab"><label for="input-two">Two cols input <span>*</span></label></div>
-											<div class="con"><input type="text" class="input datepicker" name="from" id="" /></div>
-							</div -->
+				 			<div class="clearfix">
+				 							<div class="lab"><label for="fromDate">Дата С <span>*</span></label></div>
+											<div class="dateCon">
+												<input id="fromDate" type="text" class="input datepicker" name="fromDate" id="input-two" />
+											</div>
+							</div>
+							
+																		
+				 			<div class="clearfix">
+											<div class="lab"><label for="toDate">Дата По <span>*</span></label></div>
+											<div class="dateCon">
+												<input id="toDate" type="text" class="input datepicker" name="toDate" id="input-three" />
+											</div>
+							</div>
+							
+						</form>
+					</div>
+					</div>
 
         		</div>
 
             	<div id="tab2">
-            		<%@include file="allAction.jsp" %>
         		</div>
         		
         	</div>
@@ -140,6 +157,15 @@
     </div>
     <!-- /#footer -->
 	
+
+	<script>
+	$(function(){
+		  $.datepicker.setDefaults(
+		        $.extend($.datepicker.regional["ru"])
+		  );
+		  $("#datepicker").datepicker();
+		});
+	</script>
 
   <!-- /#main --> 
 </body>

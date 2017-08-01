@@ -28,10 +28,6 @@ import ttadm.modelattribute.*;
 @SessionAttributes("adminSessionBean")
 public class AdminSessionBean  implements Serializable {
 
-	/**
-	 * 
-	 */
-	//private static final long serialVersionUID = 3935902451114251503L;
 
 	/**
 	 * 

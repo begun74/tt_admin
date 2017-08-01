@@ -12,7 +12,15 @@ import ttadm.modelattribute.IMAmodel;
 
 @Service
 public class Handler implements Serializable, Runnable  {
+	
+	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4026351348050804698L;
+	
+	
 	public IMAmodel MAmodel;
 	private Thread currThread = null;
 	
@@ -35,6 +43,7 @@ public class Handler implements Serializable, Runnable  {
 	@PreDestroy
 	void destr() {
 		//if(currThread != null)
+		
 			currThread.interrupt();
 
 		System.out.println("Handler - @PreDestroy");
@@ -47,7 +56,7 @@ public class Handler implements Serializable, Runnable  {
 		// TODO Auto-generated method stub
 		try {
 			int i = 0;
-			while(i < 30 )
+			while(i < 5 )
 			{
 				currThread.sleep(1000);
 				i++;

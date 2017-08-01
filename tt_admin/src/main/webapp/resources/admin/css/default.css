@@ -288,6 +288,7 @@ a:hover.ico   { background-position: 0 0; }
 .formBox .lab span        { color: #CD0B1C; }
 .formBox .con             { width: 85%; float: right; position: relative; border: 1px solid #dadada; background: url(../images/bg-input.gif) 0 0 repeat-x; -webkit-border-radius: 5px; border-radius: 5px;  -moz-border-radius: 5px;  }
 .formBox .conleft             { width: 85%; float: left; position: relative; border: 1px solid #dadada; background: url(../images/bg-input.gif) 0 0 repeat-x; -webkit-border-radius: 5px; border-radius: 5px;  -moz-border-radius: 5px;  }
+.formBox .dateCon             { width: 15%; float: left; position: relative; border: 1px solid #dadada; background: url(../images/bg-input.gif) 0 0 repeat-x; -webkit-border-radius: 5px; border-radius: 5px;  -moz-border-radius: 5px;  }
 .formBox .file .con,
 .formBox .checkbox .con   { background: none; border: none; }
 .formBox .select, 

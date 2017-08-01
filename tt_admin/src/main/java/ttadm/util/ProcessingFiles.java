@@ -1,13 +1,14 @@
 package ttadm.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
@@ -15,14 +16,10 @@ import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javafx.concurrent.Task;
 import ttadm.bean.AdminSessionBean;
-import ttadm.bean.AppBean;
 import ttadm.model.IModel;
 import ttadm.modelattribute.IMAmodel;
 
@@ -52,6 +49,7 @@ public class ProcessingFiles implements Serializable {
 	private static boolean flag;
 	
 
+	private static List<ScheduledFuture> schFutList = new ArrayList<ScheduledFuture>();
 
 
 	@PostConstruct
@@ -89,7 +87,7 @@ public class ProcessingFiles implements Serializable {
 			
 			for(Handler handler: pool)
 			{
-				service.scheduleWithFixedDelay(handler, 1, 5, TimeUnit.SECONDS);
+				schFutList.add(service.scheduleWithFixedDelay(handler, 1, 5, TimeUnit.SECONDS)); 
 				flag = true;
 			}
 		
@@ -141,7 +139,12 @@ public class ProcessingFiles implements Serializable {
 			photoFileService.awaitTermination(3, TimeUnit.SECONDS);
 			System.out.println("=========== photoFileService.awaitTermination ! =========");
 			
+			
+			for(ScheduledFuture schFut: schFutList)
+				schFut.cancel(true);
+			
 			service.awaitTermination(3, TimeUnit.SECONDS);
+			
 			System.out.println("=========== service.awaitTermination ! =========");
 			
 		} catch (Exception e) {
