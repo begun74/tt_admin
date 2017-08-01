@@ -112,10 +112,10 @@
        										<div class="lab"><label for="textarea-two">Техт</label></div>
           									<div class="con"><textarea cols="" rows="" class="textarea wysiwyg texarAction" id="textarea-two"></textarea></div>
 							</div>
-				 			<div class="clearfix">
+				 			<!-- div class="clearfix">
 				 							<div class="lab"><label for="input-two">Two cols input <span>*</span></label></div>
-											<div class="con"><input type="text" class="input datepicker" name="from" id="" /></div><!-- // class datepicker switch on jQuery date picker -->
-							</div>
+											<div class="con"><input type="text" class="input datepicker" name="from" id="" /></div>
+							</div -->
 
         		</div>
 
