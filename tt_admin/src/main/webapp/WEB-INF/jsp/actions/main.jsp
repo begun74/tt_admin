@@ -102,37 +102,117 @@
           	<div class="box-content">    
             	<div id="tab1">
             	<div class="form-cols">
-            	 <div class="col1">
-            	 	<form class="formBox" method="post" action="">
+            	 	<div class="col1">
+            	 		<form class="formBox" method="post" modelAttribute="AdvertCamp" action="${pageContext.request.contextPath}/content?${_csrf.parameterName}=${_csrf.token}">
 				 			<div class="clearfix">
 									         <div class="lab">
-							                    <label>Наименование акции <span>*</span></label> 
+							                    <label for="name">Наименование акции <span>*</span></label> 
 									         </div>
 									         <div class="con">
-												<input name="name" id="name" type="text" class="input width400px" >										         
+												<input name="name" id="name" type="text" class="input width400px" value="${mA_AdvertCamp.name }">										         
 									         </div>
 							</div>
 				 			<div class="clearfix">
-       										<div class="lab"><label for="textarea-two">Техт <span>*</span></label></div>
-          									<div class="con"><textarea cols="" rows="" name="text" id="name" class="textarea wysiwyg texarAction" id="textarea-two"></textarea></div>
+       										<div class="lab"><label for="textarea-two">Текст <span>*</span></label></div>
+          									<div class="con"><textarea cols="" rows="" name="text" id="text" class="textarea wysiwyg texarAction" >${mA_AdvertCamp.text }</textarea></div>
 							</div>
+							<fieldset>
+					 			<div class="clearfix">
+					 							<div class="lab"><label for="fromDate">Дата проведения С <span>*</span></label></div>
+												<div class="dateCon">
+													<input id="fromDate" type="text" class="input datepicker" name="fromDate"  value="${mA_AdvertCamp.fromDate }" />
+												</div>
+								</div>
+								
+																			
+					 			<div class="clearfix">
+												<div class="lab"><label for="toDate">Дата проведения По <span>*</span></label></div>
+												<div class="dateCon">
+													<input id="toDate" type="text" class="input datepicker" name="toDate" value="${mA_AdvertCamp.toDate }" />
+												</div>
+								</div>
+							</fieldset>
+							<p/>							
 				 			<div class="clearfix">
-				 							<div class="lab"><label for="fromDate">Дата С <span>*</span></label></div>
-											<div class="dateCon">
-												<input id="fromDate" type="text" class="input datepicker" name="fromDate" id="input-two" />
-											</div>
+									<button name="butAdvCamp" value="1" class="button">Добавить</button>
+									<button name="butAdvCamp" value="2" class="button">Обновить</button>
 							</div>
-							
-																		
-				 			<div class="clearfix">
-											<div class="lab"><label for="toDate">Дата По <span>*</span></label></div>
-											<div class="dateCon">
-												<input id="toDate" type="text" class="input datepicker" name="toDate" id="input-three" />
-											</div>
-							</div>
-							
 						</form>
 					</div>
+            	 	
+            	 	<div class="col2">
+            	 		<div><div><h3>Действующие акции</h3></div>
+				          <!-- table -->
+				          <table class="tab tab-drag">
+				            <tr class="top nodrop nodrag">
+				              <th class="dragHandle">&nbsp;</th>
+				              <th class="checkbox"><input type="checkbox" name="" value="" class="check-all" /></th>
+				              <th>Column 1</th>
+				              <th>Column 2</th>          
+				              <th>Column 3</th>
+				              <th class="action">Action</th>
+				            </tr>
+				            <tr>
+				              <td class="dragHandle">&nbsp;</td>
+				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
+				              <td><a href="#">Table data one</a></td>
+				              <td>Table data one</td>          
+				              <td>Table data one</td>
+				              <td class="action">
+				                <a href="" class="ico ico-delete">Delete</a>
+				                <a href="" class="ico ico-edit">Edit</a>
+				              </td>
+				            </tr>
+				            <tr>
+				              <td class="dragHandle">&nbsp;</td>
+				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
+				              <td><a href="#">Table data two</a></td>
+				              <td>Table data two</td>          
+				              <td>Table data two</td>
+				              <td class="action">
+				                <a href="" class="ico ico-delete">Delete</a>
+				                <a href="" class="ico ico-edit">Edit</a>
+				              </td>
+				            </tr>
+				            <tr>
+				              <td class="dragHandle">&nbsp;</td>
+				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
+				              <td><a href="#">Table data three</a></td>
+				              <td>Table data three</td>          
+				              <td>Table data three</td>
+				              <td class="action">
+				                <a href="" class="ico ico-delete">Delete</a>
+				                <a href="" class="ico ico-edit">Edit</a>
+				              </td>
+				            </tr>
+				            <tr>
+				              <td class="dragHandle">&nbsp;</td>
+				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
+				              <td><a href="#">Table data four</a></td>
+				              <td>Table data four</td>          
+				              <td>Table data four</td>
+				              <td class="action">
+				                <a href="" class="ico ico-delete">Delete</a>
+				                <a href="" class="ico ico-edit">Edit</a>
+				              </td>
+				            </tr>
+				            <tr>
+				              <td class="dragHandle">&nbsp;</td>
+				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
+				              <td><a href="#">Table data five</a></td>
+				              <td>Table data five</td>          
+				              <td>Table data five</td>
+				              <td class="action">
+				                <a href="" class="ico ico-delete">Delete</a>
+				                <a href="" class="ico ico-edit">Edit</a>
+				              </td>
+				            </tr>
+				          </table>
+				          <!-- /table -->
+            	 		</div>
+            	 	
+					</div>
+
 					</div>
 
         		</div>
@@ -160,7 +240,7 @@
 
 	<script>
 	$(function(){
-		  $.datepicker.setDefaults(
+		  $.toDate.setDefaults(
 		        $.extend($.datepicker.regional["ru"])
 		  );
 		  $("#datepicker").datepicker();

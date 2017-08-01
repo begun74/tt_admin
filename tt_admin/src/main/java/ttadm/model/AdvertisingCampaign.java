@@ -38,7 +38,7 @@ public class AdvertisingCampaign implements  IModel {
 	@NotNull
 	private String text;
 	
-	@NotNull
+	
 	private Timestamp create_date;
 	
 	@NotNull
@@ -60,10 +60,52 @@ public class AdvertisingCampaign implements  IModel {
 		this.id = id;
 	}
 
+	
+	
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Timestamp getCreate_date() {
+		return create_date;
+	}
+
+	public void setCreate_date(Timestamp create_date) {
+		this.create_date = create_date;
+	}
+
+	public Timestamp getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Timestamp fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Timestamp getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Timestamp toDate) {
+		this.toDate = toDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "advert_campaign";
+		return name;
 	}
 
 

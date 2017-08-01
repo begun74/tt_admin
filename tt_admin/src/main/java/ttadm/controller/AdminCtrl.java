@@ -2,6 +2,10 @@ package ttadm.controller;
 
 
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,12 +35,14 @@ import ttadm.modelattribute.MA_loadTempTail;
 import ttadm.modelattribute.MA_loadNomenclGroupRoot;
 import ttadm.bean.AdminSessionBean;
 import ttadm.bean.AppBean;
+import ttadm.model.AdvertisingCampaign;
 import ttadm.model.DirNomenclGroup;
 import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
 import ttadm.model.Tail;
 import ttadm.modelattribute.IMAmodel;
+import ttadm.modelattribute.MA_AdvertCamp;
 import ttadm.modelattribute.MA_loadNomencl;
 import ttadm.modelattribute.MA_loadNomenclGroup;
 import ttadm.modelattribute.MA_loadProvider;
@@ -440,22 +446,56 @@ public class AdminCtrl {
 
 	
 	@RequestMapping(value = "/content" , method = RequestMethod.POST )
-	public ModelAndView   content(@RequestParam(value = "act",   defaultValue = "1", required=true) int act)
+	public ModelAndView   content(HttpSession session
+									, @Valid MA_AdvertCamp mA_AdvertCamp 
+									, BindingResult result
+									, @RequestParam(value = "logout",	required = false) String logout)
 	{
-		ModelAndView model = new ModelAndView("redirect:/content?act="+act);
+		ModelAndView model = new ModelAndView("redirect:/content?act="+mA_AdvertCamp.getButAdvCamp());
 		
-		switch (act) {
+		if (logout != null) {
+			SecurityContextHolder.clearContext();
+			session.invalidate();
+			
+			return new ModelAndView("redirect:/");
+		}
+
+		if(result.hasErrors() && mA_AdvertCamp.getButAdvCamp() > 0)
+		{
+			adminSessBean.addError("Правильно введите данные!");
+			return new ModelAndView("actions/main");
+		}		
 		
-			case 1:
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");		
+		switch (mA_AdvertCamp.getButAdvCamp()) {
+		
+			case 0:
 			model = new ModelAndView("actions/main");
 			break;
-		
+
+			case 1:
+				model = new ModelAndView("actions/main");
+				AdvertisingCampaign advCamp = new AdvertisingCampaign();
+				try {
+					advCamp.setFromDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getFromDate()).getTime()));
+					advCamp.setToDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getToDate()).getTime()));
+					advCamp.setName(mA_AdvertCamp.getName());
+					advCamp.setText(mA_AdvertCamp.getText());
+				
+					ttadmService.saveIModel(advCamp);
+					
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			break;
+
 		}
 		
 		return model;
 		
 	}
 	
+
 	@PostConstruct
 	void init(){
 		//System.out.println(this + " INIT() ");

@@ -284,7 +284,7 @@ a:hover.ico   { background-position: 0 0; }
 .formBox .col2 .lab       { width: 28% !important; }
 .formBox .col1 .con,
 .formBox .col2 .con       { width: 69% !important; position: relative; }
-.formBox .lab             { width: 12%; float: left; font-weight: bold; color: #1a2e4d; padding: 5px 2% 0 0; }
+.formBox .lab             { width: 13%; float: left; font-weight: bold; color: #1a2e4d; padding: 5px 2% 0 0; }
 .formBox .lab span        { color: #CD0B1C; }
 .formBox .con             { width: 85%; float: right; position: relative; border: 1px solid #dadada; background: url(../images/bg-input.gif) 0 0 repeat-x; -webkit-border-radius: 5px; border-radius: 5px;  -moz-border-radius: 5px;  }
 .formBox .conleft             { width: 85%; float: left; position: relative; border: 1px solid #dadada; background: url(../images/bg-input.gif) 0 0 repeat-x; -webkit-border-radius: 5px; border-radius: 5px;  -moz-border-radius: 5px;  }

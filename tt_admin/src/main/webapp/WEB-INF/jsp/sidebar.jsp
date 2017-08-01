@@ -32,7 +32,7 @@
           </li>
           <li><a href="#" >Контент сайта</a>
           	<ul class="submenu">
-          		<li><a href="${pageContext.request.contextPath}/content?act=1" >Реклама/Акции</a></li>
+          		<li><a href="${pageContext.request.contextPath}/content?act=0" >Реклама/Акции</a></li>
           	</ul>
           </li>
 
