@@ -31,3 +31,9 @@ function toEdit(form, id, name, txt, fromDate,toDate, active) {
 	
 	document.forms[form].active.checked = active;
 }
+
+
+function delAdvCamp(id) {
+	if(confirm('Удалить ?'))
+		window.location = 'content?act=3&id='+id;
+}

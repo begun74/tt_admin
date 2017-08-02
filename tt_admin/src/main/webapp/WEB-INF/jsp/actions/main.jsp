@@ -129,7 +129,7 @@
 							</div>
 				 			<div class="clearfix">
        										<div class="lab"><label for="textarea-two">Текст <span>*</span></label></div>
-          									<div class="con"><textarea name="text" id="text" class="textarea wysiwyg texarAction" ></textarea></div>
+          									<div class="con"><textarea name="text" id="text" class="textarea texarAction" ></textarea></div>
 							</div>
 							<fieldset>
 					 			<div class="clearfix">
@@ -185,7 +185,7 @@
 									              <td id="td_fromDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
 									              <td id="td_toDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" /></td>
 									              <td class="action">
-									                <a href="content?act=3&id=${advCamp.id}" class="ico ico-delete">Удалить</a>
+									                <a href="javascript:delAdvCamp(${advCamp.id});" class="ico ico-delete"></a>
 									              </td>
 									            </tr>
 											</c:forEach>
