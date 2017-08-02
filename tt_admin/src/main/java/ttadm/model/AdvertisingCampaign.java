@@ -41,9 +41,11 @@ public class AdvertisingCampaign implements  IModel {
 	
 	private Timestamp create_date;
 	
+	@Column(name="fromDate")
 	@NotNull
 	private Timestamp fromDate;
 
+	@Column(name="toDate")
 	@NotNull
 	private Timestamp toDate;
 
