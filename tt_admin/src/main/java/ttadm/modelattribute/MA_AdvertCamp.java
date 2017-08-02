@@ -25,6 +25,9 @@ public class MA_AdvertCamp  implements Serializable {
 	private static final long serialVersionUID = 1649313390929297781L;
 	
 	
+	
+	private Long id = null;
+	
 	@NotBlank
 	private String name;
 
@@ -39,10 +42,18 @@ public class MA_AdvertCamp  implements Serializable {
 	@NotBlank
 	private String toDate;
 	
-	private int butAdvCamp;
+	private Boolean active = Boolean.FALSE;
 
 	
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -75,12 +86,13 @@ public class MA_AdvertCamp  implements Serializable {
 		this.toDate = toDate;
 	}
 
-	public int getButAdvCamp() {
-		return butAdvCamp;
+
+	public Boolean getActive() {
+		return active;
 	}
 
-	public void setButAdvCamp(int butAdvCamp) {
-		this.butAdvCamp = butAdvCamp;
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public static long getSerialversionuid() {
@@ -90,7 +102,7 @@ public class MA_AdvertCamp  implements Serializable {
 	@Override
 	public String toString() {
 		return "MA_AdvertCamp [name=" + name + ", text=" + text + ", fromDate=" + fromDate + ", toDate=" + toDate
-				+ ", butAdvCamp=" + butAdvCamp + "]";
+				+ ", butAdvCamp=" + active + "]";
 	}
 
 	

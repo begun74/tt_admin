@@ -261,4 +261,19 @@ function checkboxAny(flag,clazz)
 
 }
 
+function clearErrors() {
 
+	$.ajax({
+		type : "GET",
+		url : "clearMonitorErrors",
+		timeout : 100000,
+		success : function() 
+		{
+			/*$("#compareItems").text(data.allItems);*/
+		},
+		error : function(e) {
+			//alert("ERROR: addToCompare()", e);
+			display(e);
+		}
+	});
+}

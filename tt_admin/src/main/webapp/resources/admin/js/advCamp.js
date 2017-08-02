@@ -1,0 +1,33 @@
+var app = angular.module("advCamp", []); 
+
+app.controller('advCamp_Ctrl', function($scope, $http) {
+	$scope.tails=[];
+	$scope.updTailsTable = function () {
+		$http({
+	        method : "GET",
+	        url : "getTempTails"
+	    }).then(function success(response) {
+	        $scope.tails = response.data.ok;
+	        if($scope.tails.length > 0)
+	        	clearInterval(refreshTailsTable);
+
+	    }, function error(response) {
+	        $scope.tails = response.statusText;
+	    });
+	};
+	
+	
+});
+
+
+function toEdit(form, id, name, txt, fromDate,toDate, active) {
+	//alert(text)
+	document.forms[form].id.value = id;
+	document.forms[form].name.value = name; 
+	document.forms[form].text.value  = txt;
+	
+	document.forms[form].fromDate.value = fromDate; 
+	document.forms[form].toDate.value = toDate; 
+	
+	document.forms[form].active.checked = active;
+}

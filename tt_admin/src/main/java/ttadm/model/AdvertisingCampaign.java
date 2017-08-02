@@ -41,13 +41,15 @@ public class AdvertisingCampaign implements  IModel {
 	
 	private Timestamp create_date;
 	
-	@Column(name="fromDate")
+	@Column(name="fromdate")
 	@NotNull
 	private Timestamp fromDate;
 
-	@Column(name="toDate")
+	@Column(name="todate")
 	@NotNull
 	private Timestamp toDate;
+	
+	private boolean active;
 
 	
 	@Override
@@ -110,6 +112,14 @@ public class AdvertisingCampaign implements  IModel {
 		return name;
 	}
 
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	@Override
 	public int compareTo(Object arg0) {

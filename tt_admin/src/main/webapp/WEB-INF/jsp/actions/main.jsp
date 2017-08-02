@@ -2,6 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +21,8 @@
     <link href="resources/admin/css/wysiwyg.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/fancybox-1.3.1.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/visualize.css" rel="stylesheet" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="resources/js/angular.min.js"></script>
 
 	<script type="text/javascript" src="resources/admin/js/jquery-1.4.2.min.js"></script>   
     <script type="text/javascript" src="resources/admin/js/jquery.dimensions.min.js"></script>
@@ -50,7 +54,8 @@
     
     <script type="text/javascript" src="resources/admin/js/init.js"></script>
     
-    <script type="text/javascript" src="resources/admin/js/autoLoad.js"></script>
+    <script type="text/javascript" src="resources/admin/js/advCamp.js"></script>
+    <script type="text/javascript" src="resources/admin/js/app.js"></script>
     
     <title><spring:message code="admin.title"/></title>
 
@@ -63,7 +68,7 @@
 
 </head>
 
-<body ng-app="autoLoad_App" ng-controller="autoLoad_Ctrl">
+<body ng-app="advCamp" ng-controller="advCamp_Ctrl">
 <div id="main">
     <!-- #header -->
     	<!-- footer -->
@@ -101,9 +106,19 @@
 
           	<div class="box-content">    
             	<div id="tab1">
+            	
             	<div class="form-cols">
             	 	<div class="col1">
-            	 		<form class="formBox" method="post" modelAttribute="AdvertCamp" action="${pageContext.request.contextPath}/content?${_csrf.parameterName}=${_csrf.token}">
+            	   		            <!-- Error form message -->            
+   		            <c:if test="${fn:length(adminSessionBean.errorList) gt 0 }">
+		            <div class="form-message error"  onclick="clearErrors()">
+		              <p>Ошибка :</p>
+		              <ul>
+		                <li>"${adminSessionBean.errorList}"</li>
+		              </ul>
+		            </div>
+		            </c:if>
+            	 		<form id="formAdvCamp" class="formBox" method="post" modelAttribute="AdvertCamp" action="${pageContext.request.contextPath}/content?${_csrf.parameterName}=${_csrf.token}">
 				 			<div class="clearfix">
 									         <div class="lab">
 							                    <label for="name">Наименование акции <span>*</span></label> 
@@ -114,7 +129,7 @@
 							</div>
 				 			<div class="clearfix">
        										<div class="lab"><label for="textarea-two">Текст <span>*</span></label></div>
-          									<div class="con"><textarea cols="" rows="" name="text" id="text" class="textarea wysiwyg texarAction" >${mA_AdvertCamp.text }</textarea></div>
+          									<div class="con"><textarea name="text" id="text" class="textarea texarAction" ></textarea></div>
 							</div>
 							<fieldset>
 					 			<div class="clearfix">
@@ -131,86 +146,52 @@
 													<input id="toDate" type="text" class="input datepicker" name="toDate" value="${mA_AdvertCamp.toDate }" />
 												</div>
 								</div>
+					 			<div class="clearfix">
+												<div class="lab"><label for="toDate">Действует <input type="checkbox" name="active" checked="checked"/></label></div>
+													
+								</div>
+								
 							</fieldset>
 							<p/>							
 				 			<div class="clearfix">
-									<button name="butAdvCamp" value="1" class="button">Добавить</button>
-									<button name="butAdvCamp" value="2" class="button">Обновить</button>
+									<button name="act" value="1" class="button">Добавить</button>
+									<button name="act" value="2" class="button">Обновить</button>
 							</div>
+							
+							<input type="hidden" name="id" />
 						</form>
 					</div>
             	 	
             	 	<div class="col2">
-            	 		<div><div><h3>Действующие акции</h3></div>
-				          <!-- table -->
-				          <table class="tab tab-drag">
-				            <tr class="top nodrop nodrag">
-				              <th class="dragHandle">&nbsp;</th>
-				              <th class="checkbox"><input type="checkbox" name="" value="" class="check-all" /></th>
-				              <th>Column 1</th>
-				              <th>Column 2</th>          
-				              <th>Column 3</th>
-				              <th class="action">Action</th>
-				            </tr>
-				            <tr>
-				              <td class="dragHandle">&nbsp;</td>
-				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
-				              <td><a href="#">Table data one</a></td>
-				              <td>Table data one</td>          
-				              <td>Table data one</td>
-				              <td class="action">
-				                <a href="" class="ico ico-delete">Delete</a>
-				                <a href="" class="ico ico-edit">Edit</a>
-				              </td>
-				            </tr>
-				            <tr>
-				              <td class="dragHandle">&nbsp;</td>
-				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
-				              <td><a href="#">Table data two</a></td>
-				              <td>Table data two</td>          
-				              <td>Table data two</td>
-				              <td class="action">
-				                <a href="" class="ico ico-delete">Delete</a>
-				                <a href="" class="ico ico-edit">Edit</a>
-				              </td>
-				            </tr>
-				            <tr>
-				              <td class="dragHandle">&nbsp;</td>
-				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
-				              <td><a href="#">Table data three</a></td>
-				              <td>Table data three</td>          
-				              <td>Table data three</td>
-				              <td class="action">
-				                <a href="" class="ico ico-delete">Delete</a>
-				                <a href="" class="ico ico-edit">Edit</a>
-				              </td>
-				            </tr>
-				            <tr>
-				              <td class="dragHandle">&nbsp;</td>
-				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
-				              <td><a href="#">Table data four</a></td>
-				              <td>Table data four</td>          
-				              <td>Table data four</td>
-				              <td class="action">
-				                <a href="" class="ico ico-delete">Delete</a>
-				                <a href="" class="ico ico-edit">Edit</a>
-				              </td>
-				            </tr>
-				            <tr>
-				              <td class="dragHandle">&nbsp;</td>
-				              <td class="checkbox"><input type="checkbox" name="" value="" /></td>
-				              <td><a href="#">Table data five</a></td>
-				              <td>Table data five</td>          
-				              <td>Table data five</td>
-				              <td class="action">
-				                <a href="" class="ico ico-delete">Delete</a>
-				                <a href="" class="ico ico-edit">Edit</a>
-				              </td>
-				            </tr>
-				          </table>
-				          <!-- /table -->
-            	 		</div>
-            	 	
+						<div>
+            	 			<div><h3>Действующие акции</h3></div>
+	            	 			<table class="tab tab-drag">
+						            <tr class="top nodrop nodrag">
+						              <th class="dragHandle">&nbsp;</th>
+						              <!-- th class="checkbox"><input type="checkbox" name="" value="" class="check-all" /></th -->
+						              <th>Наименование акции</th>
+						              <th>Дата проведения С</th>          
+						              <th>Дата проведения По</th>
+						              <th class="action">Action</th>
+						            </tr>
+								</table>
+	
+            	 				<div align="center"  style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
+	            	 				<table class="tab tab-drag">
+											<c:forEach items="${advCamps}" var="advCamp" varStatus="loop">
+									            <tr id="${advCamp.id}"  title="${advCamp.text}" class="table_row" onClick="toEdit('formAdvCamp','${advCamp.id}','${advCamp.name}','${advCamp.text}', '<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" />','<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" />', ${advCamp.active});">
+									              <td class="dragHandle">&nbsp;</td>
+									              <td id="td_name">${advCamp.name}</td>
+									              <td id="td_fromDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
+									              <td id="td_toDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" /></td>
+									              <td class="action">
+									                <a href="content?act=3&id=${advCamp.id}" class="ico ico-delete">Удалить</a>
+									              </td>
+									            </tr>
+											</c:forEach>
+									</table>
+								</div>
+						</div>
 					</div>
 
 					</div>
@@ -218,6 +199,36 @@
         		</div>
 
             	<div id="tab2">
+						<div>
+	            	 			<table class="tab tab-drag">
+								</table>
+	
+            	 				<div align="center"  style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
+	            	 				<table class="tab tab-drag">
+								            <tr class="top nodrop nodrag">
+								              <th class="dragHandle">&nbsp;</th>
+								              <!-- th class="checkbox"><input type="checkbox" name="" value="" class="check-all" /></th -->
+								              <th>Наименование акции</th>
+								              <th>Дата проведения С</th>          
+								              <th>Дата проведения По</th>
+								              <th></th>
+								              <th class="action">Action</th>
+								            </tr>
+											<c:forEach items="${allAdvCamps}" var="advCamp" varStatus="loop">
+									            <tr  id="${advCamp.id}" class="table_row" >
+									              <td class="dragHandle">&nbsp;</td>
+									              <td><a href="#">${advCamp.name}</a></td>
+									              <td><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
+									              <td><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" /></td>
+									              <td>Действует <input type="checkbox" id="active" <c:if test="${advCamp.active eq true}" >checked</c:if> /></td>
+									              <td class="action">
+									                <a href="content?act=3&id=${advCamp.id}" class="ico ico-delete">Удалить</a>
+									              </td>
+									            </tr>
+											</c:forEach>
+									</table>
+								</div>
+						</div>
         		</div>
         		
         	</div>
@@ -239,12 +250,20 @@
 	
 
 	<script>
-	$(function(){
-		  $.toDate.setDefaults(
-		        $.extend($.datepicker.regional["ru"])
-		  );
-		  $("#datepicker").datepicker();
-		});
+		$(document).ready(function(){
+			
+			/*$("#save").attr("checked","checked");*/
+			
+			/*  Выделяем строку в таблице */
+			$( ".table_row" ).click(function(form, id, name, fromDate,toDate) {
+				$(this).addClass("selected").siblings().removeClass("selected");
+				
+				//toEdit('formAdvCamp',$(this).attr("id"), $(this).children('#td_name').text() , $(this).children('#td_fromDate').text(), $(this).children('#td_toDate').text());
+				
+			});
+
+	    });
+
 	</script>
 
   <!-- /#main --> 

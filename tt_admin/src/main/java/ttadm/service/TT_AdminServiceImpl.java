@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ttadm.annotation.ProcessTail;
 import ttadm.dao.Dao;
 import ttadm.dao.DaoImpl;
+import ttadm.model.AdvertisingCampaign;
 import ttadm.model.ContactUsMessages;
 import ttadm.model.DirGender;
 import ttadm.model.DirNomenclGroup;
@@ -40,6 +41,18 @@ public class TT_AdminServiceImpl implements Dao {
 	
 	private  static  final  Log  LOG  =  LogFactory.getLog(TT_AdminServiceImpl.class);
 	
+
+	@Override
+	public List<AdvertisingCampaign> getAdvCampList() {
+		// TODO Auto-generated method stub
+		return dao.getAdvCampList();
+	}
+
+	@Override
+	public List<AdvertisingCampaign> getAdvCampList(boolean active) {
+		// TODO Auto-generated method stub
+		return dao.getAdvCampList(active);
+	}
 
 	@Override
 	public List<User> getUserList() {
@@ -296,7 +309,7 @@ public class TT_AdminServiceImpl implements Dao {
 	@Override
 	public void delObject(Object obj) {
 		// TODO Auto-generated method stub
-
+		dao.delObject(obj);
 	}
 
 	@Override

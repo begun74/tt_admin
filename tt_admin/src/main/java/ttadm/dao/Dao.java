@@ -16,6 +16,10 @@ import ttadm.model.*;
 
 public interface Dao {
 	
+	
+	public List<AdvertisingCampaign> getAdvCampList();
+	public List<AdvertisingCampaign> getAdvCampList(boolean active);
+	
 	public List<User> getUserList();
 	public void addUser(User user);
 

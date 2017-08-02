@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -449,9 +450,11 @@ public class AdminCtrl {
 	public ModelAndView   content(HttpSession session
 									, @Valid MA_AdvertCamp mA_AdvertCamp 
 									, BindingResult result
-									, @RequestParam(value = "logout",	required = false) String logout)
+									, @RequestParam(value = "act",	 defaultValue = "0") int act
+									, @RequestParam(value = "logout",	required = false) String logout
+									, @RequestParam(value = "id",	required = false) Long id)
 	{
-		ModelAndView model = new ModelAndView("redirect:/content?act="+mA_AdvertCamp.getButAdvCamp());
+		ModelAndView model = new ModelAndView("redirect:/content?act="+act);
 		
 		if (logout != null) {
 			SecurityContextHolder.clearContext();
@@ -460,37 +463,79 @@ public class AdminCtrl {
 			return new ModelAndView("redirect:/");
 		}
 
-		if(result.hasErrors() && mA_AdvertCamp.getButAdvCamp() > 0)
+		if(result.hasErrors() && (act == 1 || act == 2))
 		{
-			adminSessBean.addError("Правильно введите данные!");
-			return new ModelAndView("actions/main");
+			adminSessBean.addError("Правильно введите ВСЕ данные!");
+			
+			model = new ModelAndView("actions/main");
+			model.addObject("advCamps", ttadmService.getAdvCampList(true));
+			
+			return model;
 		}		
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");		
-		switch (mA_AdvertCamp.getButAdvCamp()) {
+		switch (act) {
 		
 			case 0:
-			model = new ModelAndView("actions/main");
+				model = new ModelAndView("actions/main");
 			break;
 
-			case 1:
-				model = new ModelAndView("actions/main");
+			case 1://add
+				model = new ModelAndView("redirect:/content?act=0");
 				AdvertisingCampaign advCamp = new AdvertisingCampaign();
 				try {
 					advCamp.setFromDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getFromDate()).getTime()));
 					advCamp.setToDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getToDate()).getTime()));
-					advCamp.setName(mA_AdvertCamp.getName());
-					advCamp.setText(mA_AdvertCamp.getText());
-				
+					advCamp.setName(mA_AdvertCamp.getName().replaceAll("\"", " "));
+					advCamp.setText(mA_AdvertCamp.getText().replaceAll("\"", " "));
+					advCamp.setActive(new Boolean(mA_AdvertCamp.getActive()));
 					ttadmService.saveIModel(advCamp);
 					
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
+				catch (DataIntegrityViolationException e) {
+					adminSessBean.addError("С таким названием уже существует!");
+					e.printStackTrace();
+				}
+			break;
+
+			case 2: //update
+				model = new ModelAndView("redirect:/content?act=0");
+				advCamp = (AdvertisingCampaign)ttadmService.getObject(AdvertisingCampaign.class, id);
+					if(advCamp !=null)
+						try {
+							advCamp.setFromDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getFromDate()).getTime()));
+							advCamp.setToDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getToDate()).getTime()));
+							advCamp.setName(mA_AdvertCamp.getName().replaceAll("\"", " "));
+							advCamp.setText(mA_AdvertCamp.getText().replaceAll("\"", " "));
+							advCamp.setActive(new Boolean(mA_AdvertCamp.getActive()));
+							ttadmService.saveIModel(advCamp);
+							
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+						catch (DataIntegrityViolationException e) {
+							adminSessBean.addError("С таким названием уже существует!");
+							e.printStackTrace();
+						}
+			break;
+
+			case 3: //delete
+				if(id > 0)
+				{
+					advCamp = (AdvertisingCampaign) ttadmService.getObject(AdvertisingCampaign.class, id);
+					ttadmService.delObject(advCamp);
+				}
+					
+				model = new ModelAndView("redirect:/content?act=0");
 			break;
 
 		}
 		
+		model.addObject("advCamps", ttadmService.getAdvCampList());
+		model.addObject("allAdvCamps", ttadmService.getAdvCampList());
+
 		return model;
 		
 	}

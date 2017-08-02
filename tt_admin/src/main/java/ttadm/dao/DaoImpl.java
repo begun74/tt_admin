@@ -24,6 +24,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import ttadm.annotation.ProcessTail;
+import ttadm.model.AdvertisingCampaign;
 import ttadm.model.ContactUsMessages;
 import ttadm.model.DirGender;
 import ttadm.model.DirNomenclGroup;
@@ -56,6 +57,19 @@ public class DaoImpl implements Dao {
     }
 
 
+	@Override
+	public List<AdvertisingCampaign> getAdvCampList() {
+		// TODO Auto-generated method stub
+		return getSession().createSQLQuery("select * from advert_campaign order by active desc, fromdate, todate").addEntity(AdvertisingCampaign.class).list();
+	}
+
+	@Override
+	public List<AdvertisingCampaign> getAdvCampList(boolean active) {
+		// TODO Auto-generated method stub
+		return getSession().createSQLQuery("select * from advert_campaign where active = :active order by fromdate, todate").addEntity(AdvertisingCampaign.class).setParameter("active", active).list();
+	}
+	
+	
 	@Override
 	public List<User> getUserList() {
 		// TODO Auto-generated method stub
@@ -387,7 +401,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public void delObject(Object obj) {
 		// TODO Auto-generated method stub
-
+		getSession().delete(obj);
 	}
 
 	@Override
@@ -455,6 +469,8 @@ public class DaoImpl implements Dao {
 		// TODO Auto-generated method stub
 		getSession().createSQLQuery("select diffOfTails()");
 	}
+
+
 
 
 
