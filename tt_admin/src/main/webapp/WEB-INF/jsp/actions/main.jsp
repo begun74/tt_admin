@@ -129,7 +129,7 @@
 							</div>
 				 			<div class="clearfix">
        										<div class="lab"><label for="textarea-two">Текст <span>*</span></label></div>
-          									<div class="con"><textarea name="text" id="text" class="textarea texarAction" ></textarea></div>
+          									<div class="con"><textarea name="text" id="text" class="textarea wysiwyg texarAction" ></textarea></div>
 							</div>
 							<fieldset>
 					 			<div class="clearfix">
@@ -211,8 +211,8 @@
 								              <th>Наименование акции</th>
 								              <th>Дата проведения С</th>          
 								              <th>Дата проведения По</th>
-								              <th></th>
-								              <th class="action">Action</th>
+								              <th>Активна</th>
+								              <th class="action"></th>
 								            </tr>
 											<c:forEach items="${allAdvCamps}" var="advCamp" varStatus="loop">
 									            <tr  id="${advCamp.id}" class="table_row" >
@@ -220,9 +220,9 @@
 									              <td><a href="#">${advCamp.name}</a></td>
 									              <td><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
 									              <td><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" /></td>
-									              <td>Действует <input type="checkbox" id="active" <c:if test="${advCamp.active eq true}" >checked</c:if> /></td>
+									              <td><input type="checkbox" id="active" <c:if test="${advCamp.active eq true}" >checked</c:if> /></td>
 									              <td class="action">
-									                <a href="content?act=3&id=${advCamp.id}" class="ico ico-delete">Удалить</a>
+									                <a href="content?act=3&id=${advCamp.id}" class="ico ico-delete"></a>
 									              </td>
 									            </tr>
 											</c:forEach>

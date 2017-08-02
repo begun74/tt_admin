@@ -492,6 +492,7 @@ public class AdminCtrl {
 					ttadmService.saveIModel(advCamp);
 					
 				} catch (ParseException e) {
+					adminSessBean.addError("Правильно введите ВСЕ данные!");
 					e.printStackTrace();
 				}
 				catch (DataIntegrityViolationException e) {
@@ -513,6 +514,7 @@ public class AdminCtrl {
 							ttadmService.saveIModel(advCamp);
 							
 						} catch (ParseException e) {
+							adminSessBean.addError("Правильно введите ВСЕ данные!");
 							e.printStackTrace();
 						}
 						catch (DataIntegrityViolationException e) {
@@ -533,7 +535,7 @@ public class AdminCtrl {
 
 		}
 		
-		model.addObject("advCamps", ttadmService.getAdvCampList());
+		model.addObject("advCamps", ttadmService.getAdvCampList(true));
 		model.addObject("allAdvCamps", ttadmService.getAdvCampList());
 
 		return model;
