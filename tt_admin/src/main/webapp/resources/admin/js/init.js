@@ -16,7 +16,7 @@ $(document).ready(function(){
   $('.date-pick').datePicker().val(new Date().asString()).trigger('change');
 
   // Initialise WYSIWYG editor
-  $(".wysiwyg").wysiwyg();
+  //$(".wysiwyg").wysiwyg();
 
   // Initialise Tabs
 	$("#tabs").tabs();

@@ -21,6 +21,7 @@
     <link href="resources/admin/css/wysiwyg.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/fancybox-1.3.1.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="resources/admin/css/visualize.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="resources/jHtmlArea-0.8.0.ExamplePlusSource/style/jHtmlArea.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="resources/js/angular.min.js"></script>
 
@@ -38,10 +39,12 @@
     <script type="text/javascript" src="resources/admin/js/date.js"></script>
     <!--[if IE]><script type="text/javascript" src="admin/js/jquery.bgiframe.js"></script><![endif]-->
     <script type="text/javascript" src="resources/admin/js/jquery.datePicker.js"></script>
-
+	
     <!-- // Wysiwyg // -->
-    <script type="text/javascript" src="resources/admin/js/jquery.wysiwyg.js"></script>
-
+    <!-- script type="text/javascript" src="resources/admin/js/jquery.wysiwyg.js"></script -->
+	<!-- script type="text/javascript" src="resources/CLEditor1_4_5/jquery.cleditor.js"></script -->
+	<script type="text/javascript" src="resources/jHtmlArea-0.8.0.ExamplePlusSource/scripts/jHtmlArea-0.8.min.js"></script>
+	
     <!-- // Graphs // -->
     <script type="text/javascript" src="resources/admin/js/excanvas.js"></script>
     <script type="text/javascript" src="resources/admin/js/jquery.visualize.js"></script>
@@ -128,13 +131,22 @@
 									         </div>
 							</div>
 				 			<div class="clearfix">
-       										<div class="lab"><label for="textarea-two">Текст <span>*</span></label></div>
-          									<div class="con"><textarea name="text" id="text" class="textarea texarAction" ></textarea></div>
+       										<div class="lab"><label for="text-area">Текст <span>*</span></label></div>
+       										<div class="con texarAction" >
+          										<textarea name="text" id="text_area" class="" style="width: 99%; height: 97%; border: 0px;" ></textarea>
+          									</div>
+							</div>
+				 			<div class="clearfix">
+       										<div class="lab"><label for="text_to_slider">Текст для бегущей строки</label></div>
+       										<div class="con" >
+          										<input name="text_to_slider" id="text_to_slider" type="text" class="input width400px" value="${mA_AdvertCamp.text_to_slider }">
+          									</div>
 							</div>
 							<fieldset>
 					 			<div class="clearfix">
 					 							<div class="lab"><label for="fromDate">Дата проведения С <span>*</span></label></div>
 												<div class="dateCon">
+												
 													<input id="fromDate" type="text" class="input datepicker" name="fromDate"  value="${mA_AdvertCamp.fromDate }" />
 												</div>
 								</div>
@@ -179,7 +191,7 @@
             	 				<div align="center"  style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
 	            	 				<table class="tab tab-drag">
 											<c:forEach items="${advCamps}" var="advCamp" varStatus="loop">
-									            <tr id="${advCamp.id}"  title="${advCamp.text}" class="table_row" onClick="toEdit('formAdvCamp','${advCamp.id}','${advCamp.name}','${advCamp.text}', '<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" />','<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" />', ${advCamp.active});">
+									            <tr id="${advCamp.id}"  title="${advCamp.text}" class="table_row" onClick="toEdit('formAdvCamp','${advCamp.id}','${advCamp.name}','${advCamp.text}', '<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" />','<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" />', '${advCamp.active}');">
 									              <td class="dragHandle">&nbsp;</td>
 									              <td id="td_name">${advCamp.name}</td>
 									              <td id="td_fromDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
@@ -250,19 +262,6 @@
 	
 
 	<script>
-		$(document).ready(function(){
-			
-			/*$("#save").attr("checked","checked");*/
-			
-			/*  Выделяем строку в таблице */
-			$( ".table_row" ).click(function(form, id, name, fromDate,toDate) {
-				$(this).addClass("selected").siblings().removeClass("selected");
-				
-				//toEdit('formAdvCamp',$(this).attr("id"), $(this).children('#td_name').text() , $(this).children('#td_fromDate').text(), $(this).children('#td_toDate').text());
-				
-			});
-
-	    });
 
 	</script>
 

@@ -33,7 +33,9 @@ public class MA_AdvertCamp  implements Serializable {
 
 	@NotBlank
 	private String text;
-	
+
+	private String text_to_slider;
+
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotBlank
 	private String fromDate;
@@ -68,6 +70,16 @@ public class MA_AdvertCamp  implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	
+	
+	public String getText_to_slider() {
+		return text_to_slider;
+	}
+
+	public void setText_to_slider(String text_to_slider) {
+		this.text_to_slider = text_to_slider;
 	}
 
 	public String getFromDate() {

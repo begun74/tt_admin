@@ -488,6 +488,7 @@ public class AdminCtrl {
 					advCamp.setToDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getToDate()).getTime()));
 					advCamp.setName(mA_AdvertCamp.getName().replaceAll("\"", " "));
 					advCamp.setText(mA_AdvertCamp.getText().replaceAll("\"", " "));
+					advCamp.setText_to_slider(mA_AdvertCamp.getText_to_slider() != null?mA_AdvertCamp.getText_to_slider().replaceAll("\"", " "):null);
 					advCamp.setActive(new Boolean(mA_AdvertCamp.getActive()));
 					ttadmService.saveIModel(advCamp);
 					
@@ -510,6 +511,7 @@ public class AdminCtrl {
 							advCamp.setToDate(new Timestamp(dateFormat.parse(mA_AdvertCamp.getToDate()).getTime()));
 							advCamp.setName(mA_AdvertCamp.getName().replaceAll("\"", " "));
 							advCamp.setText(mA_AdvertCamp.getText().replaceAll("\"", " "));
+							advCamp.setText_to_slider(mA_AdvertCamp.getText_to_slider() != null?mA_AdvertCamp.getText_to_slider().replaceAll("\"", " "):null);
 							advCamp.setActive(new Boolean(mA_AdvertCamp.getActive()));
 							ttadmService.saveIModel(advCamp);
 							
@@ -535,7 +537,18 @@ public class AdminCtrl {
 
 		}
 		
-		model.addObject("advCamps", ttadmService.getAdvCampList(true));
+		List<AdvertisingCampaign> advCamps = ttadmService.getAdvCampList(true);
+		List<AdvertisingCampaign> listAC_slider = new LinkedList<AdvertisingCampaign>();
+		
+		
+		
+		for(AdvertisingCampaign advCamp: advCamps)
+			if(advCamp.getText_to_slider() != null)
+				listAC_slider.add(advCamp);
+		
+		model.addObject("advCamps_slider", listAC_slider);
+
+		model.addObject("advCamps", advCamps);
 		model.addObject("allAdvCamps", ttadmService.getAdvCampList());
 
 		return model;

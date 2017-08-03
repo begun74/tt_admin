@@ -38,6 +38,8 @@ public class AdvertisingCampaign implements  IModel {
 	@NotNull
 	private String text;
 	
+	@Column(name="text_to_slider")
+	private String text_to_slider;
 	
 	private Timestamp create_date;
 	
@@ -73,7 +75,18 @@ public class AdvertisingCampaign implements  IModel {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	
 
+	public String getText_to_slider() {
+		return text_to_slider;
+	}
+
+	public void setText_to_slider(String text_to_slider) {
+		this.text_to_slider = text_to_slider;
+	}
+
+	
 	public Timestamp getCreate_date() {
 		return create_date;
 	}

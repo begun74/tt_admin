@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -47,6 +48,7 @@ public class AppBean implements Serializable {
 	private HashMap<Long,Object> mapStore = new HashMap<Long,Object>();
 	
 	private List<DirProvider> listProviders = new ArrayList<DirProvider>();
+	
 	
 	private double version = 1.1;
 	
@@ -99,6 +101,8 @@ public class AppBean implements Serializable {
 		catch(Exception exc) {
 			System.out.println("AppBean.init() - ttadmService.getStoreList() is null");
 		}
+
+		
 		//listProviders = ttService.getProviderList();
 		//System.out.println("mapStore - "+mapStore);
 		//System.out.println("AppBean @PostConstruct ");
@@ -153,8 +157,6 @@ public class AppBean implements Serializable {
 
 
 	
-
-
 	public String getIMAGES_SERVER() {
 		IMAGES_SERVER = env.getRequiredProperty("IMAGES_SERVER");
 		return IMAGES_SERVER;
