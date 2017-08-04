@@ -37,7 +37,7 @@ app.controller('advCamp_Ctrl', function($scope, $http) {
 });
 
 
-function toEdit(form, id, name, txt, fromDate,toDate, active) {
+function toEdit(form, id, name, txt, fromDate,toDate, active, txt_to_slider) {
 	//alert(text)
 	
 	document.forms[form].id.value = id;
@@ -45,8 +45,9 @@ function toEdit(form, id, name, txt, fromDate,toDate, active) {
 	$("#text_area").htmlarea('html',txt);
 	document.forms[form].fromDate.value = fromDate; 
 	document.forms[form].toDate.value = toDate; 
-	
 	document.forms[form].active.checked = active;
+	document.forms[form].text_to_slider.value = txt_to_slider; 
+
 }
 
 

@@ -191,7 +191,14 @@
             	 				<div align="center"  style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
 	            	 				<table class="tab tab-drag">
 											<c:forEach items="${advCamps}" var="advCamp" varStatus="loop">
-									            <tr id="${advCamp.id}"  title="${advCamp.text}" class="table_row" onClick="toEdit('formAdvCamp','${advCamp.id}','${advCamp.name}','${advCamp.text}', '<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" />','<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" />', '${advCamp.active}');">
+									            <tr id="${advCamp.id}"  class="table_row" onClick="toEdit('formAdvCamp'
+									            																	,'${advCamp.id}'
+									            																	,'${advCamp.name}'
+									            																	,'${advCamp.text}'
+									            																	,'<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" />'
+									            																	,'<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" />'
+									            																	, ${advCamp.active}
+									            																	,'${advCamp.text_to_slider}');">
 									              <td class="dragHandle">&nbsp;</td>
 									              <td id="td_name">${advCamp.name}</td>
 									              <td id="td_fromDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          

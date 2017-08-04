@@ -79,6 +79,8 @@ public class MA_AdvertCamp  implements Serializable {
 	}
 
 	public void setText_to_slider(String text_to_slider) {
+		if(text_to_slider.trim().length() == 0)
+			text_to_slider = null;
 		this.text_to_slider = text_to_slider;
 	}
 
