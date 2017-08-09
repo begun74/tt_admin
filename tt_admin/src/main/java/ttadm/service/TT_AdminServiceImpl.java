@@ -206,6 +206,7 @@ public class TT_AdminServiceImpl implements Dao {
 		// TODO Auto-generated method stub
 		dao.addTails(tails);
 		dao.callProc_DiffOfTails();
+		LOG.info("Call diffOfTails");
 	}
 
 	@ProcessTail
