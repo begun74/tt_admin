@@ -59,7 +59,6 @@ public interface Dao {
 	public Object [] getTailsList(int p, long itemOnPage, String sortby);
 	public List<Tail> getTailsList(Tail tail_example, Collection<Criterion> criterions, int p );
 	public List<Tail> getTailsList(long id_dirNomenclature);
-	public void callProc_DiffOfTails();
 	
 	public List<DirNomenclature> findByText(String text);
 
@@ -84,7 +83,9 @@ public interface Dao {
 	
 	public void updateTails();
 	
+	public void callProcedure(String nameProc);
+	
 	User findByUserName(String username);
 	
-
+	
 }

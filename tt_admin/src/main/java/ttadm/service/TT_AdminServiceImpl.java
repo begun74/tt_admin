@@ -205,7 +205,7 @@ public class TT_AdminServiceImpl implements Dao {
 	public void addTails(Collection<Tail> tails) {
 		// TODO Auto-generated method stub
 		dao.addTails(tails);
-		dao.callProc_DiffOfTails();
+		//dao.callProc_DiffOfTails();
 		LOG.info("Call diffOfTails");
 	}
 
@@ -333,10 +333,11 @@ public class TT_AdminServiceImpl implements Dao {
 		dao.saveIModel(imodel);
 	}
 
+
 	@Override
-	public void callProc_DiffOfTails() {
-		// Just stub
-		// view method addTails(Collection<Tail> tails)
+	public void callProcedure(String nameProc) {
+		// TODO Auto-generated method stub
+		dao.callProcedure(nameProc);
 	}
 
 

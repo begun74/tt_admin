@@ -464,10 +464,11 @@ public class DaoImpl implements Dao {
 	}
 
 
+
 	@Override
-	public void callProc_DiffOfTails() {
+	public void callProcedure(String nameProc) {
 		// TODO Auto-generated method stub
-		getSession().createStoredProcedureCall("diffOfTails");
+		getSession().createStoredProcedureCall(nameProc);
 	}
 
 
