@@ -385,10 +385,7 @@ public class AdminCtrl {
 				appBean.addToMapStore(adminSessBean.getmA_loadTail());
 
 				if(deleteOldTails)
-				{
 					ttadmService.updateTails();
-					ttadmService.callProcedure("diffOfTails"); //Новинки на сайте
-				}
 
 				
 					synchronized(this) {
@@ -396,7 +393,9 @@ public class AdminCtrl {
 						ttadmService.addTails(adminSessBean.getTempListTails());
 
 						adminSessBean.getTempListTails().clear();
-						
+
+						ttadmService.callProcedure("diffOfTails"); //Новинки на сайте
+
 						System.gc();
 						
 					}
