@@ -468,7 +468,7 @@ public class DaoImpl implements Dao {
 	@Override
 	public void callProcedure(String nameProc) {
 		// TODO Auto-generated method stub
-		getSession().createStoredProcedureCall(nameProc);
+		getSession().getNamedQuery(nameProc);
 	}
 
 

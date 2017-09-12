@@ -219,7 +219,7 @@ public class XLS_fileHandler  implements Runnable, AutoCloseable {
 		catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					adminSessBean.addError("Ошибка загрузки файла!");
+					adminSessBean.addError("Ошибка загрузки файла: " + e.getMessage());
 		}
 
 		

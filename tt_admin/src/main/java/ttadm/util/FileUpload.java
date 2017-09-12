@@ -149,17 +149,16 @@ public class FileUpload {
 						
 						collection = ReadExcelFile.processFile(file,(Tail) model, (MA_loadTail) IMAmodel, hmNomencl) ;
 					}
+					
+					file.delete();
+					return collection;
 				
 			} 
 			catch(Exception exc)
 			{
-					exc.printStackTrace();
-					return null;
-			}
-			finally 
-			{
 					file.delete();
-					return collection;
+					exc.printStackTrace();
+					throw exc;
 			}
 		
 
