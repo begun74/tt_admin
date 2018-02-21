@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -243,6 +245,16 @@ public class ReadExcelFile {
 	        			tail.setNds( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNds()-1))) );
 	        			tail.setNadb_opt( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNadb_opt()-1))) );
 	        			tail.setNadb_rozn( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNadb_rozn()-1))) );
+	        			
+	        			
+        				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        				String newDate = df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1));
+        				tail.setIsNew(df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1) ).isEmpty()  ? null : new Timestamp( sdf.parse(newDate).getTime() ) );
+
+        			}
+        			catch(ParseException nfe)
+        			{
+        				throw new  ParseFileXLSException ("Требуется dd/MM/yyyy формат даты  в строке "+ ++row_ + " столбец " + mA_loadTail.getIsNew());
         			}
         			catch(Exception exc) {
         				throw new  ParseFileXLSException ("Ошибка в строке "+ ++row_);

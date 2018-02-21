@@ -86,6 +86,7 @@ public class Tail implements  IModel {
 	
 	private transient int index;
 	
+	private transient  Timestamp isNew;
 	
 	
 	public Long getId() {
@@ -215,6 +216,14 @@ public class Tail implements  IModel {
 	
 	
 	
+	public Timestamp getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(Timestamp isNew) {
+		this.isNew = isNew;
+	}
+
 	@Override
 	public String toString() {
 		return "Tail [id=" + id + ", amountTail=" + amountTail + ", firstPrice=" + firstPrice + ", create_date="

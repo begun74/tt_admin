@@ -32,6 +32,7 @@ import ttadm.model.DirNomenclGroupRoot;
 import ttadm.model.DirNomenclature;
 import ttadm.model.DirProvider;
 import ttadm.model.IModel;
+import ttadm.model.NewTails;
 import ttadm.model.OrderItems;
 import ttadm.model.Store;
 import ttadm.model.Tail;
@@ -260,7 +261,16 @@ public class DaoImpl implements Dao {
 		// TODO Auto-generated method stub
 		Session sess = getSession();
 		for(Tail tail: tails)
+		{
 			sess.save(tail);
+			
+			if(tail.getIsNew() != null)
+			{
+				NewTails nt = new NewTails(tail.getIsNew() , tail.getDirNomenclature().getId());
+				
+				sess.save(nt);
+			}
+		}
 		sess.flush();
 		sess.clear();
 		

@@ -72,6 +72,7 @@ public class HibernateConfiguration {
         sessionBuilder.addAnnotatedClasses(Order.class);
         sessionBuilder.addAnnotatedClasses(ContactUsMessages.class);
         sessionBuilder.addAnnotatedClasses(AdvertisingCampaign.class);
+        sessionBuilder.addAnnotatedClasses(NewTails.class);
 
         return sessionBuilder.buildSessionFactory();
     }

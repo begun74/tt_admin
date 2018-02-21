@@ -27,6 +27,7 @@ public class MA_loadTail implements IMAmodel {
 	private int nadb_opt=0; //Надбавка оптовая
 	private int nadb_rozn=0; //Надбавка розничная
 	private int rozn_price=0; //Розничная цена
+	private int isNew=0;
 	
 	private transient boolean save;
 	private transient boolean deleteOldTails;
@@ -150,6 +151,16 @@ public class MA_loadTail implements IMAmodel {
 	public long getSerialversionuid() {
 		// TODO Auto-generated method stub
 		return serialVersionUID;
+	}
+	
+	
+
+	public int getIsNew() {
+		return isNew;
+	}
+
+	public void setIsNew(int isNew) {
+		this.isNew = isNew;
 	}
 
 	@Override

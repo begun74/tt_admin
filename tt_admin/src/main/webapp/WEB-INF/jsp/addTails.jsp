@@ -197,6 +197,15 @@
 																        	<input name="nadb_rozn" id="nadb_rozn" type="text" class="input" value="${sessionBean.mA_loadTail.nadb_rozn}" >
 																        </div>
 														</div>
+														<div class="clearfix">									        
+																        <div class="lab">
+																        	<label>Новинка ?</label>
+																        </div>
+																        <div style="width: 25px" class="conleft">
+																        	<input name="isNew" id="isNew" type="text" class="input" value="${sessionBean.mA_loadTail.isNew}" >
+																        </div>
+														</div>
+
 												</div>
 
 												
