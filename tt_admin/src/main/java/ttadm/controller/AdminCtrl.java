@@ -394,7 +394,7 @@ public class AdminCtrl {
 
 						adminSessBean.getTempListTails().clear();
 
-						ttadmService.callProcedure("diffOfTails"); //Новинки на сайте
+						//ttadmService.callProcedure("diffOfTails"); //Новинки на сайте
 
 						System.gc();
 						

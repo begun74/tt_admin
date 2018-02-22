@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.Resource;
 
@@ -260,6 +261,9 @@ public class DaoImpl implements Dao {
 	public void addTails(Collection<Tail> tails) {
 		// TODO Auto-generated method stub
 		Session sess = getSession();
+		sess.createSQLQuery("delete from diff_of_tails").executeUpdate();
+		TreeSet<NewTails> nTails = new TreeSet<NewTails>();
+		
 		for(Tail tail: tails)
 		{
 			sess.save(tail);
@@ -267,10 +271,15 @@ public class DaoImpl implements Dao {
 			if(tail.getIsNew() != null)
 			{
 				NewTails nt = new NewTails(tail.getIsNew() , tail.getDirNomenclature().getId());
-				
-				sess.save(nt);
+				nTails.add(nt);
 			}
 		}
+		
+		for(NewTails ntail: nTails)
+		{
+			sess.save(ntail);
+		}
+			
 		sess.flush();
 		sess.clear();
 		

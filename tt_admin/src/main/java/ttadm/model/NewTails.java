@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "diff_of_tails")
-public class NewTails {
+public class NewTails implements Comparable {
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="seq_global")
 	@SequenceGenerator(
@@ -55,6 +55,13 @@ public class NewTails {
 	public void setFk_dir_nomenclature(Long fk_dir_nomenclature) 
 	{
 		this.fk_dir_nomenclature = fk_dir_nomenclature;
+	}
+
+
+	@Override
+	public int compareTo(Object obj) {
+		// TODO Auto-generated method stub
+		return fk_dir_nomenclature.compareTo(((NewTails)obj).getFk_dir_nomenclature());
 	}
 
 
