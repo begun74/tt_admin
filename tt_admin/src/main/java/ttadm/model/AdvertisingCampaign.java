@@ -53,6 +53,8 @@ public class AdvertisingCampaign implements  IModel {
 	
 	private boolean active;
 
+	@Column(name="index")
+	private int index;
 	
 	@Override
 	public Long getId() {
@@ -132,6 +134,16 @@ public class AdvertisingCampaign implements  IModel {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 
 	@Override

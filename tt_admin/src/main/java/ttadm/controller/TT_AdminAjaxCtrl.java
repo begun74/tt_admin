@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +18,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ttadm.bean.AdminSessionBean;
+import ttadm.model.AdvertisingCampaign;
 import ttadm.model.IJSON;
 import ttadm.model.IModel;
 import ttadm.model.JSON_RESULT;
@@ -32,6 +36,7 @@ import ttadm.modelattribute.MA_loadNomenclGroup;
 import ttadm.modelattribute.MA_loadNomenclGroupRoot;
 import ttadm.modelattribute.MA_loadProvider;
 import ttadm.modelattribute.MA_loadTail;
+import ttadm.service.TT_AdminServiceImpl;
 
 @Controller
 @Scope("session")
@@ -46,6 +51,10 @@ public class TT_AdminAjaxCtrl implements Serializable{
 	
 	@Autowired
 	private AdminSessionBean adminSessBean;
+	
+	@Autowired
+	private TT_AdminServiceImpl ttadmService;  //Service which will do all data retrieval/manipulation work
+	
 
 	
 
@@ -177,4 +186,31 @@ public class TT_AdminAjaxCtrl implements Serializable{
 	}	
 	
 
+	@ResponseBody
+	@RequestMapping(value = "/saveAdvCampMap", method = RequestMethod.GET)
+	public HttpStatus  saveAdvCampMap(HttpSession httpSession, @RequestParam  Map<String,String> allRequestParams) 
+	{
+ 		if(httpSession.isNew()) 
+			return HttpStatus.FORBIDDEN;
+		
+		Map<String,String>  saveAdvCampMap = allRequestParams;
+		
+		List<AdvertisingCampaign> AdvCampList = ttadmService.getAdvCampList(true);
+		
+		for(AdvertisingCampaign AdvCamp: AdvCampList)
+		{
+			try {
+				Object id = AdvCamp.getId();
+				Integer indx = Integer.parseInt(saveAdvCampMap.get(id+""));
+				AdvCamp.setIndex(indx);
+				ttadmService.saveIModel(AdvCamp);
+			}
+			catch(NullPointerException npe){
+				//ignore
+			}
+			
+		}
+		
+		return  HttpStatus.OK;
+	}
 }

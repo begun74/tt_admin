@@ -133,7 +133,7 @@
 				 			<div class="clearfix">
        										<div class="lab"><label for="text-area">Текст <span>*</span></label></div>
        										<div class="con texarAction" >
-          										<textarea name="text" id="text_area" class="" style="width: 99%; height: 97%; border: 0px;" ></textarea>
+          										<textarea name="text" id="text_area" class="" style="width: 99%; height: 97%; border: 10px;" ></textarea>
           									</div>
 							</div>
 				 			<div class="clearfix">
@@ -189,7 +189,7 @@
 								</table>
 	
             	 				<div align="center"  style="overflow-y:scroll; overflow-x: none; height:300px; width:100%;">
-	            	 				<table class="tab tab-drag">
+	            	 				<table id="advCampTable" class="tab tab-drag advCampTable">
 											<c:forEach items="${advCamps}" var="advCamp" varStatus="loop">
 									            <tr id="${advCamp.id}"  class="table_row" onClick="toEdit('formAdvCamp'
 									            																	,'${advCamp.id}'
@@ -199,13 +199,13 @@
 									            																	,'<fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" />'
 									            																	, ${advCamp.active}
 									            																	,'${advCamp.text_to_slider}');">
-									              <td class="dragHandle">&nbsp;</td>
-									              <td id="td_name">${advCamp.name}</td>
-									              <td id="td_fromDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
-									              <td id="td_toDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" /></td>
-									              <td class="action">
-									                <a href="javascript:delAdvCamp(${advCamp.id});" class="ico ico-delete"></a>
-									              </td>
+										              <td class="dragHandle">&nbsp;</td>
+										              <td id="td_name">${advCamp.name}</td>
+										              <td id="td_fromDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.fromDate}" /></td>          
+										              <td id="td_toDate"><fmt:formatDate pattern="dd/MM/yyyy" value = "${advCamp.toDate}" /></td>
+										              <td class="action">
+										                <a href="javascript:delAdvCamp(${advCamp.id});" class="ico ico-delete"></a>
+										              </td>
 									            </tr>
 											</c:forEach>
 									</table>

@@ -68,7 +68,11 @@ public class DaoImpl implements Dao {
 	@Override
 	public List<AdvertisingCampaign> getAdvCampList(boolean active) {
 		// TODO Auto-generated method stub
-		return getSession().createSQLQuery("select * from advert_campaign where active = :active order by fromdate, todate").addEntity(AdvertisingCampaign.class).setParameter("active", active).list();
+		
+		//List<AdvertisingCampaign> advCampList = getSession().createSQLQuery("select * from advert_campaign where active = :active").addEntity(AdvertisingCampaign.class).setParameter("active", active).list(); 
+		
+		List<AdvertisingCampaign> advCampList = getSession().createCriteria(AdvertisingCampaign.class).add(Restrictions.eq("active", active)).addOrder(Order.asc("index")).list();
+		return advCampList;
 	}
 	
 	
@@ -262,7 +266,7 @@ public class DaoImpl implements Dao {
 		// TODO Auto-generated method stub
 		Session sess = getSession();
 		sess.createSQLQuery("delete from diff_of_tails").executeUpdate();
-		TreeSet<NewTails> nTails = new TreeSet<NewTails>();
+		TreeSet<NewTails> nTails = new TreeSet<NewTails>(); // для уникальных записей
 		
 		for(Tail tail: tails)
 		{

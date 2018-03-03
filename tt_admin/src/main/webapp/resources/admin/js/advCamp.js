@@ -12,8 +12,34 @@ $(document).ready(function(){
 		
 	});
 	
-	CLEditor = $("#text_area").htmlarea();
+	$( ".table_row" ).mouseup(function() {
+		var trMap = {};
+			var trs = $(this).siblings(".table_row");
+			trs.push(this);
+		
+			for(var i=0;i<trs.length;i++) {
+				//alert ( $(trs[i]).index() +"  "+ trs[i].id );
+				trMap[trs[i].id] = $(trs[i]).index();
+			}
+			
+			//for(var i in trMap)
+				//alert(i+ " - "+trMap[i])
+			
+			
+			$.ajax({
+	            url: "saveAdvCampMap",
+	            type: 'GET',    
+	            data: trMap,
+	            dataType: 'json',
+	            success: function(result) {
+	                //alert("success?");
+	            }
+	        });
 
+	});
+	
+	/*CLEditor = $("#text_area").htmlarea();*/
+	
 });
 
 

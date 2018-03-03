@@ -234,6 +234,7 @@ public class ReadExcelFile {
         	Row tmp = rowIterator.next();
         	
         		if(row_ >= mA_loadTail.getRow()-1) {
+        			
         			try {
 	        			tail = new Tail();
 	        			tail.setIndex(index++);
@@ -249,12 +250,14 @@ public class ReadExcelFile {
 	        			
         				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         				String newDate = df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1));
-        				tail.setIsNew(df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1) ).isEmpty()  ? null : new Timestamp( sdf.parse(newDate).getTime() ) );
+        				try {
+        					tail.setIsNew(df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1) ).isEmpty()  ? null : new Timestamp( sdf.parse(newDate).getTime() ) );
+        				}
+            			catch(ParseException nfe)
+            			{
+            				throw new  ParseFileXLSException ("Требуется dd/MM/yyyy формат даты  в строке "+ ++row_ + " столбец " + mA_loadTail.getIsNew());
+            			}
 
-        			}
-        			catch(ParseException nfe)
-        			{
-        				throw new  ParseFileXLSException ("Требуется dd/MM/yyyy формат даты  в строке "+ ++row_ + " столбец " + mA_loadTail.getIsNew());
         			}
         			catch(Exception exc) {
         				throw new  ParseFileXLSException ("Ошибка в строке "+ ++row_);
