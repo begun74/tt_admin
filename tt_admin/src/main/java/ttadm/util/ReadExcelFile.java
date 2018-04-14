@@ -234,24 +234,24 @@ public class ReadExcelFile {
         	Row tmp = rowIterator.next();
         	
         		if(row_ >= mA_loadTail.getRow()-1) {
-        			
+        			int r = 0;
         			try {
-	        			tail = new Tail();
-	        			tail.setIndex(index++);
-	        			tail.setAmountTail(Integer.parseInt(df.formatCellValue(tmp.getCell(mA_loadTail.getCol_amountTail()-1)) ));
-	        			tail.setFirstPrice(NumberFormat.getNumberInstance().parse(df.formatCellValue(tmp.getCell(mA_loadTail.getCol_firstPrice()-1) )).doubleValue());
-	        			tail.setCreate_date(timestamp);
-	        			tail.setDirNomenclature( hmNomencl.get(new Long((df.formatCellValue(tmp.getCell((mA_loadTail.getCol_codeNomencl()-1)))))) );
-	        			tail.setSize(df.formatCellValue(tmp.getCell(mA_loadTail.getCol_size()-1)).replaceAll("р-р", "").trim());
-	        			tail.setNds( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNds()-1))) );
-	        			tail.setNadb_opt( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNadb_opt()-1))) );
-	        			tail.setNadb_rozn( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNadb_rozn()-1))) );
+	        			tail = new Tail(); 
+	        			++r; tail.setIndex(index++); 
+	        			++r; tail.setAmountTail(Integer.parseInt(df.formatCellValue(tmp.getCell(mA_loadTail.getCol_amountTail()-1)) ));
+	        			++r; tail.setFirstPrice(NumberFormat.getNumberInstance().parse(df.formatCellValue(tmp.getCell(mA_loadTail.getCol_firstPrice()-1) )).doubleValue());
+	        			++r; tail.setCreate_date(timestamp); 
+	        			++r; tail.setDirNomenclature( hmNomencl.get(new Long((df.formatCellValue(tmp.getCell((mA_loadTail.getCol_codeNomencl()-1)))))) ); 
+	        			++r; tail.setSize(df.formatCellValue(tmp.getCell(mA_loadTail.getCol_size()-1)).replaceAll("р-р", "").trim()); 
+	        			++r; tail.setNds( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNds()-1))) ); 
+	        			++r; tail.setNadb_opt( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNadb_opt()-1))) ); 
+	        			++r; tail.setNadb_rozn( new Integer(df.formatCellValue(tmp.getCell(mA_loadTail.getNadb_rozn()-1))) );
 	        			
 	        			
-        				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        				String newDate = df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1));
+	        			++r; SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");  
+	        			++r; String newDate = df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1)); 
         				try {
-        					tail.setIsNew(df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1) ).isEmpty()  ? null : new Timestamp( sdf.parse(newDate).getTime() ) );
+        					++r; tail.setIsNew(df.formatCellValue (tmp.getCell(mA_loadTail.getIsNew()-1) ).isEmpty()  ? null : new Timestamp( sdf.parse(newDate).getTime() ) ); 
         				}
             			catch(ParseException nfe)
             			{
@@ -260,7 +260,8 @@ public class ReadExcelFile {
 
         			}
         			catch(Exception exc) {
-        				throw new  ParseFileXLSException ("Ошибка в строке "+ ++row_);
+        				
+        				throw new  ParseFileXLSException ("Ошибка в строке "+ row_+ exc.getMessage());
         			}
         			
         			lTails.add(tail);
