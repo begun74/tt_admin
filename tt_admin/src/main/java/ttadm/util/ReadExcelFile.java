@@ -255,7 +255,7 @@ public class ReadExcelFile {
         				}
             			catch(ParseException nfe)
             			{
-            				throw new  ParseFileXLSException ("Требуется dd/MM/yyyy формат даты  в строке "+ ++row_ + " столбец " + mA_loadTail.getIsNew());
+            				throw new  ParseFileXLSException (" требуется dd/MM/yyyy формат даты  в строке "+ ++row_ + " столбец " + mA_loadTail.getIsNew());
             			}
 
         			}
