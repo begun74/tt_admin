@@ -211,11 +211,12 @@ public class FileUpload {
 							Files.write(path, data);
 							
 							BufferedImage img = null;
+							
 							try {
 								img = ImageIO.read(path.toFile());
 							}
 							catch(javax.imageio.IIOException err) {
-								throw new FileSystemException("Неправильная кодировка файла jpg  " + path.toFile());
+								throw new javax.imageio.IIOException("Неправильная кодировка файла jpg     " + file);
 							}
 							
 							float img_width = img.getWidth();
