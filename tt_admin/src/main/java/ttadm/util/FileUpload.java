@@ -13,6 +13,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
@@ -209,8 +210,13 @@ public class FileUpload {
 							path = Paths.get(tempFile.toURI());
 							Files.write(path, data);
 							
-							
-							BufferedImage img = ImageIO.read(path.toFile());
+							BufferedImage img = null;
+							try {
+								img = ImageIO.read(path.toFile());
+							}
+							catch(javax.imageio.IIOException err) {
+								throw new FileSystemException("Неправильная кодировка файла jpg  " + path.toFile());
+							}
 							
 							float img_width = img.getWidth();
 							float img_height = img.getHeight();

@@ -129,43 +129,52 @@ public class ReadExcelFile {
         	
         	
         		if(row_ >= mA_loadNomencl.getRow()-1) {
-        			dirNomenclature = new DirNomenclature();
-	        	
-        			dirNomenclature.setName(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_name()-1)).trim());
-        			dirNomenclature.setModel(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_model()-1)).trim());
-        			dirNomenclature.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadNomencl.getCol_code()-1))).trim() ) );
-        			dirNomenclature.setArticle(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_article()-1)).trim());
         			
-        			String composition = df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_composition()-1)).trim().length() == 0? null: df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_composition()-1)).trim();
-        			dirNomenclature.setComposition(composition);
-
-        			dirNomenclature.setDirNomenclGroup(hmNomenclGroup.get(Long.parseLong(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_codeNomenclGroup()-1)).trim() ) ) );
-        			dirNomenclature.setDirGender(hmDGen.get(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_gender()-1)).toLowerCase().trim() ) );
-        			dirNomenclature.setDirProvider(hmDProv.get(new Long((df.formatCellValue( setCellTypeToString(tmp.getCell((mA_loadNomencl.getCol_codeProvider()-1))))))));
-        			dirNomenclature.setAccess_date(access_date);
+        			String err_msg = "";
         			
-
-        			String path = df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_pathToImage()-1)).trim();
-        			//System.out.println(path);
-
-        			if(path.length() >0)
-        			{
-        				
-        				StringTokenizer st = new StringTokenizer(path,";");
-        				List<String> files = new ArrayList<String>();
-        				while (st.hasMoreTokens()) {
-        					
-        					String file = st.nextToken();
-        					//System.out.println("file - "+file);
-        					files.add(Constants.IMAGES_SERVER +File.separator+file.substring(3).replace('\\', '/'));
-        				}
-        				
-        				hmPollPaths.put(dirNomenclature.getCode(),files);
-        				//System.out.println(files);
+        			try {
+		        			dirNomenclature = new DirNomenclature();
+			        	
+		        			err_msg = " Заполните наименование номенклатуры "; dirNomenclature.setName(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_name()-1)).trim());
+		        			err_msg = " Заполните модель номенклатуры "; dirNomenclature.setModel(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_model()-1)).trim());
+		        			err_msg = " Заполните код номенклатуры "; dirNomenclature.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadNomencl.getCol_code()-1))).trim() ) );
+		        			err_msg = " Заполните артикль номенклатуры "; dirNomenclature.setArticle(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_article()-1)).trim());
+		        			
+		        			String composition = df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_composition()-1)).trim().length() == 0? null: df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_composition()-1)).trim();
+		        			dirNomenclature.setComposition(composition);
+		
+		        			err_msg = " Заполните номенклатурную группу  "; dirNomenclature.setDirNomenclGroup(hmNomenclGroup.get(Long.parseLong(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_codeNomenclGroup()-1)).trim() ) ) );
+		        			err_msg = " Заполните гендерную группу "; dirNomenclature.setDirGender(hmDGen.get(df.formatCellValue( tmp.getCell(mA_loadNomencl.getCol_gender()-1)).toLowerCase().trim() ) );
+		        			err_msg = " Заполните наименование поставщика "; dirNomenclature.setDirProvider(hmDProv.get(new Long((df.formatCellValue( setCellTypeToString(tmp.getCell((mA_loadNomencl.getCol_codeProvider()-1))))))));
+		        			dirNomenclature.setAccess_date(access_date);
+		        			
+		
+		        			String path = df.formatCellValue(tmp.getCell(mA_loadNomencl.getCol_pathToImage()-1)).trim();
+		        			//System.out.println(path);
+		
+		        			if(path.length() >0)
+		        			{
+		        				
+		        				StringTokenizer st = new StringTokenizer(path,";");
+		        				List<String> files = new ArrayList<String>();
+		        				while (st.hasMoreTokens()) {
+		        					
+		        					String file = st.nextToken();
+		        					//System.out.println("file - "+file);
+		        					files.add(Constants.IMAGES_SERVER +File.separator+file.substring(3).replace('\\', '/'));
+		        				}
+		        				
+		        				hmPollPaths.put(dirNomenclature.getCode(),files);
+		        				//System.out.println(files);
+		        			}
         			}
-        			
-        			
-		        	lNomencls.add(dirNomenclature);
+        			catch(Exception exc) {
+        						lNomencls.clear();
+		        				throw new  ParseFileXLSException ("Ошибка в строке "+ ++row_ + "  " + err_msg);
+        			}
+		        			
+				    lNomencls.add(dirNomenclature);
+				        	
         		}
         	
         	
@@ -197,10 +206,16 @@ public class ReadExcelFile {
         	
         		if(row_ >= mA_loadNomenclGroup.getRow()-1) {
         			dirNomenclGroup = new DirNomenclGroup();
-	        	
-        			dirNomenclGroup.setName(df.formatCellValue(tmp.getCell(mA_loadNomenclGroup.getCol_name()-1)));
-        			dirNomenclGroup.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadNomenclGroup.getCol_code()-1))) ) );
-        			dirNomenclGroup.setDirNomenclGroupRoot(hmNomenclGroupRoot.get(Long.parseLong(df.formatCellValue(tmp.getCell(mA_loadNomenclGroup.getCol_codeNomenclGroupRoot()-1)) )) );
+
+        			try {
+	        			dirNomenclGroup.setName(df.formatCellValue(tmp.getCell(mA_loadNomenclGroup.getCol_name()-1)));
+	        			dirNomenclGroup.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadNomenclGroup.getCol_code()-1))) ) );
+	        			dirNomenclGroup.setDirNomenclGroupRoot(hmNomenclGroupRoot.get(Long.parseLong(df.formatCellValue(tmp.getCell(mA_loadNomenclGroup.getCol_codeNomenclGroupRoot()-1)) )) );
+        			}
+        			catch(Exception exc) {
+        						lNomencls.clear();
+		        				throw new  ParseFileXLSException ("Ошибка в строке "+ row_);
+        			}
         			
 		        	lNomencls.add(dirNomenclGroup);
         		}
@@ -290,14 +305,19 @@ public class ReadExcelFile {
         {
         	Row tmp = rowIterator.next();
         	
-        	
+        	String err_msg = "";
         		if(row_ >= mA_loadNomenclGroupRoot.getRow()-1) {
-        			dirNomenclGroupRoot = new DirNomenclGroupRoot();
-	        	
-        			dirNomenclGroupRoot.setName(df.formatCellValue(tmp.getCell(mA_loadNomenclGroupRoot.getCol_name()-1)));
-        			dirNomenclGroupRoot.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadNomenclGroupRoot.getCol_code()-1))) ) );
-        			
-		        	lNomencls.add(dirNomenclGroupRoot);
+        			try {
+	        			dirNomenclGroupRoot = new DirNomenclGroupRoot();
+		        	
+	        			err_msg = "Заполните наименование "; dirNomenclGroupRoot.setName(df.formatCellValue(tmp.getCell(mA_loadNomenclGroupRoot.getCol_name()-1)));
+	        			err_msg = "Заполните код "; dirNomenclGroupRoot.setCode(Long.parseLong(df.formatCellValue( setCellTypeToString(tmp.getCell(mA_loadNomenclGroupRoot.getCol_code()-1))) ) );
+	        			
+			        	lNomencls.add(dirNomenclGroupRoot);
+        			}
+        			catch(Exception exc) {
+        				throw new  ParseFileXLSException ("Ошибка в строке "+ row_+ "   "+err_msg);
+        			}
         		}
         	
         	
