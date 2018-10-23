@@ -212,12 +212,7 @@ public class FileUpload {
 							
 							BufferedImage img = null;
 							
-							try {
-								img = ImageIO.read(path.toFile());
-							}
-							catch(javax.imageio.IIOException err) {
-								throw new javax.imageio.IIOException("Неправильная кодировка файла jpg     " + file);
-							}
+							img = ImageIO.read(path.toFile());
 							
 							float img_width = img.getWidth();
 							float img_height = img.getHeight();
@@ -257,6 +252,10 @@ public class FileUpload {
 							System.err.println("\n========= ERROR: FileUpload.downloadPhoto =======");
 							throw new Exception("ERROR: FileUpload.downloadPhoto  not found - "+file);
 						}
+						catch(javax.imageio.IIOException err) {
+							throw new javax.imageio.IIOException("Неправильная кодировка файла jpg     " + file);
+						}
+						
 				}
 
 			}

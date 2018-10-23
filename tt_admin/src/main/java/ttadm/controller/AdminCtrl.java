@@ -556,8 +556,20 @@ public class AdminCtrl {
 		return model;
 		
 	}
-	
 
+	@RequestMapping(value = "/content/jobs" , method = RequestMethod.POST )
+	public ModelAndView   contentJobs(HttpSession session
+									, @Valid MA_AdvertCamp mA_AdvertCamp 
+									, BindingResult result
+									, @RequestParam(value = "act",	 defaultValue = "0") int act
+									, @RequestParam(value = "logout",	required = false) String logout
+									, @RequestParam(value = "id",	required = false) Long id)
+	{
+		ModelAndView model = new ModelAndView("redirect:/content/jobs?act="+act);
+
+		return model;
+	}
+	
 	@PostConstruct
 	void init(){
 		//System.out.println(this + " INIT() ");
